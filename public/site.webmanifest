@@ -1,0 +1,58 @@
+{
+  "name": "Aéroport International de N'djili — FIH",
+  "short_name": "FIH",
+  "description": "Vols, stationnement et services — Aéroport International de N'djili (Kinshasa, RDC)",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F7F2",
+  "theme_color": "#003DA5",
+  "lang": "fr",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Départs",
+      "short_name": "Départs",
+      "description": "Consultez les vols au départ",
+      "url": "/vols/departs",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Arrivées",
+      "short_name": "Arrivées",
+      "description": "Consultez les vols à l'arrivée",
+      "url": "/vols/arrivees",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mon Compte",
+      "short_name": "Compte",
+      "description": "Accédez à votre espace client",
+      "url": "/compte",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "categories": ["travel", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshots/home-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Page d'accueil"
+    }
+  ]
+}
