@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "loading": "Chargement…",
     "error": "Une erreur est survenue",
@@ -64,8 +64,16 @@
     "actual": "Réel",
     "gate": "Porte",
     "terminal": "Terminal",
-    "status": "Statut",
-    "baggageClaim": "Tapis bagages",
+    "status": {
+      "scheduled": "Prévu",
+      "boarding": "Embarquement",
+      "departed": "Parti",
+      "arrived": "Arrivé",
+      "delayed": "Retardé",
+      "cancelled": "Annulé",
+      "diverted": "Dérouté",
+      "on_time": "À l'heure"
+    },
     "statuses": {
       "scheduled": "Prévu",
       "boarding": "Embarquement",
@@ -87,7 +95,9 @@
     "filterByTerminal": "Filtrer par terminal",
     "noFlights": "Aucun vol pour le moment",
     "noFlightsDesc": "Les vols apparaîtront ici dès qu'ils seront programmés.",
-    "realtime": "Temps réel"
+    "realtime": "Temps réel",
+    "viewAllDepartures": "Tous les départs",
+    "viewAllArrivals": "Toutes les arrivées"
   },
   "parking": {
     "title": "Stationnement FIH",
@@ -257,31 +267,64 @@
       "mobileMoney": "Mobile Money",
       "taxis": "Taxis officiels",
       "visaVaccines": "Visa & Vaccins",
-      "contact": "Contact"
+      "contact": "Contact",
+      "wifi": "Wi-Fi",
+      "waitTimes": "Temps d'attente"
     },
     "liveFlights": {
       "title": "Vols en direct",
+      "subtitle": "Données mises à jour toutes les minutes",
       "departures": "Prochains départs",
       "arrivals": "Prochaines arrivées",
-      "viewAll": "Tableau des vols complet"
+      "viewAll": "Tableau des vols complet",
+      "live": "En direct",
+      "updatedLabel": "Mis à jour en temps réel",
+      "noFlights": "Aucun vol programmé pour le moment"
     },
     "news": {
-      "title": "Actualités FIH"
+      "eyebrow": "Actualités",
+      "title": "Actualités FIH",
+      "viewAll": "Toutes les actualités"
+    },
+    "services": {
+      "eyebrow": "Nos services",
+      "title": "Tout ce dont vous avez besoin",
+      "flights": "Informations vols en temps réel, tableaux des départs et arrivées",
+      "parking": "Stationnement officiel RVA, tarifs, réservation en ligne",
+      "shops": "Boutiques, restaurants, duty free et salons dans l'aérogare",
+      "guide": "Tout ce qu'il faut savoir avant et après votre vol à FIH",
+      "corporate": "Gouvernance, carrières et partenariats avec la RVA",
+      "community": "Nos engagements envers les communes riveraines de l'aéroport"
     },
     "community": {
+      "eyebrow": "Communauté & Environnement",
       "title": "Engagement communautaire",
-      "subtitle": "La RVA s'engage auprès des communes de Nsele, Masina et Kimbanseke",
-      "cta": "Nos initiatives"
-    },
-    "newsletter": {
-      "title": "Restez informé",
-      "subtitle": "Abonnez-vous aux alertes SMS et aux actualités FIH",
-      "phonePlaceholder": "Votre numéro de téléphone",
-      "emailPlaceholder": "Votre adresse e-mail",
-      "subscribe": "S'abonner",
-      "smsAlerts": "Alertes SMS vols",
-      "newsEmail": "Actualités par e-mail"
+      "subtitle": "La RVA s'engage auprès des communes de Nsele, Masina et Kimbanseke pour un développement durable.",
+      "cta": "Nos initiatives",
+      "communes": "Communes riveraines",
+      "environment": {
+        "title": "Environnement & Durabilité",
+        "desc": "Gestion environnementale, protection de la faune et du Pool Malebo, certifications durabilité"
+      },
+      "relations": {
+        "title": "Relations communautaires",
+        "desc": "Consultations publiques, initiatives locales à Nsele, Masina et Kimbanseke"
+      },
+      "art": {
+        "title": "Programme FIH Art",
+        "desc": "Promotion des artistes congolais : Chéri Samba, Moke et la nouvelle génération"
+      }
     }
+  },
+  "newsletter": {
+    "title": "Restez informé",
+    "subtitle": "Recevez les dernières actualités FIH, alertes de vols et informations opérationnelles directement dans votre boîte mail.",
+    "emailPlaceholder": "votre@email.com",
+    "cta": "S'abonner",
+    "disclaimer": "Pas de spam. Désabonnement en un clic. Données protégées conformément à la politique de confidentialité.",
+    "successMessage": "Merci ! Vous êtes maintenant abonné aux actualités FIH.",
+    "errorMessage": "Une erreur est survenue. Veuillez réessayer.",
+    "invalidEmail": "Veuillez saisir une adresse e-mail valide."
   },
   "search": {
     "title": "Recherche",
@@ -289,7 +332,13 @@
     "recentSearches": "Recherches récentes",
     "suggestions": "Suggestions",
     "noResults": "Aucun résultat pour « {{query}} »",
-    "resultsFor": "Résultats pour « {{query}} »"
+    "resultsFor": "Résultats pour « {{query}} »",
+    "byFlight": "Par numéro de vol",
+    "byRoute": "Par destination",
+    "flightPlaceholder": "Ex : SN491",
+    "fromPlaceholder": "Départ (ex : Lubumbashi)",
+    "toPlaceholder": "Arrivée (ex : Paris CDG)",
+    "cta": "Rechercher"
   },
   "accessibility": {
     "skipToContent": "Aller au contenu principal",

@@ -64,8 +64,16 @@
     "actual": "Actual",
     "gate": "Gate",
     "terminal": "Terminal",
-    "status": "Status",
-    "baggageClaim": "Baggage Claim",
+    "status": {
+      "scheduled": "Scheduled",
+      "boarding": "Boarding",
+      "departed": "Departed",
+      "arrived": "Arrived",
+      "delayed": "Delayed",
+      "cancelled": "Cancelled",
+      "diverted": "Diverted",
+      "on_time": "On Time"
+    },
     "statuses": {
       "scheduled": "Scheduled",
       "boarding": "Boarding",
@@ -76,6 +84,7 @@
       "diverted": "Diverted",
       "on_time": "On Time"
     },
+    "baggageClaim": "Baggage Claim",
     "terminals": {
       "international": "International Terminal",
       "domestic": "Domestic Terminal"
@@ -87,7 +96,9 @@
     "filterByTerminal": "Filter by terminal",
     "noFlights": "No flights at the moment",
     "noFlightsDesc": "Flights will appear here once scheduled.",
-    "realtime": "Real-time"
+    "realtime": "Real-time",
+    "viewAllDepartures": "All departures",
+    "viewAllArrivals": "All arrivals"
   },
   "parking": {
     "title": "FIH Parking",
@@ -257,31 +268,64 @@
       "mobileMoney": "Mobile Money",
       "taxis": "Official Taxis",
       "visaVaccines": "Visa & Vaccines",
-      "contact": "Contact"
+      "contact": "Contact",
+      "wifi": "Wi-Fi",
+      "waitTimes": "Wait Times"
     },
     "liveFlights": {
       "title": "Live Flights",
+      "subtitle": "Data updated every minute",
       "departures": "Next Departures",
       "arrivals": "Next Arrivals",
-      "viewAll": "Full flight board"
+      "viewAll": "Full flight board",
+      "live": "Live",
+      "updatedLabel": "Updated in real time",
+      "noFlights": "No flights scheduled at the moment"
     },
     "news": {
-      "title": "FIH News"
+      "eyebrow": "News",
+      "title": "FIH News",
+      "viewAll": "All news"
+    },
+    "services": {
+      "eyebrow": "Our services",
+      "title": "Everything you need",
+      "flights": "Real-time flight information, departure and arrival boards",
+      "parking": "Official RVA parking, rates, online booking",
+      "shops": "Shops, restaurants, duty free and lounges in the terminal",
+      "guide": "Everything you need to know before and after your flight at FIH",
+      "corporate": "Governance, careers and partnerships with RVA",
+      "community": "Our commitments to the communities surrounding the airport"
     },
     "community": {
+      "eyebrow": "Community & Environment",
       "title": "Community Engagement",
-      "subtitle": "RVA is committed to the communities of Nsele, Masina and Kimbanseke",
-      "cta": "Our initiatives"
-    },
-    "newsletter": {
-      "title": "Stay Informed",
-      "subtitle": "Subscribe to SMS alerts and FIH news",
-      "phonePlaceholder": "Your phone number",
-      "emailPlaceholder": "Your email address",
-      "subscribe": "Subscribe",
-      "smsAlerts": "Flight SMS Alerts",
-      "newsEmail": "News by Email"
+      "subtitle": "RVA is committed to the communities of Nsele, Masina and Kimbanseke for sustainable development.",
+      "cta": "Our initiatives",
+      "communes": "Surrounding communes",
+      "environment": {
+        "title": "Environment & Sustainability",
+        "desc": "Environmental management, protection of wildlife and Pool Malebo, sustainability certifications"
+      },
+      "relations": {
+        "title": "Community Relations",
+        "desc": "Public consultations, local initiatives in Nsele, Masina and Kimbanseke"
+      },
+      "art": {
+        "title": "FIH Art Program",
+        "desc": "Promoting Congolese artists: Chéri Samba, Moke and the new generation"
+      }
     }
+  },
+  "newsletter": {
+    "title": "Stay Informed",
+    "subtitle": "Receive the latest FIH news, flight alerts and operational information directly in your inbox.",
+    "emailPlaceholder": "your@email.com",
+    "cta": "Subscribe",
+    "disclaimer": "No spam. Unsubscribe in one click. Data protected in accordance with our privacy policy.",
+    "successMessage": "Thank you! You are now subscribed to FIH news.",
+    "errorMessage": "An error occurred. Please try again.",
+    "invalidEmail": "Please enter a valid email address."
   },
   "search": {
     "title": "Search",
@@ -289,7 +333,13 @@
     "recentSearches": "Recent searches",
     "suggestions": "Suggestions",
     "noResults": "No results for \"{{query}}\"",
-    "resultsFor": "Results for \"{{query}}\""
+    "resultsFor": "Results for \"{{query}}\"",
+    "byFlight": "By flight number",
+    "byRoute": "By destination",
+    "flightPlaceholder": "E.g. SN491",
+    "fromPlaceholder": "From (e.g. Lubumbashi)",
+    "toPlaceholder": "To (e.g. Paris CDG)",
+    "cta": "Search"
   },
   "accessibility": {
     "skipToContent": "Skip to main content",
