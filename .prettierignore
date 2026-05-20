@@ -1,0 +1,10 @@
+node_modules
+dist
+.vite
+build
+coverage
+src/routeTree.gen.ts
+supabase/.branches
+supabase/.temp
+*.lock
+package-lock.json
