@@ -45,6 +45,7 @@ coverage
 
 # Generated
 src/routeTree.gen.ts
+*.tsbuildinfo
 
 # Supabase local
 supabase/.branches
