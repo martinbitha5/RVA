@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "loading": "Loading…",
     "error": "An error occurred",
@@ -407,6 +407,142 @@
       "filters": "Show on map",
       "downloadPdf": "Download PDF map",
       "mapNote": "Schematic map for reference only. Interactive MapLibre GL version coming in Phase 4."
+    }
+  },
+  "parking": {
+    "reservation": {
+      "title": "Reserve — {{lot}}",
+      "confirmed": "Reservation confirmed",
+      "step1": "Dates",
+      "step2": "Vehicle",
+      "step3": "Payment",
+      "step4": "Confirmed",
+      "arrival": "Arrival date",
+      "departure": "Departure date",
+      "dateRequired": "Please select both dates",
+      "dateInvalid": "Departure must be after arrival",
+      "plate": "Vehicle plate",
+      "fullName": "Full name",
+      "phone": "Phone number",
+      "email": "Email address",
+      "payMethod": "Payment method",
+      "mobileMoneyNote": "Mobile Money payment",
+      "mobileMoneyDesc": "You will receive a USSD prompt on your phone to confirm the payment.",
+      "total": "Total to pay",
+      "pay": "Pay & Confirm",
+      "successTitle": "Booking confirmed!",
+      "successDesc": "Your QR code has been generated. Present it at the barrier on arrival.",
+      "qrNote": "Also sent by SMS and email if provided.",
+      "copyCode": "Copy code",
+      "copied": "Copied!"
+    }
+  },
+  "stat": {
+    "hub": {
+      "title": "Parking & Transport",
+      "subtitle": "Official RVA parking, accredited taxis, buses, shuttles and access information",
+      "parkingDesc": "P1, P2, P3 car parks with online booking",
+      "offersDesc": "Hourly, daily rates and subscriptions",
+      "taxisDesc": "RVA-accredited official taxis only",
+      "busDesc": "Transco lines from Kinshasa",
+      "shuttlesDesc": "Partner hotel shuttles",
+      "rentalDesc": "Avis, Europcar, Hertz, Loxea and more",
+      "pmrDesc": "Parking and assistance for reduced mobility passengers",
+      "boulevardDesc": "Main access via Boulevard Lumumba",
+      "worksAlert": "Ongoing works — International Terminal",
+      "worksAlertDesc": "Disruptions possible in P2 car park until August 2026."
+    },
+    "parking": {
+      "subtitle": "Book your parking space online. Payment by Mobile Money or credit card.",
+      "occupancy": "Occupancy",
+      "infoTitle": "Practical information",
+      "infoDesc": "Car parks are monitored 24/7 by RVA security. Keep your ticket on entry."
+    },
+    "offres": {
+      "subtitle": "Official RVA rates in USD. CDF equivalent available at payment desks.",
+      "parking": "Car park",
+      "mobileMoney": "Mobile Money Payment",
+      "mobileMoneyDesc": "Pay your parking fee directly via Airtel Money, M-Pesa or Orange Money.",
+      "accepted": "Accepted at FIH",
+      "conditions": "Payment conditions",
+      "condition1": "Payment must be made before leaving the car park.",
+      "condition2": "Lost ticket: $20 USD flat fee applies.",
+      "condition3": "Mobile Money payment available at payment terminals.",
+      "condition4": "Rates are in USD, CDF equivalent at daily rate."
+    },
+    "taxis": {
+      "subtitle": "Only take RVA-accredited official taxis. Identifiable by their yellow plate and FIH logo.",
+      "warning": "Beware of informal taxis",
+      "warningDesc": "Unlicensed drivers offer services at the terminal exit. Refuse and go to the official signposted area.",
+      "official": "RVA accredited",
+      "howTitle": "How to take an official taxi",
+      "step1": "Exit the terminal through the main exit",
+      "step2": "Follow the «Official RVA Taxis» signs",
+      "step3": "Choose your taxi (yellow plate + FIH logo)",
+      "step4": "Agree on the fare before getting in",
+      "tariffTitle": "Indicative fares to Kinshasa",
+      "tariffNote": "Indicative fares. Negotiate before departure. Traffic may affect cost."
+    },
+    "bus": {
+      "subtitle": "The Transco/Esprit de Vie network offers regular lines between the airport and Kinshasa's main districts.",
+      "stops": "Stops",
+      "infoTitle": "Practical information",
+      "infoDesc": "Buses depart from the public transport zone (T1 exit, left). Payment in CDF or USD cash on board."
+    },
+    "shuttles": {
+      "subtitle": "Major Kinshasa hotels offer shuttles to and from the airport. Booking recommended."
+    },
+    "rental": {
+      "subtitle": "Several car rental agencies are available on arrival at FIH.",
+      "international": "International agencies",
+      "local": "Local agencies"
+    },
+    "pmr": {
+      "subtitle": "N'djili Airport is equipped to welcome passengers with reduced mobility.",
+      "parkingTitle": "Disabled parking",
+      "parkingDesc": "Reserved spaces closest to terminal entrances. Free on presentation of supporting documents.",
+      "assistanceTitle": "Boarding assistance",
+      "assistanceDesc": "RVA staff are available to accompany wheelchair passengers from the entrance to the boarding gate.",
+      "medicalTitle": "Medical centre",
+      "medicalDesc": "A nurse is on duty 24/7 for minor medical emergencies at the International Terminal.",
+      "contactTitle": "Contact the PMR team",
+      "contactDesc": "Call at least 48 hours before your flight to arrange personalised assistance.",
+      "requestTitle": "Request assistance",
+      "requestDesc": "To arrange your assistance in advance, contact our dedicated team at least 48 hours before your flight.",
+      "callNow": "Call PMR service"
+    },
+    "dropoff": {
+      "subtitle": "Drop-off and pick-up zones at N'djili Airport.",
+      "deposTitle": "Drop-off (Departures)",
+      "deposZone": "Drop-off zone",
+      "deposZoneDesc": "In front of the International Terminal main entrance — 3 lanes available.",
+      "deposTime": "Maximum duration",
+      "deposTimeDesc": "15 minutes free. Beyond that, use P1 (short stay, $2/h).",
+      "deposAlert": "Extended stops not permitted in front of the terminal. Risk of fine.",
+      "pickupTitle": "Pick-up (Arrivals)",
+      "pickupZone": "Pick-up zone",
+      "pickupZoneDesc": "P1 car park ground floor — 200m from Arrivals hall exit.",
+      "pickupTime": "Free duration",
+      "pickupTimeDesc": "30 minutes free for passengers waiting for arrivals."
+    },
+    "works": {
+      "subtitle": "Information on ongoing works and disruptions at N'djili International Airport."
+    },
+    "carpooling": {
+      "subtitle": "Use RVA-accredited carpooling apps for your trips to or from the airport.",
+      "zoneTitle": "Pick-up zone",
+      "zoneDesc": "Accredited carpooling vehicles must park in P2 (ground floor). Pick-up in front of the terminal is prohibited."
+    },
+    "limo": {
+      "subtitle": "Premium transport services with high-end vehicles and professional drivers."
+    },
+    "blvd": {
+      "subtitle": "Boulevard Lumumba is the main access road to N'djili International Airport from Kinshasa.",
+      "addressLabel": "Official address",
+      "openMaps": "Open in Google Maps",
+      "trafficAlert": "Frequent traffic jams during rush hours (7–9am and 5–7pm) on Boulevard Lumumba. Allow an extra 30 minutes.",
+      "routesTitle": "Estimated travel times from Kinshasa",
+      "timesNote": "Estimated times excluding traffic. Allow 30–45 extra minutes during rush hours."
     }
   },
   "welcome": "Boyei malamu · Welcome"

@@ -119,7 +119,33 @@
     "spots": "places",
     "hourly": "par heure",
     "daily": "par jour",
-    "weekly": "par semaine"
+    "weekly": "par semaine",
+    "reservation": {
+      "title": "Réserver — {{lot}}",
+      "confirmed": "Réservation confirmée",
+      "step1": "Dates",
+      "step2": "Véhicule",
+      "step3": "Paiement",
+      "step4": "Confirmé",
+      "arrival": "Date d'arrivée",
+      "departure": "Date de départ",
+      "dateRequired": "Veuillez sélectionner les deux dates",
+      "dateInvalid": "La date de départ doit être après l'arrivée",
+      "plate": "Plaque d'immatriculation",
+      "fullName": "Nom complet",
+      "phone": "Numéro de téléphone",
+      "email": "Adresse e-mail",
+      "payMethod": "Méthode de paiement",
+      "mobileMoneyNote": "Paiement Mobile Money",
+      "mobileMoneyDesc": "Vous recevrez une invite USSD sur votre téléphone pour confirmer le paiement.",
+      "total": "Total à payer",
+      "pay": "Payer & Confirmer",
+      "successTitle": "Réservation confirmée !",
+      "successDesc": "Votre QR code a été généré. Présentez-le à la barrière à votre arrivée.",
+      "qrNote": "Également envoyé par SMS et e-mail si fourni.",
+      "copyCode": "Copier le code",
+      "copied": "Copié !"
+    }
   },
   "shops": {
     "title": "Boutiques & Restaurants",
@@ -406,6 +432,114 @@
       "filters": "Afficher sur la carte",
       "downloadPdf": "Télécharger le plan PDF",
       "mapNote": "Plan schématique indicatif. La version interactive avec MapLibre GL sera disponible en Phase 4."
+    }
+  },
+  "stat": {
+    "hub": {
+      "title": "Stationnement & Transport",
+      "subtitle": "Stationnement officiel RVA, taxis agréés, bus, navettes et informations d'accès",
+      "parkingDesc": "Parkings P1, P2, P3 avec réservation en ligne",
+      "offersDesc": "Tarifs horaires, journaliers et abonnements",
+      "taxisDesc": "Taxis officiels agréés RVA uniquement",
+      "busDesc": "Lignes Transco depuis Kinshasa",
+      "shuttlesDesc": "Navettes hôtels partenaires",
+      "rentalDesc": "Avis, Europcar, Hertz, Loxea et plus",
+      "pmrDesc": "Stationnement et assistance personnes à mobilité réduite",
+      "boulevardDesc": "Accès principal via Boulevard Lumumba",
+      "worksAlert": "Travaux en cours — Terminal International",
+      "worksAlertDesc": "Des perturbations sont possibles sur le parking P2 jusqu'en août 2026."
+    },
+    "parking": {
+      "subtitle": "Réservez votre place de stationnement en ligne. Paiement par Mobile Money ou carte bancaire.",
+      "occupancy": "Occupation",
+      "infoTitle": "Informations pratiques",
+      "infoDesc": "Les parkings sont surveillés 24h/24 par la sécurité RVA. Conservez votre ticket à l'entrée."
+    },
+    "offres": {
+      "subtitle": "Tarifs officiels RVA en USD. Équivalence CDF disponible aux caisses.",
+      "parking": "Parking",
+      "mobileMoney": "Paiement Mobile Money",
+      "mobileMoneyDesc": "Payez votre stationnement directement via Airtel Money, M-Pesa ou Orange Money.",
+      "accepted": "Accepté à FIH",
+      "conditions": "Conditions de paiement",
+      "condition1": "Le paiement doit être effectué avant de quitter le parking.",
+      "condition2": "Ticket perdu : forfait de $20 USD applicable.",
+      "condition3": "Paiement Mobile Money disponible aux bornes de paiement.",
+      "condition4": "Les tarifs sont exprimés en USD, équivalent CDF au taux du jour."
+    },
+    "taxis": {
+      "subtitle": "Prenez uniquement les taxis officiels agréés par la RVA. Identifiables par leur plaque jaune et le logo FIH.",
+      "warning": "Attention aux taxis informels",
+      "warningDesc": "Des chauffeurs non agréés proposent leurs services à la sortie du terminal. Refusez et dirigez-vous vers la zone officielle balisée.",
+      "official": "Agréé RVA",
+      "howTitle": "Comment prendre un taxi officiel",
+      "step1": "Sortez du terminal par la sortie principale",
+      "step2": "Suivez les panneaux «Taxis officiels RVA»",
+      "step3": "Choisissez votre taxi (plaque jaune + logo FIH)",
+      "step4": "Convenez du tarif avant de monter",
+      "tariffTitle": "Tarifs indicatifs vers Kinshasa",
+      "tariffNote": "Tarifs indicatifs. Négocier le prix avant le départ. Les embouteillages peuvent affecter le coût."
+    },
+    "bus": {
+      "subtitle": "Le réseau Transco/Esprit de Vie propose des lignes régulières entre l'aéroport et les principaux quartiers de Kinshasa.",
+      "stops": "Arrêts",
+      "infoTitle": "Informations pratiques",
+      "infoDesc": "Les bus partent de la zone de transport en commun (sortie T1 gauche). Paiement en espèces CDF ou USD à bord."
+    },
+    "shuttles": {
+      "subtitle": "Les grands hôtels de Kinshasa proposent des navettes depuis et vers l'aéroport. Réservation recommandée."
+    },
+    "rental": {
+      "subtitle": "Plusieurs agences de location de voitures sont disponibles à l'arrivée à FIH.",
+      "international": "Agences internationales",
+      "local": "Agences locales"
+    },
+    "pmr": {
+      "subtitle": "L'Aéroport de N'djili est équipé pour accueillir les passagers à mobilité réduite.",
+      "parkingTitle": "Places PMR",
+      "parkingDesc": "Places réservées au plus proche des entrées du terminal. Gratuites sur présentation du justificatif.",
+      "assistanceTitle": "Assistance embarquement",
+      "assistanceDesc": "Des agents RVA sont disponibles pour accompagner les passagers en fauteuil roulant de l'entrée jusqu'à la porte d'embarquement.",
+      "medicalTitle": "Centre médical",
+      "medicalDesc": "Un infirmier est disponible 24h/24 pour les urgences médicales légères au niveau du Terminal International.",
+      "contactTitle": "Contacter l'équipe PMR",
+      "contactDesc": "Appelez au moins 48h avant votre vol pour organiser votre assistance personnalisée.",
+      "requestTitle": "Demander une assistance",
+      "requestDesc": "Pour organiser votre assistance en avance, contactez notre équipe dédiée au minimum 48h avant votre vol.",
+      "callNow": "Appeler le service PMR"
+    },
+    "dropoff": {
+      "subtitle": "Zones de dépose-minute et de récupération des passagers à l'Aéroport de N'djili.",
+      "deposTitle": "Dépose-minute (Départs)",
+      "deposZone": "Zone de dépose",
+      "deposZoneDesc": "Devant l'entrée principale du Terminal International — 3 voies disponibles.",
+      "deposTime": "Durée maximale",
+      "deposTimeDesc": "15 minutes offertes. Au-delà, dirigez-vous vers P1 (court terme, $2/h).",
+      "deposAlert": "Arrêts prolongés non autorisés devant le terminal. Risque de verbalisation.",
+      "pickupTitle": "Récupération (Arrivées)",
+      "pickupZone": "Zone de récupération",
+      "pickupZoneDesc": "Parking P1 niveau 0 — sortie hall Arrivées, 200 m.",
+      "pickupTime": "Durée offerte",
+      "pickupTimeDesc": "30 minutes offertes pour les passagers en attente d'arrivants."
+    },
+    "works": {
+      "subtitle": "Informations sur les travaux et perturbations en cours à l'Aéroport International de N'djili."
+    },
+    "carpooling": {
+      "subtitle": "Utilisez les applications de covoiturage agréées par la RVA pour vos trajets depuis ou vers l'aéroport.",
+      "zoneTitle": "Zone de prise en charge",
+      "zoneDesc": "Les véhicules de covoiturage agréés doivent stationner dans la zone P2 (niveau 0). La prise en charge est interdite devant le terminal."
+    },
+    "limo": {
+      "subtitle": "Services de transport premium avec véhicules haut de gamme et chauffeurs professionnels."
+    },
+    "blvd": {
+      "subtitle": "Le Boulevard Lumumba est la voie d'accès principale à l'Aéroport International de N'djili depuis Kinshasa.",
+      "addressLabel": "Adresse officielle",
+      "openMaps": "Ouvrir dans Google Maps",
+      "trafficAlert": "Embouteillages fréquents aux heures de pointe (7h–9h et 17h–19h) sur le Boulevard Lumumba. Prévoyez 30 minutes supplémentaires.",
+      "routesTitle": "Temps de trajet estimés depuis Kinshasa",
+      "timesNote": "Durées estimées hors embouteillages. Prévoir 30–45 min supplémentaires aux heures de pointe."
     }
   },
   "welcome": "Mbote · Bienvenue"
