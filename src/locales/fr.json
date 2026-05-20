@@ -345,5 +345,68 @@
     "openInNewTab": "S'ouvre dans un nouvel onglet",
     "externalLink": "Lien externe"
   },
+  "vols": {
+    "hub": {
+      "title": "Vols & Informations",
+      "subtitle": "Départs, arrivées, compagnies aériennes et plans des aérogares en temps réel",
+      "departuresDesc": "Tableau en temps réel des départs depuis FIH",
+      "arrivalsDesc": "Mises à jour live des arrivées à FIH",
+      "airlinesDesc": "Les 17 compagnies qui opèrent à N'djili",
+      "smsDesc": "Abonnez-vous aux notifications de vol par SMS",
+      "waitTimesDesc": "Temps d'attente estimés aux contrôles",
+      "mapsDesc": "Plans interactifs des terminaux FIH"
+    },
+    "departs": {
+      "subtitle": "Vols au départ de l'Aéroport International de N'djili — mis à jour en temps réel",
+      "disclaimer": "Les informations affichées sont indicatives. Consultez votre compagnie pour confirmation."
+    },
+    "arrivees": {
+      "subtitle": "Vols à destination de Kinshasa N'djili — mis à jour en temps réel",
+      "disclaimer": "Les informations affichées sont indicatives. Consultez votre compagnie pour confirmation."
+    },
+    "airlines": {
+      "subtitle": "17 compagnies aériennes opèrent à l'Aéroport International de N'djili (FIH)",
+      "searchPlaceholder": "Rechercher une compagnie…",
+      "hub": "Compagnies hub à FIH",
+      "international": "Compagnies internationales"
+    },
+    "airline": {
+      "website": "Site officiel",
+      "todayFlights": "Vols du jour"
+    },
+    "sms": {
+      "subtitle": "Recevez des alertes SMS en temps réel pour votre vol : statut, changement de porte, retards.",
+      "phoneLabel": "Votre numéro de téléphone",
+      "phoneHint": "Numéros Vodacom, Airtel, Orange acceptés",
+      "flightLabel": "Numéro de vol (optionnel)",
+      "cta": "S'abonner aux alertes",
+      "featureStatus": "Changement de statut",
+      "featureGate": "Changement de porte",
+      "featureDelay": "Retards & annulations",
+      "successTitle": "Inscription confirmée !",
+      "successDesc": "Vous recevrez des alertes SMS pour vos vols à FIH.",
+      "disclaimer": "Service SMS fourni par Africa's Talking. Des frais de SMS peuvent s'appliquer selon votre opérateur. Désabonnement possible à tout moment."
+    },
+    "waitTimes": {
+      "subtitle": "Temps d'attente estimés aux postes de sécurité, douanes et immigration",
+      "noData": "Aucune donnée disponible pour le moment",
+      "open": "Ouvert",
+      "closed": "Fermé"
+    },
+    "plans": {
+      "subtitle": "Plans schématiques des terminaux — version interactive avec MapLibre à venir",
+      "gates": "Portes d'embarquement",
+      "security": "Contrôle de sûreté",
+      "customs": "Douanes & Immigration",
+      "shops": "Boutiques",
+      "restaurants": "Restaurants",
+      "toilets": "Sanitaires",
+      "atm": "Distributeurs ATM",
+      "pmr": "Accès PMR",
+      "filters": "Afficher sur la carte",
+      "downloadPdf": "Télécharger le plan PDF",
+      "mapNote": "Plan schématique indicatif. La version interactive avec MapLibre GL sera disponible en Phase 4."
+    }
+  },
   "welcome": "Mbote · Bienvenue"
 }

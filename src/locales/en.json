@@ -346,5 +346,68 @@
     "openInNewTab": "Opens in a new tab",
     "externalLink": "External link"
   },
+  "vols": {
+    "hub": {
+      "title": "Flights & Information",
+      "subtitle": "Real-time departures, arrivals, airlines and terminal maps",
+      "departuresDesc": "Real-time departures board from FIH",
+      "arrivalsDesc": "Live arrivals updates at FIH",
+      "airlinesDesc": "The 17 airlines operating at N'djili",
+      "smsDesc": "Subscribe to flight SMS notifications",
+      "waitTimesDesc": "Estimated wait times at checkpoints",
+      "mapsDesc": "Interactive terminal maps at FIH"
+    },
+    "departs": {
+      "subtitle": "Flights departing from N'djili International Airport — updated in real time",
+      "disclaimer": "Information shown is indicative. Please confirm with your airline."
+    },
+    "arrivees": {
+      "subtitle": "Flights arriving in Kinshasa N'djili — updated in real time",
+      "disclaimer": "Information shown is indicative. Please confirm with your airline."
+    },
+    "airlines": {
+      "subtitle": "17 airlines operate at N'djili International Airport (FIH)",
+      "searchPlaceholder": "Search an airline…",
+      "hub": "Hub airlines at FIH",
+      "international": "International airlines"
+    },
+    "airline": {
+      "website": "Official website",
+      "todayFlights": "Today's flights"
+    },
+    "sms": {
+      "subtitle": "Receive real-time SMS alerts for your flight: status, gate changes, delays.",
+      "phoneLabel": "Your phone number",
+      "phoneHint": "Vodacom, Airtel, Orange numbers accepted",
+      "flightLabel": "Flight number (optional)",
+      "cta": "Subscribe to alerts",
+      "featureStatus": "Status changes",
+      "featureGate": "Gate changes",
+      "featureDelay": "Delays & cancellations",
+      "successTitle": "Subscription confirmed!",
+      "successDesc": "You will receive SMS alerts for your flights at FIH.",
+      "disclaimer": "SMS service provided by Africa's Talking. SMS charges may apply depending on your carrier. Unsubscribe at any time."
+    },
+    "waitTimes": {
+      "subtitle": "Estimated wait times at security, customs and immigration checkpoints",
+      "noData": "No data available at the moment",
+      "open": "Open",
+      "closed": "Closed"
+    },
+    "plans": {
+      "subtitle": "Schematic terminal maps — interactive MapLibre version coming soon",
+      "gates": "Boarding gates",
+      "security": "Security checkpoint",
+      "customs": "Customs & Immigration",
+      "shops": "Shops",
+      "restaurants": "Restaurants",
+      "toilets": "Restrooms",
+      "atm": "ATM machines",
+      "pmr": "Accessibility",
+      "filters": "Show on map",
+      "downloadPdf": "Download PDF map",
+      "mapNote": "Schematic map for reference only. Interactive MapLibre GL version coming in Phase 4."
+    }
+  },
   "welcome": "Boyei malamu · Welcome"
 }

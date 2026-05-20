@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from './supabase';
-import type { FlightWithAirline, NewsArticle, ParkingLot } from '@/types/database';
+import type { FlightWithAirline, NewsArticle, ParkingLot, Airline, WaitTime } from '@/types/database';
 
 export function useUpcomingFlights(type: 'departure' | 'arrival', limit = 6) {
   return useQuery<FlightWithAirline[]>({
@@ -36,6 +36,98 @@ export function useLatestNews(limit = 3) {
       return data ?? [];
     },
     staleTime: 5 * 60_000,
+  });
+}
+
+/** Full flight board — no date ceiling, used on /vols/departs and /vols/arrivees */
+export function useFlightBoard(type: 'departure' | 'arrival') {
+  return useQuery<FlightWithAirline[]>({
+    queryKey: ['flights-board', type],
+    queryFn: async () => {
+      const cutoff = new Date();
+      cutoff.setHours(cutoff.getHours() - 2); // show flights from 2 h ago
+      const { data, error } = await supabase
+        .from('flights')
+        .select('*, airlines(iata_code, name, logo_url, slug)')
+        .eq('type', type)
+        .gte('scheduled_time', cutoff.toISOString())
+        .order('scheduled_time', { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as FlightWithAirline[];
+    },
+    staleTime: 30_000,
+    refetchInterval: 60_000,
+  });
+}
+
+export function useAirlines() {
+  return useQuery<Airline[]>({
+    queryKey: ['airlines'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('airlines')
+        .select('*')
+        .eq('active', true)
+        .order('name');
+      if (error) throw error;
+      return data ?? [];
+    },
+    staleTime: 10 * 60_000,
+    gcTime: 30 * 60_000,
+  });
+}
+
+export function useAirlineBySlug(slug: string) {
+  return useQuery<Airline | null>({
+    queryKey: ['airlines', slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('airlines')
+        .select('*')
+        .eq('slug', slug)
+        .maybeSingle();
+      if (error) throw error;
+      return data;
+    },
+    staleTime: 10 * 60_000,
+    enabled: !!slug,
+  });
+}
+
+export function useAirlineFlights(airlineId: string) {
+  return useQuery<FlightWithAirline[]>({
+    queryKey: ['flights-airline', airlineId],
+    queryFn: async () => {
+      const cutoff = new Date();
+      cutoff.setHours(cutoff.getHours() - 2);
+      const { data, error } = await supabase
+        .from('flights')
+        .select('*, airlines(iata_code, name, logo_url, slug)')
+        .eq('airline_id', airlineId)
+        .gte('scheduled_time', cutoff.toISOString())
+        .order('scheduled_time', { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as FlightWithAirline[];
+    },
+    staleTime: 30_000,
+    enabled: !!airlineId,
+  });
+}
+
+export function useWaitTimes() {
+  return useQuery<WaitTime[]>({
+    queryKey: ['wait-times'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('wait_times')
+        .select('*')
+        .order('terminal')
+        .order('checkpoint');
+      if (error) throw error;
+      return data ?? [];
+    },
+    staleTime: 2 * 60_000,
+    refetchInterval: 5 * 60_000,
   });
 }
 
