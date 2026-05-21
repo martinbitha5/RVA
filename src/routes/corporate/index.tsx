@@ -1,51 +1,213 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 import {
   Building2, Scale, Rocket, History, Briefcase,
-  Handshake, Plane, Shield,
+  Handshake, Plane, Shield, ArrowRight, Users,
 } from 'lucide-react';
+import { PageHero } from '@/components/ui/page-hero';
 
 export const Route = createFileRoute('/corporate/')({
   component: CorporateHub,
-  head: () => ({ meta: [
-    { title: "Corporate — Régie des Voies Aériennes · FIH" },
-    { name: 'description', content: 'Informations institutionnelles sur la Régie des Voies Aériennes (RVA), gestionnaire de l\'Aéroport International de N\'djili (FIH), Kinshasa, RDC.' },
-  ]}),
+  head: () => ({
+    meta: [
+      { title: "Corporate — Régie des Voies Aériennes · FIH" },
+      { name: 'description', content: "Informations institutionnelles sur la Régie des Voies Aériennes (RVA), gestionnaire de l'Aéroport International de N'djili (FIH), Kinshasa, RDC." },
+    ],
+  }),
 });
 
-const CARDS = [
-  { key: 'about',           href: '/corporate/a-propos',              Icon: Building2,  color: 'bg-rdc-blue/10 text-rdc-blue' },
-  { key: 'governance',      href: '/corporate/gouvernance',           Icon: Scale,      color: 'bg-slate-100 text-slate-600' },
-  { key: 'futureProjects',  href: '/corporate/projets-avenir',        Icon: Rocket,     color: 'bg-rdc-yellow/20 text-rdc-anthracite' },
-  { key: 'history',         href: '/corporate/historique',            Icon: History,    color: 'bg-amber-100 text-amber-700' },
-  { key: 'careers',         href: '/corporate/carriere',              Icon: Briefcase,  color: 'bg-rdc-green/10 text-rdc-green' },
-  { key: 'partnerships',    href: '/corporate/partenariats-commerciaux', Icon: Handshake, color: 'bg-purple-100 text-purple-700' },
-  { key: 'airServices',     href: '/corporate/services-aeriens',      Icon: Plane,      color: 'bg-cyan-100 text-cyan-700' },
-  { key: 'safetyAndSecurity',href: '/corporate/surete-securite',      Icon: Shield,     color: 'bg-rdc-red/10 text-rdc-red' },
+const MAIN_SECTIONS = [
+  {
+    icon: Building2,
+    href: '/corporate/a-propos',
+    label: 'À propos de la RVA',
+    desc: 'Mission, valeurs et rôle de la Régie des Voies Aériennes dans le développement du transport aérien en RDC.',
+    accent: '#003DA5',
+  },
+  {
+    icon: Scale,
+    href: '/corporate/gouvernance',
+    label: 'Gouvernance',
+    desc: "Conseil d'administration, comité de direction, directions fonctionnelles et structure de gouvernance.",
+    accent: '#1A1A1A',
+  },
+  {
+    icon: Rocket,
+    href: '/corporate/projets-avenir',
+    label: "Projets d'avenir",
+    desc: 'Reconstruction du terminal international, modernisation de la piste et vision 2030 pour FIH.',
+    accent: '#FFCE00',
+  },
+  {
+    icon: History,
+    href: '/corporate/historique',
+    label: 'Historique',
+    desc: "De 1953 à aujourd'hui — Sabena, Air Congo, Air Zaïre et la renaissance de l'aviation congolaise.",
+    accent: '#CE1126',
+  },
+] as const;
+
+const OTHER_SECTIONS = [
+  { icon: Briefcase, href: '/corporate/carriere', label: 'Carrières', desc: "Rejoignez la communauté FIH — offres d'emploi et opportunités de carrière à la RVA." },
+  { icon: Handshake, href: '/corporate/partenariats-commerciaux', label: 'Partenariats', desc: 'Concessions, publicité, immobilier aéroportuaire et opportunités commerciales à FIH.' },
+  { icon: Plane, href: '/corporate/services-aeriens', label: 'Services aériens', desc: 'Fret, aviation générale et commerciale — services dédiés aux opérateurs aériens.' },
+  { icon: Shield, href: '/corporate/surete-securite', label: 'Sûreté & Sécurité', desc: 'Écosystème sécurité de FIH — SSLIA, SMS, SST et engagement qualité.' },
+] as const;
+
+const STATS = [
+  { value: '1953', label: 'Année de fondation', sub: 'Aéroport de N\'djili' },
+  { value: '2M+', label: 'Passagers / an', sub: 'Volume traité à FIH' },
+  { value: '14+', label: 'Compagnies', sub: 'Partenaires actifs' },
+  { value: 'RVA', label: 'Gestionnaire', sub: 'Régie des Voies Aériennes' },
 ] as const;
 
 function CorporateHub() {
-  const { t } = useTranslation();
   return (
-    <div className="container py-10 md:py-14">
-      <p className="text-xs font-bold uppercase tracking-[0.2em] text-rdc-blue">{t('corporate.title')}</p>
-      <h1 className="font-display mt-1 text-3xl font-bold text-rdc-anthracite md:text-4xl mb-3">{t('corporate.hubTitle')}</h1>
-      <p className="mb-10 max-w-2xl text-sm text-muted-foreground">{t('corporate.hubSubtitle')}</p>
+    <>
+      <PageHero
+        eyebrow="Régie des Voies Aériennes"
+        title="Un aéroport au cœur du Congo"
+        subtitle="La RVA gère et développe l'Aéroport International de N'djili (FIH) depuis 1953 — pilier du transport aérien en République Démocratique du Congo."
+        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Corporate' }]}
+        cta={
+          <div className="flex flex-wrap gap-3">
+            <Link to={'/corporate/a-propos' as never} className="btn-primary">
+              <Building2 size={15} /> À propos de la RVA
+            </Link>
+            <Link to={'/corporate/projets-avenir' as never} className="btn-outline-white">
+              <Rocket size={15} /> Projets d'avenir
+            </Link>
+          </div>
+        }
+      />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {CARDS.map(({ key, href, Icon, color }) => (
-          <Link key={key} to={href as never}
-            className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-5 shadow-sm hover:shadow-md hover:border-rdc-blue/30 transition-all">
-            <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl ${color}`}>
-              <Icon size={20} />
+      {/* Stats strip */}
+      <section className="bg-border py-0">
+        <div className="grid grid-cols-2 gap-px md:grid-cols-4">
+          {STATS.map((s) => (
+            <div key={s.label} className="bg-white px-8 py-10 text-center">
+              <p className="font-display text-4xl font-bold text-rdc-blue leading-none">{s.value}</p>
+              <p className="mt-1.5 text-xs font-bold uppercase tracking-wider text-rdc-anthracite">{s.label}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">{s.sub}</p>
             </div>
-            <div className="min-w-0">
-              <p className="font-semibold text-rdc-anthracite group-hover:text-rdc-blue transition-colors">{t(`corporate.${key}`)}</p>
-              <p className="mt-0.5 text-xs text-muted-foreground line-clamp-2">{t(`corporate.${key}Desc`)}</p>
+          ))}
+        </div>
+      </section>
+
+      {/* Main sections — dark editorial grid */}
+      <section className="section-night py-20 lg:py-28">
+        <div className="container">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="accent-line" />
+            <p className="eyebrow text-rdc-yellow">Informations institutionnelles</p>
+          </div>
+          <h2 className="display-sub text-white mb-12">
+            Découvrir la RVA et FIH
+          </h2>
+
+          <div className="grid gap-0.5 bg-white/8 sm:grid-cols-2">
+            {MAIN_SECTIONS.map((s) => (
+              <Link
+                key={s.href}
+                to={s.href as never}
+                className="group relative bg-rdc-anthracite p-10 flex flex-col gap-6 overflow-hidden hover:bg-white/5 transition-colors"
+              >
+                <div
+                  className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-500"
+                  style={{ backgroundColor: s.accent }}
+                />
+
+                <div className="flex items-start justify-between">
+                  <div
+                    className="flex h-14 w-14 items-center justify-center"
+                    style={{ background: `${s.accent}15`, border: `1px solid ${s.accent}30` }}
+                  >
+                    <s.icon size={26} style={{ color: s.accent }} strokeWidth={1.5} />
+                  </div>
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="bg-rdc-yellow w-8 h-8 flex items-center justify-center">
+                      <ArrowRight size={14} className="text-rdc-anthracite" />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-display font-bold text-white text-2xl leading-snug group-hover:text-rdc-yellow transition-colors">
+                    {s.label}
+                  </h3>
+                  <p className="mt-3 text-sm text-white/45 leading-relaxed">{s.desc}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Other sections — white grid */}
+      <section className="bg-white py-20">
+        <div className="container">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="accent-line" />
+            <p className="eyebrow text-rdc-blue">Autres domaines</p>
+          </div>
+          <h2 className="display-sub text-rdc-anthracite mb-10">
+            Carrières, partenariats & services
+          </h2>
+
+          <div className="grid gap-0.5 bg-border sm:grid-cols-2 lg:grid-cols-4">
+            {OTHER_SECTIONS.map((s) => (
+              <Link
+                key={s.href}
+                to={s.href as never}
+                className="group relative bg-white p-7 flex flex-col gap-4 overflow-hidden hover:bg-rdc-blue/2 transition-colors"
+              >
+                <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-rdc-blue transition-all duration-500" />
+                <div className="flex h-12 w-12 items-center justify-center bg-rdc-blue/8 border border-rdc-blue/15">
+                  <s.icon size={20} className="text-rdc-blue" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <h3 className="font-display font-bold text-rdc-anthracite text-lg leading-snug group-hover:text-rdc-blue transition-colors">
+                    {s.label}
+                  </h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-bold text-rdc-blue/60 group-hover:text-rdc-blue transition-colors mt-auto">
+                  Voir <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Career CTA */}
+      <section className="section-blue py-16 lg:py-20">
+        <div className="container">
+          <div className="grid gap-10 lg:grid-cols-[1fr_auto] items-center">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="accent-line" />
+                <p className="eyebrow text-rdc-yellow">Rejoindre la RVA</p>
+              </div>
+              <h2 className="font-display font-bold text-white text-3xl lg:text-4xl leading-tight">
+                Construisez votre carrière à l'aéroport
+              </h2>
+              <p className="mt-4 text-white/60 text-base max-w-xl leading-relaxed">
+                La Régie des Voies Aériennes recrute des talents congolais pour
+                façonner l'avenir du transport aérien en RDC. Découvrez nos offres
+                d'emploi et programmes de formation.
+              </p>
             </div>
-          </Link>
-        ))}
-      </div>
-    </div>
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
+              <Link to={'/corporate/carriere/offres-emploi' as never} className="btn-primary whitespace-nowrap">
+                <Users size={15} /> Voir les offres d'emploi
+              </Link>
+              <Link to={'/corporate/carriere' as never} className="btn-outline-white whitespace-nowrap">
+                La communauté FIH <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

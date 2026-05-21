@@ -75,6 +75,28 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      fontSize: {
+        'display-xs': ['1.5rem',   { lineHeight: '1.1',  letterSpacing: '-0.02em' }],
+        'display-sm': ['2rem',     { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        'display-md': ['2.75rem',  { lineHeight: '1.0',  letterSpacing: '-0.02em' }],
+        'display-lg': ['3.5rem',   { lineHeight: '0.95', letterSpacing: '-0.025em' }],
+        'display-xl': ['4.5rem',   { lineHeight: '0.92', letterSpacing: '-0.03em' }],
+        'display-2xl': ['6rem',    { lineHeight: '0.9',  letterSpacing: '-0.035em' }],
+        'display-3xl': ['7.5rem',  { lineHeight: '0.88', letterSpacing: '-0.04em' }],
+      },
+      boxShadow: {
+        'premium':     '0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08)',
+        'premium-lg':  '0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.10)',
+        'blue':        '0 8px 32px rgba(0,61,165,0.35)',
+        'blue-lg':     '0 16px 48px rgba(0,61,165,0.45)',
+        'inset-bottom':'inset 0 -2px 0 0',
+      },
+      backgroundImage: {
+        'gradient-night': 'linear-gradient(135deg, #080F1E 0%, #0D1B3E 50%, #003DA5 100%)',
+        'gradient-blue':  'linear-gradient(135deg, #003DA5 0%, #001E6E 100%)',
+        'gradient-rdc':   'linear-gradient(90deg, #003DA5, #FFCE00, #CE1126, #009A44)',
+        'gradient-dark':  'linear-gradient(180deg, rgba(8,15,30,0) 0%, rgba(8,15,30,0.9) 100%)',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -89,15 +111,20 @@ export default {
           to: { opacity: '1' },
         },
         'slide-up': {
-          from: { opacity: '0', transform: 'translateY(10px)' },
+          from: { opacity: '0', transform: 'translateY(16px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        'ping-slow': {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(1.6)', opacity: '0' },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.4s ease-out',
-        'slide-up': 'slide-up 0.5s ease-out',
+        'fade-in': 'fade-in 0.5s ease both',
+        'slide-up': 'slide-up 0.6s cubic-bezier(0.16,1,0.3,1) both',
+        'ping-slow': 'ping-slow 2s ease-in-out infinite',
       },
     },
   },

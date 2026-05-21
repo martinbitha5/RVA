@@ -1,85 +1,63 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Search, Plane } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-
-type Tab = 'flight' | 'route';
+import { useNavigate } from '@tanstack/react-router';
 
 export function FlightSearch() {
   const { t } = useTranslation();
-  const [tab, setTab] = useState<Tab>('flight');
+  const navigate = useNavigate();
+  const [query, setQuery] = useState('');
+
+  function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    if (!query.trim()) return;
+    void navigate({ to: '/vols/departs' as never });
+  }
 
   return (
-    <section className="bg-white shadow-md">
-      <div className="container py-0">
-        <div className="-mt-6 rounded-2xl border border-border bg-white p-5 shadow-xl md:p-6">
-          {/* Tabs */}
-          <div className="mb-5 flex gap-1 rounded-lg bg-muted p-1 w-fit">
-            {(['flight', 'route'] as const).map((t_) => (
-              <button
-                key={t_}
-                onClick={() => setTab(t_)}
-                className={cn(
-                  'rounded-md px-4 py-1.5 text-xs font-semibold transition-all',
-                  tab === t_
-                    ? 'bg-white text-rdc-anthracite shadow-sm'
-                    : 'text-muted-foreground hover:text-foreground',
-                )}
-              >
-                {t_ === 'flight' ? t('search.byFlight') : t('search.byRoute')}
+    <div className="section-night">
+      <div className="container">
+        <div className="border-t border-white/8 py-8">
+          <form onSubmit={handleSearch}
+            className="flex flex-col sm:flex-row items-stretch gap-0">
+            {/* Label */}
+            <div className="flex items-center gap-3 bg-rdc-blue px-5 py-4 shrink-0">
+              <Plane size={15} className="-rotate-45 text-rdc-yellow" />
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-white whitespace-nowrap">
+                {t('search.title')}
+              </span>
+            </div>
+
+            {/* Input */}
+            <div className="relative flex-1">
+              <input
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder={t('search.placeholder')}
+                className="w-full h-full bg-white/5 border-y border-r border-white/10 text-white placeholder:text-white/25 pl-5 pr-14 py-4 text-sm focus:outline-none focus:border-rdc-yellow/50 transition-colors"
+              />
+              <button type="submit"
+                className="absolute right-0 top-0 h-full px-5 bg-white/5 border-l border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-colors">
+                <Search size={16} />
+              </button>
+            </div>
+          </form>
+
+          {/* Quick searches */}
+          <div className="flex flex-wrap items-center gap-2 mt-3">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-white/20 mr-1">
+              Suggérés :
+            </span>
+            {['SN491', 'Lubumbashi', 'Goma', 'Paris CDG', 'Brussels'].map(s => (
+              <button key={s}
+                onClick={() => setQuery(s)}
+                className="border border-white/12 px-3 py-1 text-xs text-white/40 hover:text-white hover:border-rdc-yellow/40 transition-colors">
+                {s}
               </button>
             ))}
           </div>
-
-          {tab === 'flight' ? (
-            <form
-              className="flex flex-col gap-3 sm:flex-row sm:items-end"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className="relative flex-1">
-                <Plane
-                  size={14}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground -rotate-45"
-                />
-                <Input
-                  placeholder={t('search.flightPlaceholder')}
-                  className="pl-9 font-mono uppercase tracking-wider"
-                />
-              </div>
-              <Button type="submit" className="bg-rdc-blue hover:bg-rdc-blue/85 text-white gap-2">
-                <Search size={14} />
-                {t('search.cta')}
-              </Button>
-            </form>
-          ) : (
-            <form
-              className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end"
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className="relative">
-                <Plane
-                  size={14}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                />
-                <Input placeholder={t('search.fromPlaceholder')} className="pl-9" />
-              </div>
-              <div className="relative">
-                <Plane
-                  size={14}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground -rotate-180"
-                />
-                <Input placeholder={t('search.toPlaceholder')} className="pl-9" />
-              </div>
-              <Button type="submit" className="bg-rdc-blue hover:bg-rdc-blue/85 text-white gap-2">
-                <Search size={14} />
-                {t('search.cta')}
-              </Button>
-            </form>
-          )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }

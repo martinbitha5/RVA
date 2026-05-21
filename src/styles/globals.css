@@ -4,58 +4,57 @@
 
 @layer base {
   :root {
-    /* shadcn/ui — light theme calibrated on RDC institutional palette */
-    --background: 60 14% 97%; /* cream #F7F7F2 */
-    --foreground: 0 0% 10%; /* anthracite #1A1A1A */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 220 13% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 220 13% 9%;
 
-    --primary: 215 100% 32%; /* RDC blue #003DA5 */
+    --primary: 217 100% 32%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 48 100% 50%; /* RDC yellow #FFCE00 */
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 46 100% 50%;
+    --secondary-foreground: 220 13% 9%;
 
-    --muted: 40 25% 92%;
-    --muted-foreground: 0 0% 35%;
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 8% 46%;
 
-    --accent: 146 100% 30%; /* RDC green #009A44 */
+    --accent: 146 100% 30%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 352 84% 44%; /* RDC red #CE1126 */
+    --destructive: 352 84% 44%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 85%;
-    --input: 40 15% 85%;
-    --ring: 215 100% 32%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 100% 32%;
 
-    --radius: 0.5rem;
+    --radius: 0.375rem;
   }
 
   .dark {
-    --background: 0 0% 8%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 215 80% 60%;
-    --primary-foreground: 0 0% 10%;
-    --secondary: 48 90% 55%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 16%;
-    --muted-foreground: 0 0% 65%;
+    --background: 220 20% 8%;
+    --foreground: 220 10% 96%;
+    --card: 220 15% 12%;
+    --card-foreground: 220 10% 96%;
+    --popover: 220 15% 12%;
+    --popover-foreground: 220 10% 96%;
+    --primary: 217 80% 60%;
+    --primary-foreground: 220 20% 8%;
+    --secondary: 46 90% 55%;
+    --secondary-foreground: 220 20% 8%;
+    --muted: 220 15% 16%;
+    --muted-foreground: 220 8% 60%;
     --accent: 146 60% 45%;
     --accent-foreground: 0 0% 100%;
     --destructive: 352 70% 50%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 215 80% 60%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 217 80% 60%;
   }
 }
 
@@ -63,23 +62,255 @@
   * {
     @apply border-border;
   }
+
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
+
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-white text-foreground font-sans;
     font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
   }
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-display tracking-tight;
+
+  ::selection {
+    background-color: #003DA5;
+    color: #ffffff;
   }
+
   :focus-visible {
-    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+    @apply outline-none ring-2 ring-rdc-blue ring-offset-2;
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tight;
   }
 }
+
+/* ─── Layout Sections ───────────────────────────────────────── */
+@layer components {
+
+  /* Dark anthracite section */
+  .section-night {
+    @apply bg-rdc-anthracite text-white;
+  }
+
+  /* Brand blue section */
+  .section-blue {
+    @apply bg-rdc-blue text-white;
+  }
+
+  /* Off-white/cream section */
+  .section-cream {
+    background-color: #F5F5F0;
+  }
+
+  /* Subtle grey section */
+  .section-muted {
+    background-color: #F8F9FB;
+  }
+
+  /* ─── Typography utilities ─────────────────────────────────── */
+  .display-hero {
+    @apply font-display font-bold leading-[0.92] tracking-[-0.02em];
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+  }
+
+  .display-section {
+    @apply font-display font-bold leading-[0.95] tracking-[-0.02em];
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .display-sub {
+    @apply font-display font-bold leading-tight tracking-[-0.015em];
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.25em];
+  }
+
+  /* ─── Card patterns (breaking the SaaS card look) ─────────── */
+
+  /* Photo card: image fills, text overlay at bottom */
+  .card-photo {
+    @apply relative overflow-hidden cursor-pointer;
+  }
+  .card-photo::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(to top, rgba(8,15,30,0.85) 0%, rgba(8,15,30,0.3) 50%, transparent 100%);
+  }
+  .card-photo:hover img {
+    transform: scale(1.04);
+  }
+  .card-photo img {
+    @apply h-full w-full object-cover transition-transform duration-700;
+  }
+
+  /* Dark feature card */
+  .card-dark {
+    @apply bg-[#0D1B2E] text-white overflow-hidden relative;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Minimal row item */
+  .item-row {
+    @apply flex items-center gap-4 py-4 border-b border-border last:border-0 transition-colors hover:bg-muted/50 px-0;
+  }
+
+  /* ─── Buttons (premium variants) ──────────────────────────── */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-rdc-blue text-white font-semibold px-7 py-3.5 text-sm tracking-wide transition-all;
+    letter-spacing: 0.02em;
+  }
+  .btn-primary:hover {
+    @apply bg-rdc-blue-dark;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(0,61,165,0.4);
+  }
+
+  .btn-outline-white {
+    @apply inline-flex items-center gap-2 border border-white/30 text-white font-semibold px-7 py-3.5 text-sm tracking-wide transition-all;
+  }
+  .btn-outline-white:hover {
+    @apply bg-white text-rdc-anthracite border-white;
+  }
+
+  .btn-outline-dark {
+    @apply inline-flex items-center gap-2 border border-rdc-anthracite text-rdc-anthracite font-semibold px-7 py-3.5 text-sm tracking-wide transition-all;
+  }
+  .btn-outline-dark:hover {
+    @apply bg-rdc-anthracite text-white;
+  }
+
+  /* ─── Link underline animation ─────────────────────────────── */
+  .link-animated {
+    @apply relative inline-block;
+  }
+  .link-animated::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-0 bg-current transition-all duration-300;
+  }
+  .link-animated:hover::after {
+    @apply w-full;
+  }
+
+  /* ─── Hero overlay helpers ─────────────────────────────────── */
+  .hero-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(0,15,45,0.85) 0%,
+      rgba(0,30,80,0.65) 40%,
+      rgba(0,61,165,0.25) 100%
+    );
+  }
+
+  .hero-overlay-dark {
+    background: linear-gradient(
+      to bottom,
+      rgba(8,15,30,0.4) 0%,
+      rgba(8,15,30,0.75) 60%,
+      rgba(8,15,30,0.95) 100%
+    );
+  }
+
+  /* ─── Status badges (flight) ───────────────────────────────── */
+  .status-on-time   { @apply bg-emerald-50 text-emerald-700 border border-emerald-200; }
+  .status-delayed   { @apply bg-amber-50 text-amber-700 border border-amber-200; }
+  .status-boarding  { @apply bg-blue-50 text-rdc-blue border border-rdc-blue/30; }
+  .status-cancelled { @apply bg-red-50 text-rdc-red border border-red-200; }
+  .status-landed    { @apply bg-gray-50 text-gray-600 border border-gray-200; }
+
+  /* ─── Horizontal line accent ───────────────────────────────── */
+  .accent-line {
+    @apply h-px w-12 bg-rdc-yellow;
+  }
+
+  /* ─── Custom scrollbar ─────────────────────────────────────── */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #003DA5 transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #003DA5;
+    border-radius: 2px;
+  }
+
+  /* ─── Number/stat display ──────────────────────────────────── */
+  .stat-number {
+    @apply font-display font-bold leading-none tracking-[-0.03em];
+    font-size: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* ─── Full-bleed section with container ───────────────────── */
+  .section-full {
+    @apply w-full;
+  }
+  .section-full > .inner {
+    @apply container py-20 lg:py-28;
+  }
+
+  /* ─── Airport-specific pattern (diagonal stripes) ─────────── */
+  .runway-pattern {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 206, 0, 0.08) 0,
+      rgba(255, 206, 0, 0.08) 1px,
+      transparent 0,
+      transparent 10px
+    );
+  }
+
+  /* ─── Table styles ─────────────────────────────────────────── */
+  .table-premium {
+    @apply w-full text-sm;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .table-premium thead tr th {
+    @apply py-3 px-4 text-left text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/50 border-b border-border;
+  }
+  .table-premium tbody tr {
+    @apply border-b border-border/60 transition-colors hover:bg-muted/30;
+  }
+  .table-premium tbody tr td {
+    @apply py-4 px-4;
+  }
+}
+
+/* ─── Animations ────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.5); opacity: 0.5; }
+}
+
+.animate-fade-in-up  { animation: fadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in     { animation: fadeIn 0.5s ease both; }
+.animate-slide-left  { animation: slideInLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }

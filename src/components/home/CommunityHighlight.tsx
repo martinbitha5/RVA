@@ -5,79 +5,112 @@ import { Leaf, Users, Paintbrush2, ArrowRight } from 'lucide-react';
 const HIGHLIGHTS = [
   {
     icon: Leaf,
-    titleKey: 'home.community.environment.title',
-    descKey: 'home.community.environment.desc',
     href: '/communaute/environnement-durabilite',
-    bg: 'bg-emerald-50',
-    iconColor: 'text-emerald-600 bg-emerald-100',
+    titleKey: 'community.environmentSustainability',
+    desc: 'Gestion de l\'impact environnemental autour de FIH — Pool Malebo, fleuve Congo, faune aviaire.',
+    accent: '#009A44',
   },
   {
     icon: Users,
-    titleKey: 'home.community.relations.title',
-    descKey: 'home.community.relations.desc',
-    href: '/communaute/relations-communaute/initiatives',
-    bg: 'bg-blue-50',
-    iconColor: 'text-rdc-blue bg-rdc-blue/10',
+    href: '/communaute/relations-communaute',
+    titleKey: 'community.relations',
+    desc: 'Dialogue permanent avec les communes de Nsele, Masina et Kimbanseke.',
+    accent: '#FFCE00',
   },
   {
     icon: Paintbrush2,
-    titleKey: 'home.community.art.title',
-    descKey: 'home.community.art.desc',
-    href: '/communaute/relations-communaute/fih-art',
-    bg: 'bg-amber-50',
-    iconColor: 'text-amber-600 bg-amber-100',
+    href: '/communaute/relations-communaute',
+    titleKey: 'community.fihArt',
+    desc: 'Programme FIH Art — Chéri Samba, Moke et la nouvelle génération d\'artistes kinois.',
+    accent: '#CE1126',
   },
-];
+] as const;
+
+const COMMUNES = ['Nsele', 'Masina', 'Kimbanseke', 'N\'djili'];
 
 export function CommunityHighlight() {
   const { t } = useTranslation();
 
   return (
-    <section className="container py-14">
-      <div className="mb-8">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-rdc-green">
-          {t('home.community.eyebrow')}
-        </p>
-        <h2 className="font-display mt-1 text-2xl font-bold text-rdc-anthracite md:text-3xl">
-          {t('home.community.title')}
-        </h2>
-        <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-          {t('home.community.subtitle')}
-        </p>
-      </div>
+    <section className="section-night overflow-hidden">
+      <div className="container py-20 lg:py-28">
+        <div className="grid gap-16 lg:grid-cols-[1fr_420px] items-start">
 
-      <div className="grid gap-5 sm:grid-cols-3">
-        {HIGHLIGHTS.map((h) => (
-          <Link
-            key={h.href}
-            to={h.href as never}
-            className={`group rounded-2xl p-6 transition-shadow hover:shadow-lg ${h.bg}`}
-          >
-            <div className={`mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl ${h.iconColor}`}>
-              <h.icon size={20} />
+          {/* Left: text + highlights */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="accent-line" />
+              <p className="eyebrow text-rdc-yellow">{t('community.title')}</p>
             </div>
-            <h3 className="font-display font-semibold text-rdc-anthracite">{t(h.titleKey)}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{t(h.descKey)}</p>
-            <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-rdc-anthracite/70 transition-colors group-hover:text-rdc-anthracite">
-              {t('common.learnMore')} <ArrowRight size={12} />
-            </span>
-          </Link>
-        ))}
-      </div>
 
-      {/* Communes ribbon */}
-      <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-2 rounded-xl border border-rdc-green/20 bg-rdc-green/5 px-5 py-3.5">
-        <p className="text-xs font-semibold uppercase tracking-wider text-rdc-green">
-          {t('home.community.communes')}
-        </p>
-        {['Nsele', 'Masina', 'Kimbanseke'].map((c) => (
-          <span
-            key={c}
-            className="rounded-full bg-rdc-green/10 px-3 py-1 text-xs font-medium text-rdc-green"
-          >
-            {c}
-          </span>
-        ))}
+            <h2 className="display-sub text-white mb-6">
+              {t('community.homeTitle')}
+            </h2>
+
+            <p className="text-white/50 text-base leading-relaxed mb-12 max-w-lg">
+              {t('community.homeSubtitle')}
+            </p>
+
+            {/* Highlight items */}
+            <div className="space-y-0 border-t border-white/10">
+              {HIGHLIGHTS.map((h) => (
+                <Link key={h.href} to={h.href as never}
+                  className="group flex items-start gap-5 py-7 border-b border-white/10 hover:border-white/20 transition-colors">
+                  <div
+                    className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center transition-all group-hover:scale-105"
+                    style={{ background: `${h.accent}20`, border: `1px solid ${h.accent}30` }}>
+                    <h.icon size={18} style={{ color: h.accent }} strokeWidth={1.5} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display font-bold text-white text-base leading-snug group-hover:text-rdc-yellow transition-colors">
+                      {t(h.titleKey)}
+                    </h3>
+                    <p className="mt-1.5 text-sm text-white/40 leading-relaxed">
+                      {h.desc}
+                    </p>
+                  </div>
+                  <ArrowRight size={14}
+                    className="mt-1 shrink-0 text-white/20 group-hover:text-rdc-yellow group-hover:translate-x-1 transition-all" />
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: communes panel */}
+          <div className="border border-white/10 bg-white/3 p-8">
+            <p className="eyebrow text-rdc-yellow mb-6">{t('community.riverineCommunesTitle')}</p>
+            <p className="text-sm text-white/50 leading-relaxed mb-8">
+              {t('community.riverineCommunesDesc')}
+            </p>
+
+            {/* Commune list */}
+            <div className="space-y-px">
+              {COMMUNES.map((commune, i) => (
+                <div key={commune}
+                  className="flex items-center justify-between px-5 py-4 bg-white/4 hover:bg-white/8 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <span className="font-display text-sm font-bold text-rdc-yellow/40">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="font-semibold text-white">{commune}</span>
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-white/25">
+                    Commune
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Noise complaint CTA */}
+            <div className="mt-8 border-t border-white/10 pt-6">
+              <p className="text-xs text-white/40 mb-3">Nuisances sonores ?</p>
+              <Link to={'/communaute/environnement-sonore' as never}
+                className="btn-outline-white w-full justify-center text-xs">
+                Déposer une plainte
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -2,7 +2,6 @@ import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { AlertBanner } from '@/components/layout/AlertBanner';
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -10,8 +9,8 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <AlertBanner />
+    <div className="flex min-h-screen flex-col bg-white text-foreground">
+      {/* Header is fixed — no AlertBanner pushing it down */}
       <Header />
       <main id="main-content" className="flex-1" tabIndex={-1}>
         <Outlet />

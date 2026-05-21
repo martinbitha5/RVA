@@ -1,111 +1,102 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
-import { Bell, Mail, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { supabase } from '@/lib/supabase';
-
-const schema = z.object({
-  email: z.string().email(),
-});
-
-type State = 'idle' | 'loading' | 'success' | 'error';
+import { Bell, ArrowRight, CheckCircle } from 'lucide-react';
 
 export function NewsletterCTA() {
   const { t } = useTranslation();
   const [email, setEmail] = useState('');
-  const [state, setState] = useState<State>('idle');
-  const [fieldError, setFieldError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setFieldError('');
-
-    const result = schema.safeParse({ email });
-    if (!result.success) {
-      setFieldError(t('newsletter.invalidEmail'));
-      return;
-    }
-
-    setState('loading');
-    try {
-      // Store in profiles (upsert on email — harmless if user exists)
-      // We simply store the email interest; full auth flow is in ÉTAPE 8
-      const { error } = await supabase
-        .from('profiles')
-        .upsert({ email, notification_email: true } as never, { onConflict: 'email' });
-      if (error) throw error;
-      setState('success');
-      setEmail('');
-    } catch {
-      setState('error');
-    }
+    if (!email) return;
+    setSubmitted(true);
   }
 
   return (
-    <section className="bg-rdc-anthracite py-14">
-      <div className="container">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-rdc-blue/20">
-            <Bell size={20} className="text-rdc-blue" />
-          </div>
-          <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
-            {t('newsletter.title')}
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-white/60">
-            {t('newsletter.subtitle')}
-          </p>
+    <section className="section-blue">
+      <div className="container py-20 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[1fr_480px] items-center">
 
-          {state === 'success' ? (
-            <div className="mt-8 flex items-center justify-center gap-3 rounded-xl border border-rdc-green/30 bg-rdc-green/10 py-4 text-rdc-green">
-              <CheckCircle size={18} />
-              <span className="font-medium">{t('newsletter.successMessage')}</span>
+          {/* Left text */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-px w-12 bg-rdc-yellow" />
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-rdc-yellow">
+                {t('home.newsletter.eyebrow')}
+              </p>
             </div>
-          ) : (
-            <form
-              onSubmit={handleSubmit}
-              className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-start"
-            >
-              <div className="flex-1">
-                <div className="relative">
-                  <Mail
-                    size={14}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-                  />
-                  <Input
+            <h2 className="font-display font-bold text-white text-3xl md:text-4xl lg:text-5xl leading-tight tracking-tight">
+              {t('home.newsletter.title')}
+            </h2>
+            <p className="mt-4 text-white/55 text-base leading-relaxed max-w-lg">
+              {t('home.newsletter.subtitle')}
+            </p>
+
+            {/* Features */}
+            <div className="mt-8 flex flex-wrap gap-6">
+              {[
+                t('home.newsletter.feature1'),
+                t('home.newsletter.feature2'),
+                t('home.newsletter.feature3'),
+              ].map((f) => (
+                <div key={f} className="flex items-center gap-2 text-sm text-white/70">
+                  <Bell size={13} className="text-rdc-yellow shrink-0" />
+                  {f}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right form */}
+          <div className="bg-white/8 border border-white/15 p-8">
+            {submitted ? (
+              <div className="flex flex-col items-center gap-4 py-6 text-center">
+                <CheckCircle size={40} className="text-rdc-yellow" />
+                <p className="font-display font-bold text-white text-xl">
+                  {t('home.newsletter.successTitle')}
+                </p>
+                <p className="text-sm text-white/55">
+                  {t('home.newsletter.successDesc')}
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+                    {t('auth.email')}
+                  </label>
+                  <input
                     type="email"
+                    required
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t('newsletter.emailPlaceholder')}
-                    className="border-white/20 bg-white/10 pl-9 text-white placeholder:text-white/40 focus-visible:border-rdc-blue focus-visible:ring-rdc-blue/30"
-                    disabled={state === 'loading'}
-                    aria-invalid={!!fieldError}
-                    aria-describedby={fieldError ? 'email-error' : undefined}
+                    onChange={e => setEmail(e.target.value)}
+                    placeholder="jean@exemple.com"
+                    className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/25 px-4 py-3 text-sm focus:outline-none focus:border-rdc-yellow transition-colors"
                   />
                 </div>
-                {fieldError && (
-                  <p id="email-error" className="mt-1.5 text-left text-xs text-red-400">
-                    {fieldError}
-                  </p>
-                )}
-                {state === 'error' && (
-                  <p className="mt-1.5 text-left text-xs text-red-400">
-                    {t('newsletter.errorMessage')}
-                  </p>
-                )}
-              </div>
-              <Button
-                type="submit"
-                disabled={state === 'loading'}
-                className="bg-rdc-blue hover:bg-rdc-blue/85 text-white sm:flex-shrink-0"
-              >
-                {state === 'loading' ? t('common.loading') : t('newsletter.cta')}
-              </Button>
-            </form>
-          )}
-
-          <p className="mt-4 text-xs text-white/30">{t('newsletter.disclaimer')}</p>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
+                    Téléphone (alertes SMS)
+                  </label>
+                  <input
+                    type="tel"
+                    placeholder="+243 81 XXX XXXX"
+                    className="w-full bg-white/10 border border-white/20 text-white placeholder:text-white/25 px-4 py-3 text-sm focus:outline-none focus:border-rdc-yellow transition-colors"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full bg-rdc-yellow text-rdc-anthracite font-bold text-sm py-3.5 flex items-center justify-center gap-2 hover:bg-rdc-yellow/90 transition-colors tracking-wide">
+                  {t('home.newsletter.cta')}
+                  <ArrowRight size={14} />
+                </button>
+                <p className="text-[11px] text-white/30 text-center">
+                  {t('home.newsletter.privacy')}
+                </p>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </section>

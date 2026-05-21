@@ -1,163 +1,183 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
-  Search,
-  Menu,
-  X,
-  User,
-  Plane,
-  ParkingCircle,
-  UtensilsCrossed,
-  MapPin,
-  Building2,
-  Users,
-  ChevronRight,
+  Search, Menu, X, User, Plane, ChevronDown,
+  ParkingCircle, UtensilsCrossed, MapPin, Building2, Users,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { MegaMenu } from './MegaMenu';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
 
-/* ─── FIH Logo ──────────────────────────────────────────────── */
-function FihLogo({ className }: { className?: string }) {
+/* ─── Logo ──────────────────────────────────────────────────── */
+function FihLogo({ light = false }: { light?: boolean }) {
   return (
-    <Link
-      to="/"
-      aria-label="Aéroport International de N'djili — Accueil"
-      className={cn(
-        'flex items-center gap-3 transition-opacity hover:opacity-90 focus-visible:opacity-90',
-        className,
-      )}
-    >
-      {/* Icon mark */}
-      <div
-        aria-hidden="true"
-        className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-rdc-blue text-rdc-yellow"
-      >
-        <Plane size={18} strokeWidth={2.5} className="-rotate-45" />
+    <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
+      className="flex items-center gap-3 group shrink-0">
+      <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden bg-rdc-blue">
+        <Plane size={18} strokeWidth={2.5} className="-rotate-45 text-rdc-yellow" />
+        <div className="absolute inset-0 bg-rdc-yellow opacity-0 group-hover:opacity-10 transition-opacity" />
       </div>
-      {/* Text stack */}
-      <div className="leading-tight">
-        <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-          Régie des Voies Aériennes
+      <div>
+        <p className={cn('text-[9px] font-bold uppercase tracking-[0.3em]', light ? 'text-white/40' : 'text-black/30')}>
+          RVA · Régie des Voies Aériennes
         </p>
-        <p className="font-display text-[13px] font-bold leading-none text-rdc-anthracite">
-          Aéroport de N&apos;djili{' '}
-          <span className="text-rdc-blue">· FIH</span>
+        <p className={cn('font-display text-[14px] font-bold leading-none mt-0.5', light ? 'text-white' : 'text-rdc-anthracite')}>
+          N&apos;djili <span className={light ? 'text-rdc-yellow' : 'text-rdc-blue'}>· FIH</span>
         </p>
       </div>
     </Link>
   );
 }
 
-/* ─── Mobile nav item ───────────────────────────────────────── */
-interface MobileNavSectionProps {
-  icon: React.ReactNode;
-  label: string;
-  links: { href: string; label: string }[];
-  onClose: () => void;
-}
+/* ─── Nav data ──────────────────────────────────────────────── */
+const NAV_ITEMS = [
+  {
+    key: 'flights',
+    Icon: Plane,
+    links: [
+      { href: '/vols/departs',              label: 'Départs' },
+      { href: '/vols/arrivees',             label: 'Arrivées' },
+      { href: '/vols/compagnies-aeriennes', label: 'Compagnies aériennes' },
+      { href: '/vols/alertes-sms',          label: 'Alertes SMS' },
+      { href: '/vols/temps-attente',        label: 'Temps d\'attente' },
+      { href: '/vols/plans-aerogares',      label: 'Plans des aérogares' },
+    ],
+  },
+  {
+    key: 'parking',
+    Icon: ParkingCircle,
+    links: [
+      { href: '/stationnement-transport/stationnement-fih', label: 'Stationnement FIH' },
+      { href: '/stationnement-transport/offres',            label: 'Offres & Tarifs' },
+      { href: '/stationnement-transport/taxis',             label: 'Taxis agréés' },
+      { href: '/stationnement-transport/transcom-bus',      label: 'Transco / Bus' },
+      { href: '/stationnement-transport/navettes',          label: 'Navettes' },
+      { href: '/stationnement-transport/location-voitures', label: 'Location voitures' },
+    ],
+  },
+  {
+    key: 'shops',
+    Icon: UtensilsCrossed,
+    links: [
+      { href: '/boutiques-restaurants/repertoire',    label: 'Répertoire' },
+      { href: '/boutiques-restaurants/restaurants',   label: 'Restaurants' },
+      { href: '/boutiques-restaurants/boutiques',     label: 'Boutiques' },
+      { href: '/boutiques-restaurants/echange-devises', label: 'Bureaux de change' },
+      { href: '/boutiques-restaurants/hors-taxes',    label: 'Hors-taxes' },
+      { href: '/boutiques-restaurants/salons',        label: 'Salons VIP' },
+    ],
+  },
+  {
+    key: 'guide',
+    Icon: MapPin,
+    links: [
+      { href: '/guide/quitter-kinshasa',    label: 'Quitter Kinshasa' },
+      { href: '/guide/atterrir-kinshasa',   label: 'Atterrir à Kinshasa' },
+      { href: '/guide/douanes-immigration', label: 'Douanes & Immigration' },
+      { href: '/guide/securite-bagages',    label: 'Sécurité & Bagages' },
+      { href: '/guide/sante',               label: 'Santé & Vaccinations' },
+      { href: '/guide/wifi-connectivite',   label: 'Wi-Fi & Connectivité' },
+    ],
+  },
+  {
+    key: 'corporate',
+    Icon: Building2,
+    links: [
+      { href: '/corporate/a-propos',                label: 'À propos de la RVA' },
+      { href: '/corporate/gouvernance',             label: 'Gouvernance' },
+      { href: '/corporate/projets-avenir',          label: 'Projets d\'avenir' },
+      { href: '/corporate/historique',              label: 'Historique' },
+      { href: '/corporate/carriere',                label: 'Carrières' },
+      { href: '/corporate/partenariats-commerciaux', label: 'Partenariats' },
+    ],
+  },
+  {
+    key: 'community',
+    Icon: Users,
+    links: [
+      { href: '/communaute/environnement-durabilite', label: 'Environnement & Durabilité' },
+      { href: '/communaute/environnement-sonore',     label: 'Environnement sonore' },
+      { href: '/communaute/travaux-pistes',           label: 'Travaux sur pistes' },
+      { href: '/communaute/relations-communaute',     label: 'Relations communautaires' },
+    ],
+  },
+] as const;
 
-function MobileNavSection({
-  icon,
-  label,
-  links,
-  onClose,
-}: MobileNavSectionProps) {
+const NAV_LABELS: Record<string, string> = {
+  flights: 'Vols',
+  parking: 'Stationnement',
+  shops: 'Boutiques',
+  guide: 'Guide',
+  corporate: 'Corporate',
+  community: 'Communauté',
+};
+
+/* ─── Desktop dropdown ──────────────────────────────────────── */
+function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrolled: boolean }) {
   const [open, setOpen] = useState(false);
+
   return (
-    <div className="border-b border-border last:border-0">
+    <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
       <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between px-2 py-4 text-left text-sm font-semibold text-rdc-anthracite"
+        className={cn(
+          'flex items-center gap-1 text-sm font-medium py-1 transition-colors relative group',
+          scrolled
+            ? open ? 'text-rdc-blue' : 'text-rdc-anthracite hover:text-rdc-blue'
+            : open ? 'text-rdc-yellow' : 'text-white hover:text-rdc-yellow',
+        )}
+        aria-expanded={open}
       >
-        <span className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-md bg-muted text-rdc-blue">
-            {icon}
-          </span>
-          {label}
-        </span>
-        <ChevronRight
-          size={16}
-          className={cn('text-muted-foreground transition-transform', open && 'rotate-90')}
-        />
+        {NAV_LABELS[item.key]}
+        <ChevronDown size={13} className={cn('transition-transform duration-200', open && 'rotate-180')} />
+        {/* Underline */}
+        <span className={cn(
+          'absolute -bottom-1 left-0 h-px transition-all duration-300',
+          scrolled ? 'bg-rdc-blue' : 'bg-rdc-yellow',
+          open ? 'w-full' : 'w-0 group-hover:w-full',
+        )} />
       </button>
+
       {open && (
-        <ul className="mb-3 ml-11 space-y-1">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                to={link.href as never}
-                onClick={onClose}
-                className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-muted"
-              >
+        <div className="absolute left-1/2 top-full z-50 mt-2 w-56 -translate-x-1/2 bg-white shadow-premium-lg ring-1 ring-black/5">
+          {/* Blue top accent */}
+          <div className="h-0.5 bg-rdc-blue" />
+          <div className="py-2">
+            {item.links.map(link => (
+              <Link key={link.href} to={link.href as never}
+                className="block px-5 py-2.5 text-sm text-gray-700 hover:bg-rdc-blue hover:text-white transition-colors">
                 {link.label}
               </Link>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
 }
 
 /* ─── Search Dialog ─────────────────────────────────────────── */
-function SearchDialog({
-  open,
-  onOpenChange,
-}: {
-  open: boolean;
-  onOpenChange: (v: boolean) => void;
-}) {
-  const { t } = useTranslation();
+function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl gap-0 p-0">
-        <DialogHeader className="px-6 pt-6">
-          <DialogTitle className="font-display text-lg">
-            {t('search.title')}
-          </DialogTitle>
+      <DialogContent className="max-w-xl gap-0 p-0 overflow-hidden">
+        <DialogHeader className="px-6 pt-5 pb-4 border-b border-border">
+          <DialogTitle className="text-base font-semibold">Recherche rapide</DialogTitle>
         </DialogHeader>
         <div className="px-6 py-4">
           <div className="relative">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-            />
-            <Input
-              autoFocus
-              placeholder={t('search.placeholder')}
-              className="pl-9 text-base"
-            />
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Input autoFocus placeholder="N° de vol, destination, service…" className="pl-9 h-11 text-sm" />
           </div>
-          <p className="mt-6 text-xs text-muted-foreground">
-            {t('search.recentSearches')}
-          </p>
-          <div className="mt-2 flex flex-wrap gap-2">
-            {['SN491', 'Paris CDG', 'Lubumbashi', 'Stationnement P1', 'Taxis'].map(
-              (s) => (
-                <button
-                  key={s}
-                  className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:border-rdc-blue hover:text-rdc-blue transition-colors"
-                >
-                  {s}
-                </button>
-              ),
-            )}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {['SN491', 'Lubumbashi', 'Stationnement', 'Taxis', 'Visa'].map(s => (
+              <button key={s}
+                className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground hover:border-rdc-blue hover:text-rdc-blue transition-colors">
+                {s}
+              </button>
+            ))}
           </div>
         </div>
       </DialogContent>
@@ -165,209 +185,155 @@ function SearchDialog({
   );
 }
 
-/* ─── Header ────────────────────────────────────────────────── */
+/* ─── Mobile accordion nav item ─────────────────────────────── */
+function MobileNavItem({ item, onClose }: { item: typeof NAV_ITEMS[number]; onClose: () => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-white/10 last:border-0">
+      <button onClick={() => setOpen(v => !v)}
+        className="flex w-full items-center justify-between px-0 py-4 text-sm font-semibold text-white">
+        <span className="flex items-center gap-3">
+          <item.Icon size={15} className="text-rdc-yellow shrink-0" />
+          {NAV_LABELS[item.key]}
+        </span>
+        <ChevronDown size={14} className={cn('text-white/40 transition-transform', open && 'rotate-180')} />
+      </button>
+      {open && (
+        <div className="pb-3 pl-7 space-y-0.5">
+          {item.links.map(link => (
+            <Link key={link.href} to={link.href as never} onClick={onClose}
+              className="block py-2 text-sm text-white/60 hover:text-white transition-colors">
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ─── Main Header ───────────────────────────────────────────── */
 export function Header() {
   const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const mobileNavSections = [
-    {
-      icon: <Plane size={16} />,
-      label: t('nav.flights'),
-      links: [
-        { href: '/vols/departs', label: t('flights.departures') },
-        { href: '/vols/arrivees', label: t('flights.arrivals') },
-        { href: '/vols/compagnies-aeriennes', label: t('flights.airlines') },
-        { href: '/vols/alertes-sms', label: t('flights.smsAlerts') },
-        { href: '/vols/temps-attente', label: t('flights.waitTimes') },
-        { href: '/vols/plans-aerogares', label: t('flights.terminalMaps') },
-      ],
-    },
-    {
-      icon: <ParkingCircle size={16} />,
-      label: t('nav.parkingTransport'),
-      links: [
-        { href: '/stationnement-transport/stationnement-fih', label: t('parking.parkingFih') },
-        { href: '/stationnement-transport/offres', label: t('parking.offers') },
-        { href: '/stationnement-transport/taxis', label: t('parking.taxis') },
-        { href: '/stationnement-transport/transcom-bus', label: t('parking.bus') },
-        { href: '/stationnement-transport/navettes', label: t('parking.shuttles') },
-        { href: '/stationnement-transport/location-voitures', label: t('parking.carRental') },
-      ],
-    },
-    {
-      icon: <UtensilsCrossed size={16} />,
-      label: t('nav.shopsRestaurants'),
-      links: [
-        { href: '/boutiques-restaurants/repertoire', label: t('shops.directory') },
-        { href: '/boutiques-restaurants/restaurants', label: t('shops.restaurants') },
-        { href: '/boutiques-restaurants/boutiques', label: t('shops.shops') },
-        { href: '/boutiques-restaurants/echange-devises', label: t('shops.currencyExchange') },
-        { href: '/boutiques-restaurants/hors-taxes', label: t('shops.dutyFree') },
-        { href: '/boutiques-restaurants/salons', label: t('shops.lounges') },
-      ],
-    },
-    {
-      icon: <MapPin size={16} />,
-      label: t('nav.guide'),
-      links: [
-        { href: '/guide/quitter-kinshasa', label: t('guide.leavingKinshasa') },
-        { href: '/guide/atterrir-kinshasa', label: t('guide.arrivingKinshasa') },
-        { href: '/guide/douanes-immigration', label: t('guide.customsImmigration') },
-        { href: '/guide/sante', label: t('guide.health') },
-        { href: '/guide/wifi-connectivite', label: t('guide.wifiConnectivity') },
-        { href: '/guide/services-bancaires', label: t('guide.bankingServices') },
-      ],
-    },
-    {
-      icon: <Building2 size={16} />,
-      label: t('nav.corporate'),
-      links: [
-        { href: '/corporate/a-propos', label: t('corporate.about') },
-        { href: '/corporate/gouvernance', label: t('corporate.governance') },
-        { href: '/corporate/historique', label: t('corporate.history') },
-        { href: '/corporate/carriere/offres-emploi', label: t('corporate.jobOffers') },
-        { href: '/corporate/partenariats-commerciaux/apercu-fih', label: t('corporate.partnerships') },
-      ],
-    },
-    {
-      icon: <Users size={16} />,
-      label: t('nav.community'),
-      links: [
-        { href: '/communaute/environnement-durabilite', label: t('community.environmentSustainability') },
-        { href: '/communaute/environnement-sonore/plaintes', label: t('community.noiseComplaints') },
-        { href: '/communaute/relations-communaute/initiatives', label: t('community.initiatives') },
-        { href: '/communaute/relations-communaute/fih-art', label: t('community.fihArt') },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
 
   return (
     <>
-      {/* Skip to content */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-md focus:bg-rdc-blue focus:px-4 focus:py-2 focus:text-white focus:shadow-lg"
-      >
+      <a href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:bg-rdc-blue focus:px-4 focus:py-2 focus:text-white">
         {t('accessibility.skipToContent')}
       </a>
 
-      <header className="sticky top-0 z-50 w-full border-b border-border bg-white/95 backdrop-blur-sm supports-[backdrop-filter]:bg-white/90">
-        <div className="container flex h-16 items-center justify-between gap-4">
-          {/* Logo */}
-          <FihLogo className="flex-shrink-0" />
+      <header className={cn(
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        scrolled
+          ? 'bg-white/98 shadow-[0_1px_0_rgba(0,0,0,0.06)] backdrop-blur-md'
+          : 'bg-gradient-to-b from-black/60 to-transparent',
+      )}>
+        <div className="container">
+          <div className="flex h-[70px] items-center justify-between gap-6">
 
-          {/* Desktop mega-menu — hidden on mobile */}
-          <nav
-            className="hidden xl:flex flex-1 justify-center"
-            aria-label="Navigation principale"
-          >
-            <MegaMenu />
-          </nav>
+            {/* Logo */}
+            <FihLogo light={!scrolled} />
 
-          {/* Right actions */}
-          <div className="flex items-center gap-1 sm:gap-2">
-            {/* Search */}
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={t('nav.searchAria')}
-              onClick={() => setSearchOpen(true)}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <Search size={18} />
-            </Button>
+            {/* Desktop nav */}
+            <nav className="hidden xl:flex items-center gap-7" aria-label="Navigation principale">
+              {NAV_ITEMS.map(item => (
+                <NavDropdown key={item.key} item={item} scrolled={scrolled} />
+              ))}
+            </nav>
 
-            {/* Language switcher — desktop */}
-            <LanguageSwitcher className="hidden sm:flex" />
+            {/* Actions */}
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setSearchOpen(true)}
+                aria-label="Rechercher"
+                className={cn(
+                  'flex h-9 w-9 items-center justify-center transition-colors',
+                  scrolled ? 'text-gray-600 hover:text-rdc-blue' : 'text-white/80 hover:text-white',
+                )}>
+                <Search size={18} />
+              </button>
 
-            {/* Espace Client — desktop */}
-            <Button
-              variant="default"
-              size="sm"
-              asChild
-              className="hidden md:inline-flex bg-rdc-blue hover:bg-rdc-blue-dark text-white gap-1.5"
-            >
-              <Link to={'/compte' as never}>
-                <User size={14} />
-                <span className="hidden lg:inline">{t('nav.clientSpace')}</span>
+              <LanguageSwitcher
+                className={cn('hidden md:flex', scrolled ? '' : '[&_button]:text-white/80 [&_button]:hover:text-white')}
+              />
+
+              <Link to={'/compte' as never}
+                className={cn(
+                  'hidden md:flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ml-2',
+                  scrolled
+                    ? 'bg-rdc-blue text-white hover:bg-rdc-blue-dark'
+                    : 'bg-white text-rdc-anthracite hover:bg-rdc-yellow',
+                )}>
+                <User size={13} />
+                <span className="hidden lg:inline">Espace Client</span>
               </Link>
-            </Button>
 
-            {/* Mobile hamburger */}
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={mobileOpen ? t('nav.closeMenuAria') : t('nav.menuAria')}
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(true)}
-              className="xl:hidden text-muted-foreground hover:text-foreground"
-            >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-            </Button>
+              <button
+                onClick={() => setMobileOpen(true)}
+                aria-label="Menu"
+                className={cn(
+                  'flex xl:hidden h-9 w-9 items-center justify-center transition-colors ml-1',
+                  scrolled ? 'text-gray-700 hover:text-rdc-blue' : 'text-white',
+                )}>
+                <Menu size={22} />
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Mobile drawer */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="right" className="w-full max-w-sm overflow-y-auto p-0">
-          <SheetHeader className="border-b border-border px-5 py-4">
-            <SheetTitle className="sr-only">Navigation</SheetTitle>
-            <FihLogo />
+        <SheetContent side="right" className="w-full max-w-sm bg-rdc-anthracite border-0 overflow-y-auto p-0">
+          <SheetHeader className="flex-row items-center justify-between px-6 py-5 border-b border-white/10">
+            <SheetTitle asChild><FihLogo light /></SheetTitle>
+            <button onClick={() => setMobileOpen(false)} className="text-white/60 hover:text-white">
+              <X size={20} />
+            </button>
           </SheetHeader>
 
-          <div className="px-5 py-2">
-            {/* Search in mobile */}
-            <div className="relative my-4">
-              <Search
-                size={14}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-              />
-              <Input
-                placeholder={t('search.placeholder')}
-                className="pl-8 text-sm"
-                onClick={() => {
-                  setMobileOpen(false);
-                  setSearchOpen(true);
-                }}
+          {/* Search */}
+          <div className="px-6 py-4 border-b border-white/10">
+            <div className="relative">
+              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+              <input
+                placeholder="Rechercher…"
+                className="w-full bg-white/10 border border-white/20 text-white text-sm pl-9 pr-3 py-2.5 placeholder:text-white/30 focus:outline-none focus:border-rdc-yellow"
+                onClick={() => { setMobileOpen(false); setSearchOpen(true); }}
                 readOnly
               />
             </div>
+          </div>
 
-            {/* Language */}
-            <LanguageSwitcher variant="mobile" className="mb-4" />
-
-            {/* Nav sections */}
-            {mobileNavSections.map((section) => (
-              <MobileNavSection
-                key={section.label}
-                icon={section.icon}
-                label={section.label}
-                links={section.links}
-                onClose={() => setMobileOpen(false)}
-              />
+          {/* Nav */}
+          <div className="px-6 py-2">
+            {NAV_ITEMS.map(item => (
+              <MobileNavItem key={item.key} item={item} onClose={() => setMobileOpen(false)} />
             ))}
+          </div>
 
-            {/* Espace Client CTA */}
-            <div className="pt-4">
-              <Button
-                asChild
-                className="w-full bg-rdc-blue hover:bg-rdc-blue-dark text-white gap-2"
-                onClick={() => setMobileOpen(false)}
-              >
-                <Link to={'/compte' as never}>
-                  <User size={16} />
-                  {t('nav.clientSpace')}
-                </Link>
-              </Button>
-            </div>
+          {/* Footer */}
+          <div className="px-6 py-5 border-t border-white/10 space-y-3">
+            <LanguageSwitcher variant="mobile" />
+            <Link to={'/compte' as never} onClick={() => setMobileOpen(false)}
+              className="flex w-full items-center justify-center gap-2 bg-rdc-blue text-white font-bold text-sm py-3 tracking-wide hover:bg-rdc-blue-dark transition-colors">
+              <User size={15} />
+              Mon espace client
+            </Link>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Search dialog */}
       <SearchDialog open={searchOpen} onOpenChange={setSearchOpen} />
     </>
   );

@@ -1,9 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import {
-  Plane, ParkingCircle, UtensilsCrossed, MapPin,
-  Building2, Users, ArrowRight,
-} from 'lucide-react';
+import { Plane, ParkingCircle, UtensilsCrossed, MapPin, Building2, Users, ArrowRight } from 'lucide-react';
 
 const SERVICES = [
   {
@@ -11,87 +8,108 @@ const SERVICES = [
     titleKey: 'nav.flights',
     descKey: 'home.services.flights',
     href: '/vols',
-    accent: 'border-rdc-blue group-hover:bg-rdc-blue',
+    /* Deep night blue */
+    bg: 'linear-gradient(135deg, #060D1E 0%, #001E6E 100%)',
+    tag: 'Temps réel',
   },
   {
     icon: ParkingCircle,
     titleKey: 'nav.parkingTransport',
     descKey: 'home.services.parking',
     href: '/stationnement-transport',
-    accent: 'border-rdc-yellow group-hover:bg-rdc-yellow',
+    bg: 'linear-gradient(135deg, #003DA5 0%, #0048C8 100%)',
+    tag: 'Réservation',
   },
   {
     icon: UtensilsCrossed,
     titleKey: 'nav.shopsRestaurants',
     descKey: 'home.services.shops',
     href: '/boutiques-restaurants',
-    accent: 'border-rdc-red group-hover:bg-rdc-red',
+    bg: 'linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%)',
+    tag: 'Répertoire',
   },
   {
     icon: MapPin,
     titleKey: 'nav.guide',
     descKey: 'home.services.guide',
     href: '/guide',
-    accent: 'border-rdc-green group-hover:bg-rdc-green',
+    bg: 'linear-gradient(135deg, #003DA5 0%, #002070 100%)',
+    tag: 'Passagers',
   },
   {
     icon: Building2,
     titleKey: 'nav.corporate',
     descKey: 'home.services.corporate',
     href: '/corporate',
-    accent: 'border-rdc-blue group-hover:bg-rdc-blue',
+    bg: 'linear-gradient(135deg, #060D1E 0%, #0D1B3E 100%)',
+    tag: 'RVA',
   },
   {
     icon: Users,
     titleKey: 'nav.community',
     descKey: 'home.services.community',
     href: '/communaute',
-    accent: 'border-rdc-green group-hover:bg-rdc-green',
+    bg: 'linear-gradient(135deg, #003DA5 0%, #001E6E 100%)',
+    tag: 'Nsele · Masina',
   },
-];
+] as const;
 
 export function ServicesGrid() {
   const { t } = useTranslation();
 
   return (
-    <section className="container py-14">
-      <div className="mb-8 text-center">
-        <p className="text-xs font-bold uppercase tracking-[0.2em] text-rdc-blue">
-          {t('home.services.eyebrow')}
-        </p>
-        <h2 className="font-display mt-2 text-2xl font-bold text-rdc-anthracite md:text-3xl">
-          {t('home.services.title')}
-        </h2>
-      </div>
+    <section className="section-muted py-20 lg:py-28">
+      <div className="container">
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {SERVICES.map((s) => (
-          <Link
-            key={s.href}
-            to={s.href as never}
-            className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all hover:shadow-lg"
-          >
-            {/* Left accent bar */}
-            <div
-              className={`absolute left-0 top-0 h-full w-1 border-l-2 transition-colors ${s.accent}`}
-            />
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="accent-line" />
+              <p className="eyebrow text-rdc-blue">{t('home.services.eyebrow')}</p>
+            </div>
+            <h2 className="display-sub text-rdc-anthracite">{t('home.services.title')}</h2>
+          </div>
+        </div>
 
-            <div className="flex items-start gap-4">
-              <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-muted text-rdc-blue transition-colors group-hover:bg-rdc-blue group-hover:text-white">
-                <s.icon size={20} />
+        {/* Grid — 3 cols desktop, 2 tablet, 1 mobile */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0.5 bg-border">
+          {SERVICES.map((s) => (
+            <Link
+              key={s.href}
+              to={s.href as never}
+              className="group relative flex flex-col justify-between overflow-hidden p-8 min-h-[220px] transition-all"
+              style={{ background: s.bg }}
+            >
+              {/* Tag */}
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/30">
+                  {s.tag}
+                </span>
+                <ArrowRight
+                  size={16}
+                  className="text-white/20 transition-all duration-300 group-hover:text-rdc-yellow group-hover:translate-x-1"
+                />
               </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-rdc-anthracite">{t(s.titleKey)}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+
+              {/* Icon + Title */}
+              <div>
+                <div className="mb-4 flex h-12 w-12 items-center justify-center border border-white/15 transition-colors group-hover:border-rdc-yellow/40">
+                  <s.icon size={20} className="text-white/70 group-hover:text-rdc-yellow transition-colors" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-display text-xl font-bold text-white leading-tight">
+                  {t(s.titleKey)}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/45 line-clamp-2">
                   {t(s.descKey)}
                 </p>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-rdc-blue">
-                  {t('common.learnMore')} <ArrowRight size={12} />
-                </span>
               </div>
-            </div>
-          </Link>
-        ))}
+
+              {/* Bottom hover bar */}
+              <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-rdc-yellow transition-all duration-300 group-hover:w-full" />
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   );
