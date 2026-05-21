@@ -1,78 +1,110 @@
+import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight, Plane } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ArrowRight, Plane, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+/* ─── Slides ─────────────────────────────────────────────────────────── */
+const SLIDES = [
+  {
+    src: '/images/fih-hero-1.jpg',
+    alt: 'Tarmac FIH — Ethiopian Airlines Star Alliance A350, MG Airlines A320',
+    caption: 'Ethiopian Airlines A350 · Star Alliance · Kinshasa FIH',
+    position: 'object-center',
+  },
+  {
+    src: '/images/fih-hero-2.jpg',
+    alt: 'Tarmac FIH — flotte internationale au sol, terminal RVA',
+    caption: 'Opérations au sol · Régie des Voies Aériennes · FIH',
+    position: 'object-center',
+  },
+] as const;
 
 const STATS = [
-  { value: '2M+', label: 'Passagers par an' },
-  { value: '34',  label: 'Destinations' },
-  { value: '17',  label: 'Compagnies' },
+  { value: '2M+',  label: 'Passagers par an' },
+  { value: '34',   label: 'Destinations' },
+  { value: '17',   label: 'Compagnies' },
   { value: '24/7', label: 'Opérations' },
 ];
 
+const SLIDE_DURATION = 7000; // 7 secondes par slide
+
+/* ─── Component ──────────────────────────────────────────────────────── */
 export function Hero() {
   const { t } = useTranslation();
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  // Auto-advance
+  useEffect(() => {
+    if (paused) return;
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % SLIDES.length);
+    }, SLIDE_DURATION);
+    return () => clearInterval(timer);
+  }, [paused]);
+
+  const prev = () => setCurrent(i => (i - 1 + SLIDES.length) % SLIDES.length);
+  const next = () => setCurrent(i => (i + 1) % SLIDES.length);
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col overflow-hidden bg-[#060D1E]">
+    <section
+      className="relative w-full min-h-screen flex flex-col overflow-hidden bg-[#060D1E]"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
 
-      {/* ── Background: airport aerial simulation ────────────── */}
-      <div className="absolute inset-0">
-        {/* Base gradient — deep night sky over Kinshasa */}
-        <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(155deg, #060D1E 0%, #0A1628 35%, #0D2144 55%, #003DA5 100%)' }} />
+      {/* ── Photo slides — crossfade ──────────────────────────────── */}
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: [0.4, 0, 0.2, 1] }}
+          className="absolute inset-0"
+        >
+          <img
+            src={SLIDES[current].src}
+            alt={SLIDES[current].alt}
+            className={`h-full w-full object-cover ${SLIDES[current].position}`}
+            style={{ filter: 'brightness(0.52) contrast(1.12) saturate(1.25)' }}
+            loading={current === 0 ? 'eager' : 'lazy'}
+            onError={(e) => {
+              // Fallback gradient if image missing
+              const el = e.currentTarget.parentElement as HTMLElement;
+              e.currentTarget.style.display = 'none';
+              el.style.background = 'linear-gradient(155deg, #060D1E 0%, #0A1628 35%, #0D2144 55%, #003DA5 100%)';
+            }}
+          />
+          {/* Cinematic vignette overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/60" />
+          {/* Left/right darkening for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/20" />
+        </motion.div>
+      </AnimatePresence>
 
-        {/* Runway light rays simulation */}
-        <div className="absolute inset-0 opacity-15"
-          style={{
-            background: `
-              radial-gradient(ellipse 180% 60% at 70% 85%, rgba(255,206,0,0.4) 0%, transparent 60%),
-              radial-gradient(ellipse 100% 40% at 30% 90%, rgba(0,61,165,0.5) 0%, transparent 50%)
-            `,
-          }}
-        />
+      {/* ── Diagonal runway stripe pattern (subtle) ──────────────── */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none opacity-10"
+        style={{
+          background: 'repeating-linear-gradient(-45deg, rgba(255,206,0,0.05) 0, rgba(255,206,0,0.05) 1px, transparent 0, transparent 28px)',
+        }}
+      />
 
-        {/* Star field simulation */}
-        <div className="absolute inset-0 opacity-30"
-          style={{
-            backgroundImage: `
-              radial-gradient(1px 1px at 10% 20%, white, transparent),
-              radial-gradient(1px 1px at 25% 10%, white, transparent),
-              radial-gradient(1px 1px at 40% 30%, white, transparent),
-              radial-gradient(1px 1px at 55% 15%, white, transparent),
-              radial-gradient(1px 1px at 70% 25%, white, transparent),
-              radial-gradient(1px 1px at 85% 8%, white, transparent),
-              radial-gradient(1.5px 1.5px at 15% 40%, rgba(255,255,255,0.6), transparent),
-              radial-gradient(1.5px 1.5px at 90% 35%, rgba(255,255,255,0.6), transparent),
-              radial-gradient(1px 1px at 60% 45%, rgba(255,255,255,0.4), transparent)
-            `,
-          }}
-        />
-
-        {/* Diagonal runway stripe pattern */}
-        <div className="absolute bottom-0 left-0 right-0 h-2/5 opacity-8"
-          style={{
-            background: 'repeating-linear-gradient(-45deg, rgba(255,206,0,0.06) 0, rgba(255,206,0,0.06) 1px, transparent 0, transparent 28px)',
-          }}
-        />
-
-        {/* Horizon glow */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rdc-yellow/30 to-transparent" />
-      </div>
-
-      {/* ── Flying plane silhouette ───────────────────────────── */}
+      {/* ── Flying plane silhouette ───────────────────────────────── */}
       <motion.div
         initial={{ x: '-10%', y: '5%', opacity: 0 }}
-        animate={{ x: '110%', y: '-8%', opacity: [0, 0.15, 0.15, 0] }}
-        transition={{ duration: 14, ease: 'linear', repeat: Infinity, repeatDelay: 6 }}
-        className="absolute top-1/4 left-0 pointer-events-none"
+        animate={{ x: '110%', y: '-8%', opacity: [0, 0.18, 0.18, 0] }}
+        transition={{ duration: 16, ease: 'linear', repeat: Infinity, repeatDelay: 10 }}
+        className="absolute top-1/4 left-0 pointer-events-none z-[2]"
       >
-        <Plane size={32} className="text-white -rotate-12" />
+        <Plane size={28} className="text-white -rotate-12" />
       </motion.div>
 
-      {/* ── Main content ─────────────────────────────────────── */}
+      {/* ── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 flex flex-1 flex-col justify-center">
-        <div className="container py-24 md:py-32 lg:py-36">
+        <div className="container py-28 md:py-36 lg:py-40">
           <div className="grid items-center gap-16 lg:grid-cols-[1fr_380px]">
 
             {/* Left: text block */}
@@ -112,7 +144,7 @@ export function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-6 max-w-xl text-lg leading-relaxed text-white/55"
+                className="mt-6 max-w-xl text-lg leading-relaxed text-white/60"
               >
                 {t('home.hero.subtitle')}
               </motion.p>
@@ -145,15 +177,15 @@ export function Hero() {
               </motion.p>
             </div>
 
-            {/* Right: stats */}
+            {/* Right: stats grid */}
             <motion.div
               initial={{ opacity: 0, x: 32 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="hidden lg:grid grid-cols-2 gap-px bg-white/8"
+              className="hidden lg:grid grid-cols-2 gap-px bg-white/10"
             >
               {STATS.map((stat) => (
-                <div key={stat.label} className="bg-white/5 p-8 backdrop-blur-sm">
+                <div key={stat.label} className="bg-black/30 backdrop-blur-sm p-8">
                   <p className="stat-number text-white">{stat.value}</p>
                   <p className="mt-2 text-xs font-medium uppercase tracking-widest text-white/40">
                     {stat.label}
@@ -165,16 +197,84 @@ export function Hero() {
         </div>
       </div>
 
-      {/* ── Bottom: scroll indicator ──────────────────────────── */}
+      {/* ── Slide controls ───────────────────────────────────────── */}
+      <div className="absolute bottom-16 left-0 right-0 z-20 flex items-center justify-between px-8 md:px-16 pointer-events-none">
+
+        {/* Left: photo caption */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ duration: 0.4 }}
+            className="hidden md:flex items-center gap-3"
+          >
+            <div className="h-px w-8 bg-rdc-yellow/50" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">
+              {SLIDES[current].caption}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Right: dots + arrows */}
+        <div className="flex items-center gap-4 pointer-events-auto">
+          {/* Prev */}
+          <button
+            onClick={prev}
+            aria-label="Photo précédente"
+            className="flex h-9 w-9 items-center justify-center border border-white/20 text-white/50 hover:border-white/60 hover:text-white transition-all"
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          {/* Dots */}
+          <div className="flex items-center gap-2">
+            {SLIDES.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrent(i)}
+                aria-label={`Photo ${i + 1}`}
+                className="relative h-0.5 overflow-hidden transition-all"
+                style={{ width: i === current ? 32 : 16, background: 'rgba(255,255,255,0.25)' }}
+              >
+                {i === current && !paused && (
+                  <motion.div
+                    className="absolute inset-y-0 left-0 bg-rdc-yellow"
+                    initial={{ width: '0%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: SLIDE_DURATION / 1000, ease: 'linear' }}
+                    key={current}
+                  />
+                )}
+                {i === current && (
+                  <div className="absolute inset-0 bg-white/60" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Next */}
+          <button
+            onClick={next}
+            aria-label="Photo suivante"
+            className="flex h-9 w-9 items-center justify-center border border-white/20 text-white/50 hover:border-white/60 hover:text-white transition-all"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
+
+      {/* ── Scroll indicator ────────────────────────────────────── */}
       <div className="relative z-10 flex justify-center pb-8">
-        <div className="flex flex-col items-center gap-2 opacity-30">
+        <div className="flex flex-col items-center gap-2 opacity-25">
           <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-white">Découvrir</span>
           <div className="h-10 w-px bg-gradient-to-b from-white to-transparent" />
         </div>
       </div>
 
-      {/* ── Bottom accent bar (RDC flag colors) ──────────────── */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-rdc" />
+      {/* ── Bottom RDC flag accent bar ───────────────────────────── */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 h-0.5 bg-gradient-rdc" />
     </section>
   );
 }
