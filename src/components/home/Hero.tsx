@@ -127,21 +127,15 @@ export function Hero() {
 
             {/* ── LEFT: hero text ── */}
             <div>
-              {/* Welcome badge */}
-              <motion.div
+              {/* Eyebrow */}
+              <motion.p
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mb-6 inline-flex items-center gap-2"
+                className="mb-5 text-xs font-bold uppercase tracking-[0.35em] text-white/50"
               >
-                <div className="flex items-center gap-2 border border-rdc-yellow/30 bg-rdc-yellow/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.3em] text-rdc-yellow">
-                  <span className="relative flex h-1.5 w-1.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping-slow rounded-full bg-rdc-yellow opacity-75" />
-                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-rdc-yellow" />
-                  </span>
-                  Mbote · Bienvenue à FIH
-                </div>
-              </motion.div>
+                Vous accueillir
+              </motion.p>
 
               {/* Title */}
               <motion.h1
@@ -150,11 +144,8 @@ export function Hero() {
                 transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="display-hero text-white"
               >
-                {t('home.hero.title').split(' ').slice(0, 3).join(' ')}
-                <br />
-                <span className="text-rdc-yellow">
-                  {t('home.hero.title').split(' ').slice(3).join(' ')}
-                </span>
+                Bienvenue à{' '}
+                <span className="text-rdc-red">Kinshasa</span>
               </motion.h1>
 
               {/* Subtitle */}
@@ -162,9 +153,10 @@ export function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-5 max-w-lg text-base leading-relaxed text-white/55"
+                className="mt-5 max-w-lg text-base leading-relaxed text-white/70"
               >
-                {t('home.hero.subtitle')}
+                Porte d&apos;entrée de la République Démocratique du Congo,
+                l&apos;aéroport international de N&apos;djili vous accueille 24h/24.
               </motion.p>
 
               {/* Live indicator */}
