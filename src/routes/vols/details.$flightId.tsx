@@ -19,6 +19,7 @@ export const Route = createFileRoute('/vols/details/$flightId')({
 
 /* ─── Airline badge colors ──────────────────────────────────────────── */
 const AIRLINE_BG: Record<string, string> = {
+  '4H':'#CE1126',  // Air Congo — rouge RDC
   ET: '#009A44', SN: '#003DA5', AF: '#002F6C', KQ: '#B22222',
   QR: '#5C0632', TK: '#E30A17', MS: '#003580', AT: '#006400',
   WB: '#00529B', '8T': '#00B0CA', BC: '#003DA5', EK: '#C60C30',

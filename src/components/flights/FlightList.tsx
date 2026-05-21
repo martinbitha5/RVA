@@ -45,6 +45,7 @@ const AIRLINE_BG: Record<string, string> = {
   AT:  '#006400',  // Royal Air Maroc — vert
   WB:  '#00529B',  // RwandAir — bleu
   '8T':'#00B0CA',  // ASKY Airlines — cyan
+  '4H':'#CE1126',  // Air Congo — rouge RDC
   BC:  '#003DA5',  // Congo Airways — bleu RDC
   KP:  '#1A1A1A',  // Korongo Airlines — anthracite
   EK:  '#C60C30',  // Emirates — rouge
