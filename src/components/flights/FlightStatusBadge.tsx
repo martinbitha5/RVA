@@ -2,15 +2,16 @@ import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import type { FlightStatus } from '@/types/database';
 
+/** ADMTL-style solid filled status badge — no rounded pill */
 const STATUS_STYLES: Record<FlightStatus, string> = {
-  scheduled: 'bg-blue-100 text-blue-700',
-  boarding:  'bg-rdc-yellow/20 text-amber-700 font-semibold animate-pulse',
-  departed:  'bg-gray-100 text-gray-500',
-  arrived:   'bg-green-100 text-green-700',
-  delayed:   'bg-orange-100 text-orange-700',
-  cancelled: 'bg-red-100 text-red-700 line-through',
-  diverted:  'bg-purple-100 text-purple-700',
-  on_time:   'bg-green-100 text-green-700',
+  scheduled: 'bg-slate-600    text-white',
+  boarding:  'bg-amber-500    text-white animate-pulse',
+  departed:  'bg-slate-400    text-white',
+  arrived:   'bg-rdc-green    text-white',
+  delayed:   'bg-orange-500   text-white',
+  cancelled: 'bg-rdc-red      text-white',
+  diverted:  'bg-purple-700   text-white',
+  on_time:   'bg-rdc-green    text-white',
 };
 
 interface Props {
@@ -23,8 +24,8 @@ export function FlightStatusBadge({ status, className }: Props) {
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs',
-        STATUS_STYLES[status] ?? 'bg-gray-100 text-gray-600',
+        'inline-flex items-center px-3 py-0.5 text-xs font-semibold uppercase tracking-wide',
+        STATUS_STYLES[status] ?? 'bg-gray-400 text-white',
         className,
       )}
     >

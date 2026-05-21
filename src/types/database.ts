@@ -656,7 +656,12 @@ export type WaitTime = Tables<'wait_times'>;
 
 // Type enrichi pour l'affichage des vols (avec airline jointé)
 export type FlightWithAirline = Flight & {
-  airlines: Pick<Airline, 'iata_code' | 'name' | 'logo_url' | 'slug'>;
+  airlines: Pick<Airline, 'iata_code' | 'name' | 'logo_url' | 'slug'> & {
+    /** Present only when selected via useFlightById */
+    website?: string | null;
+    checkin_counter?: string | null;
+    lounge_name?: string | null;
+  };
 };
 
 export type FlightStatus = Flight['status'];

@@ -131,6 +131,24 @@ export function useWaitTimes() {
   });
 }
 
+export function useFlightById(id: string) {
+  return useQuery<FlightWithAirline | null>({
+    queryKey: ['flight', id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('flights')
+        .select('*, airlines(iata_code, name, logo_url, slug, website, checkin_counter, lounge_name)')
+        .eq('id', id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as FlightWithAirline | null;
+    },
+    staleTime: 30_000,
+    refetchInterval: 60_000,
+    enabled: !!id,
+  });
+}
+
 export function useParkingAvailability() {
   return useQuery<ParkingLot[]>({
     queryKey: ['parking-lots'],
