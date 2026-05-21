@@ -5,6 +5,7 @@ import {
   Search, Menu, X, User, Plane, ChevronDown,
   ParkingCircle, UtensilsCrossed, MapPin, Building2, Users,
 } from 'lucide-react';
+// Plane is used in NAV_ITEMS — logo uses the RVA image instead
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -16,12 +17,22 @@ function FihLogo({ light = false }: { light?: boolean }) {
   return (
     <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
       className="flex items-center gap-3 group shrink-0">
-      <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden bg-rdc-blue">
-        <Plane size={18} strokeWidth={2.5} className="-rotate-45 text-rdc-yellow" />
-        <div className="absolute inset-0 bg-rdc-yellow opacity-0 group-hover:opacity-10 transition-opacity" />
+      {/* RVA Logo — on dark bg we give it a white pill so colours stay readable */}
+      <div className={cn(
+        'flex-shrink-0 flex items-center justify-center transition-all',
+        light
+          ? 'bg-white/95 rounded px-1.5 py-0.5 shadow-sm'
+          : 'bg-transparent'
+      )}>
+        <img
+          src="/images/rva-logo.png"
+          alt="RVA — Régie des Voies Aériennes"
+          className="h-9 w-auto object-contain"
+          onError={e => { e.currentTarget.style.display = 'none'; }}
+        />
       </div>
-      <div>
-        <p className={cn('text-[9px] font-bold uppercase tracking-[0.3em]', light ? 'text-white/40' : 'text-black/30')}>
+      <div className="leading-tight">
+        <p className={cn('text-[9px] font-bold uppercase tracking-[0.25em]', light ? 'text-white/50' : 'text-black/30')}>
           Aéroport International de N&apos;djili
         </p>
         <p className={cn('font-display text-[14px] font-bold leading-none mt-0.5', light ? 'text-white' : 'text-rdc-anthracite')}>

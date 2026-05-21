@@ -10,7 +10,6 @@ import {
   Instagram,
   Linkedin,
   Youtube,
-  Plane,
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
@@ -102,10 +101,16 @@ export function Footer() {
             {/* Logo */}
             <Link
               to="/"
-              className="mb-5 flex items-center gap-2.5 transition-opacity hover:opacity-80"
+              className="mb-5 flex items-center gap-3 transition-opacity hover:opacity-80"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-rdc-blue text-rdc-yellow">
-                <Plane size={17} strokeWidth={2.5} className="-rotate-45" />
+              {/* RVA logo on white pill — footer is dark so we need the pill */}
+              <div className="flex-shrink-0 bg-white/95 rounded px-1.5 py-0.5">
+                <img
+                  src="/images/rva-logo.png"
+                  alt="RVA — Régie des Voies Aériennes"
+                  className="h-8 w-auto object-contain"
+                  onError={e => { e.currentTarget.style.display = 'none'; }}
+                />
               </div>
               <div className="leading-tight">
                 <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/40">
