@@ -2,13 +2,9 @@ import { createFileRoute } from '@tanstack/react-router';
 import { Hero }               from '@/components/home/Hero';
 import { ParkingWidget }      from '@/components/home/ParkingWidget';
 import { TransportWaitTime }  from '@/components/home/TransportWaitTime';
-import { FlightsPreview }     from '@/components/home/FlightsPreview';
 import { InfosUtiles }        from '@/components/home/InfosUtiles';
 import { ElevezExperience }   from '@/components/home/ElevezExperience';
 import { SolutionsSurMesure } from '@/components/home/SolutionsSurMesure';
-import { NewsCarousel }       from '@/components/home/NewsCarousel';
-import { ExploreGrid }        from '@/components/home/ExploreGrid';
-import { NewsletterCTA }      from '@/components/home/NewsletterCTA';
 
 export const Route = createFileRoute('/')({
   component: HomePage,
@@ -29,35 +25,23 @@ export const Route = createFileRoute('/')({
 function HomePage() {
   return (
     <>
-      {/* 1. Hero plein-écran avec panel "Trouver un vol" intégré à droite */}
+      {/* 1. Hero plein-écran + panel "Trouver un vol" intégré à droite */}
       <Hero />
 
-      {/* 2. Widget réservation stationnement (ADMTL parking widget) */}
+      {/* 2. Widget réservation stationnement */}
       <ParkingWidget />
 
-      {/* 3. Transport links + Temps d'attente (2 colonnes ADMTL) */}
+      {/* 3. Transport & Temps d'attente — 2 colonnes */}
       <TransportWaitTime />
 
-      {/* 4. Vols en direct — départs / arrivées */}
-      <FlightsPreview />
-
-      {/* 5. Informations utiles — 6 cartes texte+lien (style ADMTL) */}
+      {/* 4. Informations utiles — 6 cartes */}
       <InfosUtiles />
 
-      {/* 6. Élevez votre expérience FIH — 3 cartes photo */}
+      {/* 5. Élevez votre expérience FIH — 3 cartes photo */}
       <ElevezExperience />
 
-      {/* 7. Solutions de voyage sur mesure — 4 cartes illustrées */}
+      {/* 6. Solutions de voyage sur mesure — 4 cartes */}
       <SolutionsSurMesure />
-
-      {/* 8. Actualités FIH */}
-      <NewsCarousel />
-
-      {/* 9. Explorer l'aéroport — tuiles éditoriales illustrées */}
-      <ExploreGrid />
-
-      {/* 10. Newsletter / alertes SMS */}
-      <NewsletterCTA />
     </>
   );
 }
