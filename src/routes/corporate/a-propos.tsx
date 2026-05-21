@@ -4,14 +4,17 @@ import { Building2, Plane, Users, Globe, Award } from 'lucide-react';
 
 export const Route = createFileRoute('/corporate/a-propos')({
   component: AProposPage,
-  head: () => ({ meta: [{ title: "À propos de la RVA — Aéroport N'djili · FIH" }] }),
+  head: () => ({ meta: [
+    { title: "À propos — Aéroport International de N'djili · FIH" },
+    { name: 'description', content: "Présentation de l'Aéroport International de N'djili (FIH/FZAA), Kinshasa, RDC — géré par la Régie des Voies Aériennes (RVA)." },
+  ] }),
 });
 
 const STATS = [
-  { value: '1953',    label: 'Année d\'inauguration', Icon: Building2 },
-  { value: '17+',     label: 'Compagnies aériennes',  Icon: Plane },
-  { value: '2M+',     label: 'Passagers / an',        Icon: Users },
-  { value: '34+',     label: 'Destinations',          Icon: Globe },
+  { value: '1953',    label: 'Inauguré en',             Icon: Building2 },
+  { value: '4 700 m', label: 'Piste 06/24 (asphalt)',   Icon: Plane },
+  { value: '1 M+',   label: 'Passagers / an (capacité)', Icon: Users },
+  { value: '313 m',  label: 'Altitude (1 027 ft)',       Icon: Globe },
 ];
 
 const MISSIONS = [
@@ -54,11 +57,11 @@ function AProposPage() {
       {/* RVA description */}
       <div className="mb-10 grid gap-6 lg:grid-cols-2">
         <div>
-          <h2 className="font-display mb-4 text-xl font-bold text-rdc-anthracite">La Régie des Voies Aériennes (RVA)</h2>
+          <h2 className="font-display mb-4 text-xl font-bold text-rdc-anthracite">L'Aéroport International de N'djili</h2>
           <div className="space-y-3 text-sm text-muted-foreground">
-            <p>La Régie des Voies Aériennes (RVA) est l'entreprise publique congolaise chargée de la gestion, de l'exploitation et du développement des aéroports et aérodromes de la République Démocratique du Congo.</p>
-            <p>Fondée en 1970 sous l'ère Mobutu, la RVA gère aujourd'hui <strong className="text-rdc-anthracite">plus de 20 aéroports et aérodromes</strong> à travers le territoire national, dont les principaux hub que sont N'djili (Kinshasa/FIH), Lubumbashi/Luano (FBM), Goma (GOM), Bukavu/Kavumu (BKY) et Mbuji-Mayi (MJM).</p>
-            <p>L'Aéroport International de N'djili (FIH, FZAA), situé dans la Commune de Nsele à 25 km du centre-ville de Kinshasa, est le principal hub aérien de la RDC et de l'Afrique centrale.</p>
+            <p>L'Aéroport International de N'djili (code IATA : <strong className="text-rdc-anthracite">FIH</strong>, code OACI : <strong className="text-rdc-anthracite">FZAA</strong>) est le principal aéroport de la République Démocratique du Congo et le hub aérien majeur de l'Afrique centrale. Il est situé dans la Commune de Nsele, à environ 25 km à l'est du centre-ville de Kinshasa.</p>
+            <p>Inauguré en 1953 comme base secondaire de la Sabena belge, il accueille aujourd'hui <strong className="text-rdc-anthracite">plus de 17 compagnies aériennes internationales</strong>. Le nouveau terminal international, ouvert en juin 2015, offre une capacité d'<strong className="text-rdc-anthracite">un million de passagers par an</strong>.</p>
+            <p>L'aéroport est géré par la <strong className="text-rdc-anthracite">Régie des Voies Aériennes (RVA)</strong>, entreprise publique congolaise fondée en 1970, qui administre l'ensemble du réseau aéroportuaire national — plus de 20 aéroports et aérodromes, dont Lubumbashi (FBM), Goma (GOM), Bukavu (BKY) et Mbuji-Mayi (MJM).</p>
           </div>
         </div>
         <div>

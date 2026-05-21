@@ -63,7 +63,7 @@ function PolitiqueConfidentialitePage() {
       </div>
 
       <p className="mb-8 text-sm text-muted-foreground">
-        Dernière mise à jour : janvier 2025 · Régie des Voies Aériennes (RVA) — République Démocratique du Congo
+        Dernière mise à jour : janvier 2025 · Aéroport International de N'djili (FIH) — géré par la Régie des Voies Aériennes (RVA)
       </p>
 
       <div className="space-y-8">

@@ -18,7 +18,7 @@ const SLIDES = [
   {
     src: '/images/fih-hero-2.jpg',
     alt: 'Tarmac FIH — flotte internationale au sol, terminal RVA',
-    caption: 'Opérations au sol · Régie des Voies Aériennes · FIH',
+    caption: 'Opérations au sol · Terminal International · FIH',
     position: 'object-center',
   },
 ] as const;

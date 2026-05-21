@@ -45,7 +45,7 @@ const TILES = [
     size: 'normal',
   },
   {
-    category: 'Régie des Voies Aériennes',
+    category: 'Aéroport International de N\'djili',
     title: 'Corporate RVA',
     description: 'Gouvernance, partenariats, carrières, projets de modernisation.',
     href: '/corporate',

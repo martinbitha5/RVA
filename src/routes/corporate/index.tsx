@@ -9,8 +9,8 @@ export const Route = createFileRoute('/corporate/')({
   component: CorporateHub,
   head: () => ({
     meta: [
-      { title: "Corporate — Régie des Voies Aériennes · FIH" },
-      { name: 'description', content: "Informations institutionnelles sur la Régie des Voies Aériennes (RVA), gestionnaire de l'Aéroport International de N'djili (FIH), Kinshasa, RDC." },
+      { title: "Corporate — Aéroport International de N'djili · FIH" },
+      { name: 'description', content: "Informations institutionnelles sur l'Aéroport International de N'djili (FIH), géré par la Régie des Voies Aériennes (RVA) — Kinshasa, RDC." },
     ],
   }),
 });
@@ -19,8 +19,8 @@ const MAIN_SECTIONS = [
   {
     icon: Building2,
     href: '/corporate/a-propos',
-    label: 'À propos de la RVA',
-    desc: 'Mission, valeurs et rôle de la Régie des Voies Aériennes dans le développement du transport aérien en RDC.',
+    label: "À propos de l'aéroport",
+    desc: "Mission, valeurs et rôle de l'Aéroport International de N'djili dans le développement du transport aérien en RDC.",
     accent: '#003DA5',
   },
   {
@@ -55,23 +55,23 @@ const OTHER_SECTIONS = [
 
 const STATS = [
   { value: '1953', label: 'Année de fondation', sub: 'Aéroport de N\'djili' },
-  { value: '2M+', label: 'Passagers / an', sub: 'Volume traité à FIH' },
-  { value: '14+', label: 'Compagnies', sub: 'Partenaires actifs' },
-  { value: 'RVA', label: 'Gestionnaire', sub: 'Régie des Voies Aériennes' },
+  { value: '1M+', label: 'Passagers / an (capacité)', sub: 'Nouveau terminal 2015' },
+  { value: '17+', label: 'Compagnies aériennes', sub: 'Partenaires actifs' },
+  { value: '4 700 m', label: 'Piste principale', sub: 'Piste 06/24 — asphalt' },
 ] as const;
 
 function CorporateHub() {
   return (
     <>
       <PageHero
-        eyebrow="Régie des Voies Aériennes"
+        eyebrow="Aéroport International de N'djili · FIH"
         title="Un aéroport au cœur du Congo"
-        subtitle="La RVA gère et développe l'Aéroport International de N'djili (FIH) depuis 1953 — pilier du transport aérien en République Démocratique du Congo."
+        subtitle="L'Aéroport International de N'djili (FIH/FZAA), géré par la RVA depuis 1970, est le pilier du transport aérien de la République Démocratique du Congo."
         breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Corporate' }]}
         cta={
           <div className="flex flex-wrap gap-3">
             <Link to={'/corporate/a-propos' as never} className="btn-primary">
-              <Building2 size={15} /> À propos de la RVA
+              <Building2 size={15} /> À propos de FIH
             </Link>
             <Link to={'/corporate/projets-avenir' as never} className="btn-outline-white">
               <Rocket size={15} /> Projets d'avenir
@@ -186,13 +186,13 @@ function CorporateHub() {
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="accent-line" />
-                <p className="eyebrow text-rdc-yellow">Rejoindre la RVA</p>
+                <p className="eyebrow text-rdc-yellow">Rejoindre l'équipe FIH</p>
               </div>
               <h2 className="font-display font-bold text-white text-3xl lg:text-4xl leading-tight">
                 Construisez votre carrière à l'aéroport
               </h2>
               <p className="mt-4 text-white/60 text-base max-w-xl leading-relaxed">
-                La Régie des Voies Aériennes recrute des talents congolais pour
+                L'Aéroport International de N'djili recrute des talents congolais pour
                 façonner l'avenir du transport aérien en RDC. Découvrez nos offres
                 d'emploi et programmes de formation.
               </p>

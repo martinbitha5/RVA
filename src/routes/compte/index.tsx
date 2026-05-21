@@ -76,7 +76,7 @@ function ComptePage() {
       </div>
 
       <p className="mt-8 text-xs text-center text-muted-foreground">
-        Espace client sécurisé · RVA — Régie des Voies Aériennes
+        Espace client sécurisé · Aéroport International de N'djili · FIH
       </p>
     </div>
   );

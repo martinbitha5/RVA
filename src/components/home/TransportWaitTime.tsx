@@ -95,7 +95,7 @@ export function TransportWaitTime() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-5">
                 <p className="text-xs font-bold uppercase tracking-widest text-white/60">
-                  Tarmac FIH · Régie des Voies Aériennes
+                  Tarmac FIH · Aéroport International de N'djili
                 </p>
               </div>
             </div>

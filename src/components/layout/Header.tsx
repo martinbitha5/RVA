@@ -22,10 +22,10 @@ function FihLogo({ light = false }: { light?: boolean }) {
       </div>
       <div>
         <p className={cn('text-[9px] font-bold uppercase tracking-[0.3em]', light ? 'text-white/40' : 'text-black/30')}>
-          RVA · Régie des Voies Aériennes
+          Aéroport International de N&apos;djili
         </p>
         <p className={cn('font-display text-[14px] font-bold leading-none mt-0.5', light ? 'text-white' : 'text-rdc-anthracite')}>
-          N&apos;djili <span className={light ? 'text-rdc-yellow' : 'text-rdc-blue'}>· FIH</span>
+          Kinshasa <span className={light ? 'text-rdc-yellow' : 'text-rdc-blue'}>· FIH</span>
         </p>
       </div>
     </Link>

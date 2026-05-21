@@ -10,14 +10,20 @@ export const Route = createFileRoute('/corporate/historique')({
 const TIMELINE = [
   {
     year: '1953',
-    title: 'Inauguration de l\'aéroport de Léopoldville',
-    body: 'Construit par la Sabena (Belgique) sous l\'administration coloniale, l\'aéroport de N\'djili est inauguré comme principal hub de l\'Afrique centrale belge. Les premières routes desservent Bruxelles, Johannesburg et Cairo.',
+    title: 'Construction de la base aérienne de N\'djili',
+    body: 'Héritier d\'un champ d\'aviation de la Seconde Guerre mondiale, l\'aéroport de N\'djili est construit par la Sabena (Belgique) sous l\'administration coloniale belge, comme hub secondaire pour la liaison Léopoldville–Bruxelles.',
+    era: 'colonial',
+  },
+  {
+    year: '1959',
+    title: 'Inauguration officielle — Hub de la Sabena',
+    body: 'L\'aéroport est officiellement inauguré en 1959 comme hub secondaire de la Sabena. Les premières routes internationales régulières desservent Bruxelles, Johannesburg et Le Caire. Il devient la plaque tournante de l\'Afrique centrale belge.',
     era: 'colonial',
   },
   {
     year: '1960',
     title: 'Indépendance — Naissance de la République du Congo',
-    body: 'Le 30 juin 1960, l\'aéroport de Léopoldville accueille les cérémonies d\'indépendance du Congo. L\'aéroport prend une dimension symbolique majeure. Air Congo est créée comme compagnie nationale.',
+    body: 'Le 30 juin 1960, l\'aéroport de Léopoldville accueille les cérémonies d\'indépendance du Congo. L\'aéroport prend une dimension symbolique majeure. Air Congo est créée comme première compagnie nationale.',
     era: 'independence',
   },
   {
@@ -40,21 +46,33 @@ const TIMELINE = [
   },
   {
     year: '1990–1997',
-    title: 'Période de crise',
-    body: 'La crise politique et économique du Zaïre frappe durement le secteur aérien. Air Zaïre est dissoute en 1994. Le trafic international chute de 60%. Les infrastructures se dégradent faute d\'investissements.',
+    title: 'Période de crise — Dissolution d\'Air Zaïre',
+    body: 'La crise politique et économique du Zaïre frappe durement le secteur aérien. Air Zaïre est dissoute en 1994. Le trafic international chute de 60 %. Les infrastructures se dégradent faute d\'investissements suffisants.',
     era: 'crisis',
   },
   {
     year: '1997',
     title: 'Renommage en RDC — Code IATA : FIH',
-    body: 'L\'arrivée de Laurent-Désiré Kabila marque le renommage du Zaïre en République Démocratique du Congo. L\'aéroport prend officiellement le code IATA FIH, qui s\'impose au niveau international.',
+    body: 'L\'arrivée de Laurent-Désiré Kabila marque le renommage du Zaïre en République Démocratique du Congo. L\'aéroport prend officiellement le code IATA FIH (et OACI FZAA), qui s\'impose au niveau international.',
     era: 'rdc',
   },
   {
+    year: '1998',
+    title: 'Bataille de l\'aéroport — Deuxième guerre du Congo',
+    body: 'En août 1998, des forces rebelles du RCD tentent de s\'emparer de l\'aéroport de N\'djili lors de la Deuxième Guerre du Congo. Elles sont repoussées par les troupes zimbabwéennes de la SADC qui défendent le gouvernement Kabila. L\'aéroport survit à ces combats intenses.',
+    era: 'crisis',
+  },
+  {
     year: '2000s',
-    title: 'Reprise progressive',
-    body: 'Retour progressif des compagnies internationales : Brussels Airlines, Ethiopian Airlines, Kenya Airways, Egypt Air. Congo Airways est fondée en 2015 comme nouvelle compagnie nationale sur les décombres de Hewa Bora et Bravo Air Congo.',
+    title: 'Retour des compagnies internationales',
+    body: 'Brussels Airlines, Ethiopian Airlines, Kenya Airways et EgyptAir reprennent progressivement leurs vols vers Kinshasa. Congo Airways est fondée en 2015 comme nouvelle compagnie nationale, héritière d\'Hewa Bora Airways.',
     era: 'rdc',
+  },
+  {
+    year: 'Juin 2015',
+    title: 'Ouverture du nouveau terminal international',
+    body: 'Le nouveau terminal international est inauguré en juin 2015. Il dispose d\'une capacité d\'un million de passagers par an et intègre des systèmes informatisés de traitement des arrivées — une modernisation majeure pour l\'aviation en Afrique centrale.',
+    era: 'modern',
   },
   {
     year: '2020–2024',

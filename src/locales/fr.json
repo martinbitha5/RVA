@@ -265,11 +265,11 @@
   },
   "corporate": {
     "title": "Corporate",
-    "hubTitle": "Régie des Voies Aériennes — RVA",
-    "hubSubtitle": "Informations institutionnelles sur la Régie des Voies Aériennes (RVA), gestionnaire de l'Aéroport International de N'djili (FIH), Kinshasa, RDC.",
-    "about": "À propos de la RVA",
-    "aboutDesc": "Mission, valeurs et présentation de la RVA et de FIH",
-    "aboutSubtitle": "La Régie des Voies Aériennes (RVA) est l'entreprise publique congolaise chargée de la gestion de l'ensemble des aéroports et aérodromes de la République Démocratique du Congo.",
+    "hubTitle": "Aéroport International de N'djili — Corporate",
+    "hubSubtitle": "Informations institutionnelles sur l'Aéroport International de N'djili (FIH), géré par la Régie des Voies Aériennes (RVA) — Kinshasa, RDC.",
+    "about": "À propos de FIH",
+    "aboutDesc": "Mission, valeurs et présentation de l'Aéroport International de N'djili",
+    "aboutSubtitle": "L'Aéroport International de N'djili (FIH/FZAA) est le principal hub aérien de la République Démocratique du Congo et de l'Afrique centrale, géré par la Régie des Voies Aériennes (RVA).",
     "governance": "Gouvernance",
     "governanceDesc": "Conseil d'administration, comités et direction",
     "governanceSubtitle": "La gouvernance de la RVA est assurée par un conseil d'administration nommé par le gouvernement congolais, appuyé par des comités consultatifs.",
@@ -285,8 +285,8 @@
     "historyDesc": "De 1953 à aujourd'hui — 70 ans d'histoire aérienne congolaise",
     "historySubtitle": "De l'inauguration coloniale en 1953 à la modernisation actuelle, retracez 70 ans d'histoire de l'aéroport de N'djili.",
     "careers": "Carrières",
-    "careersDesc": "Rejoignez la RVA — 1200+ emplois directs",
-    "careersSubtitle": "Rejoignez la grande famille de la Régie des Voies Aériennes et contribuez à l'essor de l'aviation congolaise.",
+    "careersDesc": "Rejoignez FIH — 1 200+ emplois directs",
+    "careersSubtitle": "Rejoignez l'Aéroport International de N'djili et contribuez à l'essor de l'aviation congolaise.",
     "community": "La communauté FIH",
     "talentCommitment": "Engagement envers les talents",
     "development": "Se développer à la RVA",
@@ -395,7 +395,7 @@
       "contact": "Contactez-nous",
       "faq": "FAQ"
     },
-    "copyright": "© {{year}} Régie des Voies Aériennes — République Démocratique du Congo",
+    "copyright": "© {{year}} Aéroport International de N'djili · FIH — Kinshasa, République Démocratique du Congo",
     "tagline": "Votre porte d'entrée vers le Congo"
   },
   "home": {

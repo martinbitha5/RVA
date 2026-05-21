@@ -109,10 +109,10 @@ export function Footer() {
               </div>
               <div className="leading-tight">
                 <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/40">
-                  Régie des Voies Aériennes
+                  Aéroport International de N&apos;djili
                 </p>
                 <p className="font-display text-[13px] font-bold leading-none text-white">
-                  N&apos;djili{' '}
+                  Kinshasa{' '}
                   <span className="text-rdc-yellow">· FIH</span>
                 </p>
               </div>

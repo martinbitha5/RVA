@@ -462,8 +462,8 @@ function QuitterKinshasaPage() {
               <p className="text-white/60 text-base leading-relaxed mb-6">
                 Lorsque votre vol est assigné à une porte sans passerelle (jetway),
                 vous embarquez à bord d'un <strong className="text-white">bus COBUS 3000</strong> —
-                navette aéroport moderne, climatisée, aux couleurs de la{' '}
-                <strong className="text-white">Régie des Voies Aériennes (RVA)</strong>.
+                navette aéroport moderne, climatisée, aux couleurs de l'{' '}
+                <strong className="text-white">Aéroport International de N'djili</strong>.
               </p>
               <p className="text-white/60 text-sm leading-relaxed mb-8">
                 Ces véhicules transportent directement les passagers depuis le terminal
@@ -475,7 +475,7 @@ function QuitterKinshasaPage() {
                 {[
                   { label: 'Flotte disponible', value: '2 bus COBUS 3000' },
                   { label: 'Capacité', value: '100+ passagers par rotation' },
-                  { label: 'Opérateur', value: 'Régie des Voies Aériennes (RVA)' },
+                  { label: 'Opérateur', value: 'Aéroport International de N\'djili (RVA)' },
                 ].map((item) => (
                   <div key={item.label} className="flex items-center justify-between py-4 border-b border-white/10">
                     <span className="text-xs font-bold uppercase tracking-wider text-white/30">{item.label}</span>
