@@ -3,10 +3,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PlaneLanding, RefreshCw, Search } from 'lucide-react';
 import { FlightList } from '@/components/flights/FlightList';
-import { FlightFilters } from '@/components/flights/FlightFilters';
 import { useFlightBoard } from '@/lib/queries';
 import { useRealtimeFlights } from '@/hooks/useRealtimeFlights';
-import type { FlightStatus } from '@/types/database';
 
 export const Route = createFileRoute('/vols/arrivees')({
   component: ArriveesPage,
@@ -20,9 +18,7 @@ export const Route = createFileRoute('/vols/arrivees')({
 
 function ArriveesPage() {
   const { t } = useTranslation();
-  const [search, setSearch]     = useState('');
-  const [status, setStatus]     = useState<FlightStatus | ''>('');
-  const [terminal, setTerminal] = useState('');
+  const [search, setSearch] = useState('');
 
   const { data = [], isLoading, dataUpdatedAt, refetch, isFetching } = useFlightBoard('arrival');
   useRealtimeFlights('arrival');
@@ -128,17 +124,6 @@ function ArriveesPage() {
         </div>
       </div>
 
-      {/* ─── Filters ───────────────────────────────────────────────── */}
-      <div className="border-b border-border bg-muted/30">
-        <div className="container py-4">
-          <FlightFilters
-            search={search}     onSearch={setSearch}
-            status={status}     onStatus={setStatus}
-            terminal={terminal} onTerminal={setTerminal}
-          />
-        </div>
-      </div>
-
       {/* ─── Flight list ───────────────────────────────────────────── */}
       <div className="container py-8 md:py-10">
         <FlightList
@@ -146,8 +131,8 @@ function ArriveesPage() {
           type="arrival"
           isLoading={isLoading}
           globalFilter={search}
-          statusFilter={status}
-          terminalFilter={terminal}
+          statusFilter=""
+          terminalFilter=""
         />
         <p className="mt-4 text-xs text-muted-foreground">{t('vols.arrivees.disclaimer')}</p>
       </div>
