@@ -185,8 +185,8 @@ function QuitterKinshasaPage() {
         gradient="night"
         cta={
           <div className="flex flex-wrap gap-3">
-            <Link to={'/guide/fih-express' as never} className="btn-primary">
-              <PlaneTakeoff size={15} /> FIH Express — prioritaire
+            <Link to={'/vols/departs' as never} className="btn-primary">
+              <PlaneTakeoff size={15} /> Vols en direct
             </Link>
             <Link to={'/vols/departs' as never} className="btn-outline-white">
               Voir les départs <ArrowRight size={14} />
@@ -536,7 +536,7 @@ function QuitterKinshasaPage() {
           <div className="grid gap-0.5 bg-white/15 sm:grid-cols-3">
             {[
               { label: 'Sécurité & Bagages', desc: 'Règles, dimensions, objets interdits', href: '/guide/securite-bagages' },
-              { label: 'FIH Express', desc: 'Enregistrement prioritaire sans file', href: '/guide/fih-express' },
+              { label: 'Douanes & Immigration', desc: 'Procédures DGDA et DGM au départ', href: '/guide/douanes-immigration' },
               { label: 'Vols en direct', desc: 'Départs temps réel depuis FIH', href: '/vols/departs' },
             ].map((link) => (
               <Link

@@ -11,10 +11,10 @@ const CARDS = [
     accent: '#CE1126',
   },
   {
-    title: "FIH Express",
-    desc: "Accédez à l'enregistrement prioritaire et franchissez les contrôles sans file d'attente.",
+    title: "Douanes & Immigration",
+    desc: "Procédures DGM et DGDA, documents requis, déclaration de devises à l'arrivée.",
     link: "En savoir plus",
-    href: '/guide/fih-express',
+    href: '/guide/douanes-immigration',
     accent: '#003DA5',
   },
   {

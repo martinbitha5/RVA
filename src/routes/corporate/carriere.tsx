@@ -65,10 +65,10 @@ const JOB_FAMILIES = [
 ];
 
 const VALUES = [
-  { emoji: '🤝', title: 'Intégrité',   desc: 'Agir avec honnêteté et responsabilité dans toutes nos missions.' },
-  { emoji: '🚀', title: 'Excellence',  desc: 'Viser les standards internationaux OACI dans chaque fonction.' },
-  { emoji: '🌍', title: 'Engagement', desc: "Servir Kinshasa, la RDC et l'Afrique avec fierté." },
-  { emoji: '💡', title: 'Innovation', desc: "Moderniser l'aéroport de N'djili pour les générations futures." },
+  { title: 'Intégrité',   desc: 'Agir avec honnêteté et responsabilité dans toutes nos missions.' },
+  { title: 'Excellence',  desc: 'Viser les standards internationaux OACI dans chaque fonction.' },
+  { title: 'Engagement', desc: "Servir Kinshasa, la RDC et l'Afrique avec fierté." },
+  { title: 'Innovation', desc: "Moderniser l'aéroport de N'djili pour les générations futures." },
 ];
 
 function CarrierePage() {
@@ -119,7 +119,7 @@ function CarrierePage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {VALUES.map(v => (
               <div key={v.title} className="border border-border bg-card p-6">
-                <div className="mb-3 text-3xl">{v.emoji}</div>
+                <div className="mb-4 h-1 w-8 bg-rdc-blue" />
                 <p className="font-bold text-rdc-anthracite mb-2">{v.title}</p>
                 <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
               </div>

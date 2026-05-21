@@ -99,9 +99,6 @@ function StationnementMenu() {
         <ul className="space-y-0.5">
           <NavItem href="/stationnement-transport/taxis" label={t('parking.taxis')} />
           <NavItem href="/stationnement-transport/transcom-bus" label={t('parking.bus')} />
-          <NavItem href="/stationnement-transport/navettes" label={t('parking.shuttles')} />
-          <NavItem href="/stationnement-transport/covoiturage" label={t('parking.carpooling')} />
-          <NavItem href="/stationnement-transport/limousines" label={t('parking.limousines')} />
           <NavItem href="/stationnement-transport/location-voitures" label={t('parking.carRental')} />
           <NavItem href="/stationnement-transport/boulevard-lumumba" label="Boulevard Lumumba" />
         </ul>
@@ -134,7 +131,6 @@ function GuideMenu() {
         <ColumnHeader>Départ</ColumnHeader>
         <ul className="space-y-0.5">
           <NavItem href="/guide/quitter-kinshasa" label={t('guide.leavingKinshasa')} />
-          <NavItem href="/guide/fih-express" label={t('guide.fihExpress')} />
           <NavItem href="/guide/securite-bagages" label={t('guide.luggageSecurity')} />
           <NavItem href="/guide/correspondances" label={t('guide.connections')} />
           <NavItem href="/guide/salons" label={t('guide.lounges')} />

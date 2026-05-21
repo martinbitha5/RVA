@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import {
-  Car, Bus, Truck, Bike, MapPin,
+  Car, Bus, Bike, MapPin,
   AlertTriangle, ArrowRight, CreditCard,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
@@ -34,25 +34,11 @@ const TRANSPORT = [
     accent: '#003DA5',
   },
   {
-    icon: Truck,
-    href: '/stationnement-transport/navettes',
-    label: 'Navettes hôtels',
-    desc: 'Navettes gratuites ou payantes proposées par les principaux hôtels de Kinshasa.',
-    accent: '#009A44',
-  },
-  {
     icon: Car,
     href: '/stationnement-transport/location-voitures',
     label: 'Location de voitures',
-    desc: 'Avis, Europcar, Hertz et agences locales disponibles au niveau des arrivées.',
+    desc: 'Avis, Europcar et agences locales disponibles au niveau des arrivées.',
     accent: '#CE1126',
-  },
-  {
-    icon: Car,
-    href: '/stationnement-transport/limousines',
-    label: 'Limousines premium',
-    desc: 'Services VIP avec chauffeur — transferts discrets pour passagers premium.',
-    accent: '#1A1A1A',
   },
   {
     icon: Bike,
@@ -69,7 +55,7 @@ function StationnementHub() {
       <PageHero
         eyebrow="Stationnement & Transport"
         title="Arriver & Repartir facilement"
-        subtitle="Stationnement officiel RVA, taxis agréés, navettes et accès via le Boulevard Lumumba — tout pour votre mobilité depuis et vers FIH."
+        subtitle="Stationnement officiel RVA, taxis agréés, bus Transco et accès via le Boulevard Lumumba — tout pour votre mobilité depuis et vers FIH."
         breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Stationnement & Transport' }]}
         cta={
           <div className="flex flex-wrap gap-3">

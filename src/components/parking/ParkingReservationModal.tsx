@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   CheckCircle, ChevronRight, Car,
-  Calendar, QrCode, Copy,
+  Calendar, QrCode, Copy, Smartphone, CreditCard,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
@@ -33,11 +33,12 @@ const vehicleSchema = z.object({
   email: z.string().email('Email invalide').or(z.literal('')),
 });
 
-const PAY_METHODS: { id: PayMethod; label: string; icon: string; color: string }[] = [
-  { id: 'airtel_money',  label: 'Airtel Money',  icon: '📱', color: 'border-red-400 bg-red-50' },
-  { id: 'mpesa',         label: 'M-Pesa Vodacom',icon: '📱', color: 'border-green-500 bg-green-50' },
-  { id: 'orange_money',  label: 'Orange Money',  icon: '📱', color: 'border-orange-400 bg-orange-50' },
-  { id: 'card',          label: 'Carte bancaire', icon: '💳', color: 'border-rdc-blue bg-blue-50' },
+type PayIcon = typeof Smartphone | typeof CreditCard;
+const PAY_METHODS: { id: PayMethod; label: string; Icon: PayIcon; dot: string; color: string }[] = [
+  { id: 'airtel_money',  label: 'Airtel Money',   Icon: Smartphone,  dot: 'bg-red-500',    color: 'border-red-400 bg-red-50' },
+  { id: 'mpesa',         label: 'M-Pesa Vodacom', Icon: Smartphone,  dot: 'bg-green-600',  color: 'border-green-500 bg-green-50' },
+  { id: 'orange_money',  label: 'Orange Money',   Icon: Smartphone,  dot: 'bg-orange-500', color: 'border-orange-400 bg-orange-50' },
+  { id: 'card',          label: 'Carte bancaire',  Icon: CreditCard,  dot: 'bg-rdc-blue',   color: 'border-rdc-blue bg-blue-50' },
 ];
 
 function calcTotal(lot: ParkingLot, days: number): number {
@@ -158,7 +159,7 @@ export function ParkingReservationModal({ lot, open, onClose }: Props) {
                   'flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold',
                   step === i + 1 ? 'bg-rdc-blue text-white' : step > i + 1 ? 'bg-rdc-green text-white' : 'bg-muted text-muted-foreground',
                 )}>
-                  {step > i + 1 ? '✓' : i + 1}
+                  {step > i + 1 ? <CheckCircle size={10} /> : i + 1}
                 </div>
                 <span className="hidden sm:block">{label}</span>
               </div>
@@ -244,7 +245,7 @@ export function ParkingReservationModal({ lot, open, onClose }: Props) {
                       payMethod === m.id ? m.color + ' border-opacity-100 shadow-sm' : 'border-border hover:border-muted-foreground/40',
                     )}
                   >
-                    <span className="text-base">{m.icon}</span>
+                    <span className={`flex h-4 w-4 flex-shrink-0 rounded-full ${m.dot}`} />
                     {m.label}
                   </button>
                 ))}

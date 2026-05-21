@@ -52,18 +52,18 @@ const AIRLINES_CARGO = [
 ];
 
 const COMMERCIAL_AIRLINES = [
-  { name: 'Ethiopian Airlines', flag: '🇪🇹', alliance: 'Star Alliance' },
-  { name: 'Brussels Airlines',  flag: '🇧🇪', alliance: 'Star Alliance' },
-  { name: 'Air France',         flag: '🇫🇷', alliance: 'SkyTeam' },
-  { name: 'Kenya Airways',      flag: '🇰🇪', alliance: 'SkyTeam' },
-  { name: 'Qatar Airways',      flag: '🇶🇦', alliance: 'Oneworld' },
-  { name: 'Turkish Airlines',   flag: '🇹🇷', alliance: 'Star Alliance' },
-  { name: 'EgyptAir',           flag: '🇪🇬', alliance: 'Star Alliance' },
-  { name: 'Royal Air Maroc',    flag: '🇲🇦', alliance: 'Oneworld' },
-  { name: 'RwandAir',           flag: '🇷🇼', alliance: 'Indépendant' },
-  { name: 'Congo Airways',      flag: '🇨🇩', alliance: 'Compagnie nationale' },
-  { name: 'ASKY Airlines',      flag: '🇹🇬', alliance: 'Panabras' },
-  { name: 'Air Moanda',         flag: '🇨🇩', alliance: 'Domestique' },
+  { name: 'Ethiopian Airlines', code: 'ET', alliance: 'Star Alliance' },
+  { name: 'Brussels Airlines',  code: 'SN', alliance: 'Star Alliance' },
+  { name: 'Air France',         code: 'AF', alliance: 'SkyTeam' },
+  { name: 'Kenya Airways',      code: 'KQ', alliance: 'SkyTeam' },
+  { name: 'Qatar Airways',      code: 'QR', alliance: 'Oneworld' },
+  { name: 'Turkish Airlines',   code: 'TK', alliance: 'Star Alliance' },
+  { name: 'EgyptAir',           code: 'MS', alliance: 'Star Alliance' },
+  { name: 'Royal Air Maroc',    code: 'AT', alliance: 'Oneworld' },
+  { name: 'RwandAir',           code: 'WB', alliance: 'Indépendant' },
+  { name: 'Congo Airways',      code: 'BC', alliance: 'Compagnie nationale' },
+  { name: 'ASKY Airlines',      code: 'KP', alliance: 'Panabras' },
+  { name: 'Air Moanda',         code: '8T', alliance: 'Domestique' },
 ];
 
 function ServicesAeriensPage() {
@@ -150,7 +150,7 @@ function ServicesAeriensPage() {
           <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {COMMERCIAL_AIRLINES.map(a => (
               <div key={a.name} className="flex items-center gap-3 border border-border bg-background px-4 py-3">
-                <span className="text-xl flex-shrink-0">{a.flag}</span>
+                <span className="flex h-8 w-10 flex-shrink-0 items-center justify-center bg-rdc-blue/10 text-[10px] font-bold text-rdc-blue">{a.code}</span>
                 <div className="min-w-0">
                   <p className="text-sm font-semibold text-rdc-anthracite">{a.name}</p>
                   <p className="text-[10px] text-muted-foreground">{a.alliance}</p>

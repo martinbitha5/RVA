@@ -51,7 +51,7 @@ const WORKS = [
     impact: 'Aucune interruption de service',
     description: 'Remplacement complet des systèmes PAPI (Precision Approach Path Indicator) sur les deux seuils de piste par des unités LED nouvelle génération certifiées OACI.',
     contractor: 'ADB Safegate',
-    reference: 'Projet RVA-2024-004 ✓',
+    reference: 'Projet RVA-2024-004 — Livré',
   },
 ];
 
@@ -98,7 +98,7 @@ function TravauxPistesPage() {
           <div className="flex items-start gap-3">
             <AlertTriangle size={16} className="mt-0.5 flex-shrink-0 text-amber-600" />
             <div>
-              <p className="text-sm font-semibold text-amber-800 mb-1">⚠ Perturbations actives — vérifiez votre vol</p>
+              <p className="text-sm font-semibold text-amber-800 mb-1">Perturbations actives — vérifiez votre vol</p>
               <p className="text-sm text-amber-700">
                 Les travaux sur la piste 01/19 (Phase 1) entraînent des fermetures nocturnes (22h–06h LMT, lun.–mer.). Certains vols nocturnes peuvent être retardés ou déviés vers Brazzaville (BZV). Consultez l'état de votre vol avant de vous déplacer à l'aéroport.
               </p>

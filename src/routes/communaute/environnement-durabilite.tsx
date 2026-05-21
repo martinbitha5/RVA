@@ -179,7 +179,7 @@ function EnvironnementPage() {
                 />
                 <p className={`text-sm ${a.done ? 'text-rdc-anthracite' : 'text-muted-foreground'}`}>{a.text}</p>
                 {a.done && (
-                  <span className="ml-auto flex-shrink-0 text-[10px] font-bold text-rdc-green">✓ Fait</span>
+                  <span className="ml-auto flex-shrink-0 text-[10px] font-bold text-rdc-green">Fait</span>
                 )}
               </div>
             ))}

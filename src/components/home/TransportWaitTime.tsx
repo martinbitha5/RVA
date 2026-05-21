@@ -4,9 +4,8 @@ import { ArrowRight, Plane, Bus, Clock, Map } from 'lucide-react';
 const TRANSPORT_LINKS = [
   { label: 'Déposer et récupérer un passager', href: '/stationnement-transport/depose-recuperation' },
   { label: 'Taxis officiels agréés RVA',       href: '/stationnement-transport/taxis' },
-  { label: 'Location de voitures',              href: '/stationnement-transport/location-voitures' },
-  { label: 'Navettes hôtels et tour-opérateurs',href: '/stationnement-transport/navettes' },
-  { label: 'Bus Transco depuis Kinshasa',        href: '/stationnement-transport/transcom-bus' },
+  { label: 'Location de voitures',   href: '/stationnement-transport/location-voitures' },
+  { label: 'Bus Transco depuis Kinshasa', href: '/stationnement-transport/transcom-bus' },
 ] as const;
 
 const WAIT_DEPARTS = [

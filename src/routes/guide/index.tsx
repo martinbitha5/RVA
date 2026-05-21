@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   PlaneTakeoff, PlaneLanding, Shield, Stethoscope, Wifi,
-  Banknote, PackageSearch, Accessibility, Shuffle, Sparkles,
+  Banknote, PackageSearch, Accessibility, Shuffle,
   ScrollText, Users, ArrowRight, AlertTriangle,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
@@ -52,7 +52,6 @@ const JOURNEY = [
 ] as const;
 
 const SERVICES = [
-  { icon: Sparkles, href: '/guide/fih-express', label: 'FIH Express', desc: 'Enregistrement prioritaire avec assistance dédiée.' },
   { icon: Shuffle, href: '/guide/correspondances', label: 'Correspondances', desc: 'Transiter à FIH — procédures et délais minimum.' },
   { icon: Stethoscope, href: '/guide/sante', label: 'Santé', desc: 'Centre médical, fièvre jaune, carnet OMS.' },
   { icon: Wifi, href: '/guide/wifi-connectivite', label: 'Wi-Fi & Connectivité', desc: 'Wi-Fi gratuit et couverture mobile Vodacom / Airtel / Orange.' },

@@ -86,11 +86,11 @@ function WifiConnectivitePage() {
             <div className="rounded-xl bg-white border border-border p-4">
               <p className="text-xs font-semibold text-rdc-anthracite mb-2">Détails connexion</p>
               <div className="space-y-1 text-xs text-muted-foreground">
-                <p>📶 SSID : <strong>FIH-Free-WiFi</strong></p>
-                <p>🔑 Mot de passe : aucun (portail captif)</p>
-                <p>⏱️ Durée gratuite : 1 heure</p>
-                <p>💰 Extension : 2 USD/h (Mobile Money)</p>
-                <p>📡 Débit : ~5–20 Mbps selon fréquentation</p>
+                <p>SSID : <strong>FIH-Free-WiFi</strong></p>
+                <p>Mot de passe : aucun (portail captif)</p>
+                <p>Durée gratuite : 1 heure</p>
+                <p>Extension : 2 USD/h (Mobile Money)</p>
+                <p>Débit : ~5–20 Mbps selon fréquentation</p>
               </div>
             </div>
           </div>

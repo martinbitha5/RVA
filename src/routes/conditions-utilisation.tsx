@@ -78,8 +78,8 @@ function ConditionsPage() {
       <div className="mt-10 rounded-xl border border-border bg-card p-5 text-sm text-muted-foreground">
         <p className="font-medium text-rdc-anthracite mb-1">Contact légal</p>
         <p>Pour toute question relative aux présentes CGU, contactez-nous :</p>
-        <p className="mt-1">📧 <a href="mailto:legal@rva.cd" className="text-rdc-blue hover:underline">legal@rva.cd</a></p>
-        <p>📍 Boulevard Lumumba, Commune de Nsele, Kinshasa, RDC</p>
+        <p className="mt-1">Email : <a href="mailto:legal@rva.cd" className="text-rdc-blue hover:underline">legal@rva.cd</a></p>
+        <p>Adresse : Boulevard Lumumba, Commune de Nsele, Kinshasa, RDC</p>
       </div>
     </div>
   );

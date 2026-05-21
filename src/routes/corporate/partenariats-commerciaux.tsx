@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { BarChart3, Store, Eye, Building, ChevronRight, ArrowRight, TrendingUp } from 'lucide-react';
+import { BarChart3, Store, Eye, Building, ChevronRight, ArrowRight, TrendingUp, Plane, LineChart, CreditCard, Globe } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
 
 export const Route = createFileRoute('/corporate/partenariats-commerciaux')({
@@ -44,22 +44,22 @@ const TRAFFIC_STATS = [
 
 const OPPORTUNITIES = [
   {
-    icon: '✈️',
+    Icon: Plane,
     title: 'Hub stratégique Afrique centrale',
     desc: 'Kinshasa est la 3ᵉ plus grande ville d\'Afrique sub-saharienne. FIH dessert directement 34 destinations sur 4 continents avec 17 compagnies aériennes.',
   },
   {
-    icon: '📈',
+    Icon: LineChart,
     title: 'Croissance du marché',
     desc: 'Le trafic passagers a progressé de +12% en 2023. La nouvelle capacité terminale (2027 : 5M pax/an) ouvre des perspectives commerciales uniques.',
   },
   {
-    icon: '💳',
+    Icon: CreditCard,
     title: 'Intégration Mobile Money',
     desc: 'FIH est le premier aéroport d\'Afrique centrale à intégrer nativement Airtel Money, M-Pesa et Orange Money dans tous ses services commerciaux.',
   },
   {
-    icon: '🌐',
+    Icon: Globe,
     title: '6 200 m² commerciaux',
     desc: 'Surface commerciale actuelle en cours d\'extension à 9 000 m² avec l\'ouverture du nouveau terminal international en 2027.',
   },
@@ -123,8 +123,8 @@ function PartenariatsPage() {
           <div className="grid gap-5 sm:grid-cols-2">
             {OPPORTUNITIES.map(o => (
               <div key={o.title} className="flex gap-4 border border-border bg-card p-6">
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center bg-rdc-blue/5 text-2xl">
-                  {o.icon}
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center bg-rdc-blue/10">
+                  <o.Icon size={20} className="text-rdc-blue" />
                 </div>
                 <div>
                   <p className="font-bold text-rdc-anthracite mb-2">{o.title}</p>

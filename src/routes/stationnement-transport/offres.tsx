@@ -10,9 +10,9 @@ export const Route = createFileRoute('/stationnement-transport/offres')({
 });
 
 const MOBILE_MONEY = [
-  { name: 'Airtel Money',   color: 'border-red-400',    logo: '🔴' },
-  { name: 'M-Pesa Vodacom', color: 'border-green-500',  logo: '🟢' },
-  { name: 'Orange Money',   color: 'border-orange-400', logo: '🟠' },
+  { name: 'Airtel Money',   color: 'border-red-400',    dot: 'bg-red-500' },
+  { name: 'M-Pesa Vodacom', color: 'border-green-500',  dot: 'bg-green-600' },
+  { name: 'Orange Money',   color: 'border-orange-400', dot: 'bg-orange-500' },
 ];
 
 function OffresPage() {
@@ -78,7 +78,7 @@ function OffresPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           {MOBILE_MONEY.map((m) => (
             <div key={m.name} className={`rounded-2xl border-2 ${m.color} bg-white p-5 flex items-center gap-3`}>
-              <span className="text-3xl">{m.logo}</span>
+              <span className={`flex h-8 w-8 flex-shrink-0 rounded-full ${m.dot}`} />
               <div>
                 <p className="font-semibold text-rdc-anthracite">{m.name}</p>
                 <div className="mt-1 flex items-center gap-1 text-xs text-rdc-green">

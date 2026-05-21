@@ -199,7 +199,7 @@ function TerminalSvg({ terminal, activeCategories }: { terminal: string; activeC
         <g>
           <rect x="180" y="290" width="160" height="40" rx="6" fill="#f97316" opacity="0.8" />
           <text x="260" y="316" textAnchor="middle" fontSize="11" fill="white" fontWeight="600" fontFamily="Inter">
-            🔒 {t('vols.plans.security')}
+            {t('vols.plans.security')}
           </text>
         </g>
       )}
@@ -209,7 +209,7 @@ function TerminalSvg({ terminal, activeCategories }: { terminal: string; activeC
         <g>
           <rect x="460" y="290" width="160" height="40" rx="6" fill="#9333ea" opacity="0.8" />
           <text x="540" y="316" textAnchor="middle" fontSize="11" fill="white" fontWeight="600" fontFamily="Inter">
-            🛃 {t('vols.plans.customs')}
+            {t('vols.plans.customs')}
           </text>
         </g>
       )}
@@ -234,7 +234,7 @@ function TerminalSvg({ terminal, activeCategories }: { terminal: string; activeC
       {activeCategories.has('pmr') && (
         <>
           <circle cx="120" cy="375" r="22" fill="#60a5fa" opacity="0.85" />
-          <text x="120" y="380" textAnchor="middle" fontSize="16" fill="white" fontFamily="Inter">♿</text>
+          <text x="120" y="380" textAnchor="middle" fontSize="11" fill="white" fontWeight="700" fontFamily="Inter">PMR</text>
         </>
       )}
 

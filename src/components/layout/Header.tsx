@@ -65,7 +65,6 @@ const NAV_ITEMS = [
       { href: '/stationnement-transport/offres',            label: 'Offres & Tarifs' },
       { href: '/stationnement-transport/taxis',             label: 'Taxis agréés' },
       { href: '/stationnement-transport/transcom-bus',      label: 'Transco / Bus' },
-      { href: '/stationnement-transport/navettes',          label: 'Navettes' },
       { href: '/stationnement-transport/location-voitures', label: 'Location voitures' },
     ],
   },

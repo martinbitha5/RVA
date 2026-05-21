@@ -17,7 +17,7 @@ const TILES = [
   {
     category: 'Accès & Mobilité',
     title: 'Stationnement & Transport',
-    description: 'Parkings officiels RVA, taxis agréés, navettes hôtels.',
+    description: 'Parkings officiels RVA, taxis agréés, bus Transco, location de voitures.',
     href: '/stationnement-transport',
     image: '/images/fih-tarmac.jpg',
     gradient: 'from-[#0D0D0D] via-black/60 to-transparent',

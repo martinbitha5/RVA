@@ -30,9 +30,6 @@ const SECTIONS = [
       { label: 'Avis Travaux', href: '/stationnement-transport/travaux' },
       { label: 'Taxis agréés', href: '/stationnement-transport/taxis' },
       { label: 'Transco / Bus', href: '/stationnement-transport/transcom-bus' },
-      { label: 'Navettes', href: '/stationnement-transport/navettes' },
-      { label: 'Covoiturage', href: '/stationnement-transport/covoiturage' },
-      { label: 'Limousines', href: '/stationnement-transport/limousines' },
       { label: 'Location voitures', href: '/stationnement-transport/location-voitures' },
       { label: 'Boulevard Lumumba', href: '/stationnement-transport/boulevard-lumumba' },
     ],
@@ -55,7 +52,6 @@ const SECTIONS = [
     base: '/guide',
     links: [
       { label: 'Quitter Kinshasa', href: '/guide/quitter-kinshasa' },
-      { label: 'FIH Express', href: '/guide/fih-express' },
       { label: 'Sécurité & Bagages', href: '/guide/securite-bagages' },
       { label: 'Atterrir à Kinshasa', href: '/guide/atterrir-kinshasa' },
       { label: 'Douanes & Immigration', href: '/guide/douanes-immigration' },

@@ -77,8 +77,8 @@ function PolitiqueConfidentialitePage() {
 
       <div className="mt-10 rounded-xl border border-border bg-card p-5 text-sm text-muted-foreground">
         <p className="font-medium text-rdc-anthracite mb-1">Délégué à la Protection des Données</p>
-        <p>📧 <a href="mailto:privacy@rva.cd" className="text-rdc-blue hover:underline">privacy@rva.cd</a></p>
-        <p>📍 Direction Générale RVA, Boulevard Lumumba, Kinshasa, RDC</p>
+        <p>Email : <a href="mailto:privacy@rva.cd" className="text-rdc-blue hover:underline">privacy@rva.cd</a></p>
+        <p>Adresse : Direction Générale RVA, Boulevard Lumumba, Kinshasa, RDC</p>
       </div>
     </div>
   );
