@@ -139,21 +139,10 @@ export function useFlightById(id: string) {
   return useQuery<FlightWithAirline | null>({
     queryKey: ['flight-detail', id],
     queryFn: async () => {
-      // 1. Cherche dans les caches déjà chargés (0 requête API)
+      // Cherche dans les caches déjà chargés (0 requête API supplémentaire)
       const deps = qc.getQueryData<FlightWithAirline[]>(['flights-board', 'departure']) ?? [];
       const arrs = qc.getQueryData<FlightWithAirline[]>(['flights-board', 'arrival'])   ?? [];
-      const cached = [...deps, ...arrs].find(f => f.id === id);
-      if (cached) return cached;
-
-      // 2. Cache vide (accès direct à la page) → fetch les deux tableaux
-      const [freshDeps, freshArrs] = await Promise.all([
-        fetchFIHDepartures(),
-        fetchFIHArrivals(),
-      ]);
-      qc.setQueryData(['flights-board', 'departure'], freshDeps);
-      qc.setQueryData(['flights-board', 'arrival'],   freshArrs);
-
-      return [...freshDeps, ...freshArrs].find(f => f.id === id) ?? null;
+      return [...deps, ...arrs].find(f => f.id === id) ?? null;
     },
     staleTime: 10 * 60_000,
     enabled: !!id,

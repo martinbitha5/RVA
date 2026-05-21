@@ -20,7 +20,7 @@ function ArriveesPage() {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
 
-  const { data = [], isLoading, dataUpdatedAt, refetch, isFetching } = useFlightBoard('arrival');
+  const { data = [], isLoading, isError, error, dataUpdatedAt, refetch, isFetching } = useFlightBoard('arrival');
   useRealtimeFlights('arrival');
 
   const updatedAt = dataUpdatedAt
@@ -126,6 +126,13 @@ function ArriveesPage() {
 
       {/* ─── Flight list ───────────────────────────────────────────── */}
       <div className="container py-8 md:py-10">
+        {isError && (
+          <div className="mb-4 rounded border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {(error as Error)?.message === 'QUOTA_EXCEEDED'
+              ? "Le quota mensuel de données temps réel est atteint. Les vols seront disponibles dès le renouvellement du quota."
+              : "Données temporairement indisponibles. Réessayez dans quelques instants."}
+          </div>
+        )}
         <FlightList
           data={data}
           type="arrival"

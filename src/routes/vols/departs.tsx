@@ -127,8 +127,10 @@ function DepartsPage() {
       {/* ─── Flight list ───────────────────────────────────────────── */}
       <div className="container py-8 md:py-10">
         {isError && (
-          <div className="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-            Erreur lors du chargement des vols : {(error as Error)?.message ?? 'Erreur inconnue'}
+          <div className="mb-4 rounded border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+            {(error as Error)?.message === 'QUOTA_EXCEEDED'
+              ? 'Le quota mensuel de données temps réel est atteint. Les vols seront disponibles dès le renouvellement du quota. Contactez l\'administration FIH si le problème persiste.'
+              : `Données temporairement indisponibles. Réessayez dans quelques instants.`}
           </div>
         )}
         <FlightList

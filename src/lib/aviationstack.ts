@@ -132,6 +132,10 @@ async function fetchFlights(params: URLSearchParams): Promise<FlightWithAirline[
   const url = `${BASE}/flights?${params.toString()}`;
   const res = await fetch(url);
 
+  if (res.status === 429) {
+    throw new Error('QUOTA_EXCEEDED');
+  }
+
   if (!res.ok) {
     throw new Error(`AviationStack HTTP ${res.status}`);
   }
@@ -143,19 +147,16 @@ async function fetchFlights(params: URLSearchParams): Promise<FlightWithAirline[
   }
 
   const raw = json.data ?? [];
-  console.log('[AviationStack] data reçu:', raw.length, 'vols', raw[0]);
 
-  const mapped = raw.map(f => {
-    try {
-      return mapFlight(f, params.has('dep_iata') ? 'departure' : 'arrival');
-    } catch (err) {
-      console.error('[AviationStack] mapFlight erreur:', err, f);
-      return null;
-    }
-  }).filter(Boolean) as ReturnType<typeof mapFlight>[];
-
-  console.log('[AviationStack] mapped:', mapped.length, 'vols');
-  return mapped;
+  return raw
+    .map(f => {
+      try {
+        return mapFlight(f, params.has('dep_iata') ? 'departure' : 'arrival');
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean) as ReturnType<typeof mapFlight>[];
 }
 
 /** Date du jour au format YYYY-MM-DD (timezone Kinshasa UTC+2) */
