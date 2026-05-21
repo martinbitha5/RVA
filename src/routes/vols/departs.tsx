@@ -20,7 +20,7 @@ function DepartsPage() {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
 
-  const { data = [], isLoading, dataUpdatedAt, refetch, isFetching } = useFlightBoard('departure');
+  const { data = [], isLoading, isError, error, dataUpdatedAt, refetch, isFetching } = useFlightBoard('departure');
   useRealtimeFlights('departure');
 
   const updatedAt = dataUpdatedAt
@@ -126,6 +126,11 @@ function DepartsPage() {
 
       {/* ─── Flight list ───────────────────────────────────────────── */}
       <div className="container py-8 md:py-10">
+        {isError && (
+          <div className="mb-4 rounded border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            Erreur lors du chargement des vols : {(error as Error)?.message ?? 'Erreur inconnue'}
+          </div>
+        )}
         <FlightList
           data={data}
           type="departure"

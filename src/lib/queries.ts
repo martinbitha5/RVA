@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from './supabase';
 import { fetchFIHDepartures, fetchFIHArrivals } from './aviationstack';
 import type { FlightWithAirline, NewsArticle, ParkingLot, Airline, WaitTime } from '@/types/database';
@@ -128,20 +128,34 @@ export function useWaitTimes() {
   });
 }
 
+/**
+ * Cherche un vol par ID d'abord dans le cache du tableau de bord (AviationStack),
+ * et seulement si absent, refetch les deux tableaux.
+ * Évite une requête Supabase pour les IDs synthétiques AviationStack.
+ */
 export function useFlightById(id: string) {
+  const qc = useQueryClient();
+
   return useQuery<FlightWithAirline | null>({
-    queryKey: ['flight', id],
+    queryKey: ['flight-detail', id],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('flights')
-        .select('*, airlines(iata_code, name, logo_url, slug, website, checkin_counter, lounge_name)')
-        .eq('id', id)
-        .maybeSingle();
-      if (error) throw error;
-      return data as FlightWithAirline | null;
+      // 1. Cherche dans les caches déjà chargés (0 requête API)
+      const deps = qc.getQueryData<FlightWithAirline[]>(['flights-board', 'departure']) ?? [];
+      const arrs = qc.getQueryData<FlightWithAirline[]>(['flights-board', 'arrival'])   ?? [];
+      const cached = [...deps, ...arrs].find(f => f.id === id);
+      if (cached) return cached;
+
+      // 2. Cache vide (accès direct à la page) → fetch les deux tableaux
+      const [freshDeps, freshArrs] = await Promise.all([
+        fetchFIHDepartures(),
+        fetchFIHArrivals(),
+      ]);
+      qc.setQueryData(['flights-board', 'departure'], freshDeps);
+      qc.setQueryData(['flights-board', 'arrival'],   freshArrs);
+
+      return [...freshDeps, ...freshArrs].find(f => f.id === id) ?? null;
     },
-    staleTime: 30_000,
-    refetchInterval: 60_000,
+    staleTime: 10 * 60_000,
     enabled: !!id,
   });
 }

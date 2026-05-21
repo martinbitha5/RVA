@@ -104,10 +104,10 @@ function mapFlight(raw: AvStackFlight, type: 'departure' | 'arrival'): FlightWit
     updated_at:    new Date().toISOString(),
     // Airlines sub-object (joined)
     airlines: {
-      iata_code: raw.airline.iata,
-      name:      raw.airline.name,
+      iata_code: raw.airline?.iata  ?? '',
+      name:      raw.airline?.name  ?? '',
       logo_url:  null,
-      slug:      raw.airline.iata.toLowerCase(),
+      slug:      (raw.airline?.iata ?? '').toLowerCase(),
     },
   };
 }
@@ -135,9 +135,20 @@ async function fetchFlights(params: URLSearchParams): Promise<FlightWithAirline[
     throw new Error(`AviationStack: ${json.error.message} (${json.error.code})`);
   }
 
-  return (json.data ?? []).map(f =>
-    mapFlight(f, params.has('dep_iata') ? 'departure' : 'arrival'),
-  );
+  const raw = json.data ?? [];
+  console.log('[AviationStack] data reçu:', raw.length, 'vols', raw[0]);
+
+  const mapped = raw.map(f => {
+    try {
+      return mapFlight(f, params.has('dep_iata') ? 'departure' : 'arrival');
+    } catch (err) {
+      console.error('[AviationStack] mapFlight erreur:', err, f);
+      return null;
+    }
+  }).filter(Boolean) as ReturnType<typeof mapFlight>[];
+
+  console.log('[AviationStack] mapped:', mapped.length, 'vols');
+  return mapped;
 }
 
 /** Vols au départ de FIH */
