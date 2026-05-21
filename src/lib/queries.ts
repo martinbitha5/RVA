@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from './supabase';
+import { fetchFIHDepartures, fetchFIHArrivals } from './aviationstack';
 import type { FlightWithAirline, NewsArticle, ParkingLot, Airline, WaitTime } from '@/types/database';
 
 export function useUpcomingFlights(type: 'departure' | 'arrival', limit = 6) {
@@ -39,24 +40,20 @@ export function useLatestNews(limit = 3) {
   });
 }
 
-/** Full flight board — no date ceiling, used on /vols/departs and /vols/arrivees */
+/**
+ * Tableau des vols FIH — alimenté par AviationStack (données réelles).
+ * Plan gratuit = 100 req/mois → cache long, pas d'auto-refresh.
+ * Le bouton "Actualiser" déclenche un refetch manuel.
+ */
 export function useFlightBoard(type: 'departure' | 'arrival') {
   return useQuery<FlightWithAirline[]>({
     queryKey: ['flights-board', type],
-    queryFn: async () => {
-      const cutoff = new Date();
-      cutoff.setHours(cutoff.getHours() - 2); // show flights from 2 h ago
-      const { data, error } = await supabase
-        .from('flights')
-        .select('*, airlines(iata_code, name, logo_url, slug)')
-        .eq('type', type)
-        .gte('scheduled_time', cutoff.toISOString())
-        .order('scheduled_time', { ascending: true });
-      if (error) throw error;
-      return (data ?? []) as FlightWithAirline[];
-    },
-    staleTime: 30_000,
-    refetchInterval: 60_000,
+    queryFn: type === 'departure' ? fetchFIHDepartures : fetchFIHArrivals,
+    staleTime:            10 * 60_000,  // 10 min — ne re-fetch pas si données fraîches
+    gcTime:               60 * 60_000,  // 1 h en cache
+    refetchInterval:      false,         // pas d'auto-refresh (économie quota)
+    refetchOnWindowFocus: false,
+    retry: 1,
   });
 }
 

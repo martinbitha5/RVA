@@ -21,6 +21,14 @@ export default defineConfig({
     port: 5173,
     strictPort: false,
     host: true,
+    proxy: {
+      // Proxy AviationStack (free plan = HTTP only → Vite proxies it for us)
+      '/api/av': {
+        target: 'http://api.aviationstack.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/av/, '/v1'),
+      },
+    },
   },
   build: {
     // Raise warning threshold (vendor split handles the large bundle)
