@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PlaneLanding, RefreshCw, Search, ChevronDown } from 'lucide-react';
 import { FlightList } from '@/components/flights/FlightList';
@@ -19,7 +19,9 @@ export const Route = createFileRoute('/vols/arrivees')({
 function ArriveesPage() {
   const { t } = useTranslation();
   const [search, setSearch] = useState('');
-  const [expanded, setExpanded] = useState(false);
+  const [stickyExpanded, setStickyExpanded] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   const { data = [], isLoading, isError, error, dataUpdatedAt, refetch, isFetching } = useFlightBoard('arrival');
   useRealtimeFlights('arrival');
@@ -28,17 +30,126 @@ function ArriveesPage() {
     ? new Date(dataUpdatedAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
     : null;
 
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0, rootMargin: '-70px 0px 0px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main id="main-content">
 
-      {/* ─── Barre "Trouver un vol" sticky ───────────────────────────────
-          Positionnée naturellement juste sous le header fixe (pt-[70px])
-          → elle colle immédiatement sans IntersectionObserver            */}
-      <div className="sticky top-[70px] z-20 bg-[#0D1B2A] border-b border-white/10 shadow">
+      {/* ─── Hero : image claire + diagonale + widget ──────────────── */}
+      <div ref={heroRef} className="relative overflow-hidden bg-[#0F2A1E]">
+
+        {/* Photo — full opacity, positionnée à droite */}
+        <img
+          src="/images/fih-checkin-ethiopian.jpg"
+          className="absolute inset-0 h-full w-full select-none object-cover object-right pointer-events-none"
+          alt=""
+          aria-hidden="true"
+        />
+
+        {/* Panneau sombre gauche avec bord oblique style ADMTL */}
+        <div
+          className="absolute inset-0 bg-[#0F2A1E]"
+          style={{ clipPath: 'polygon(0 0, 58% 0, 72% 100%, 0 100%)' }}
+        />
+
+        <div className="container relative z-10 py-14 md:py-20">
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+
+            {/* Gauche — titre + indicateur temps réel */}
+            <div>
+              <div className="mb-3 flex items-center gap-2.5">
+                <span
+                  className="inline-block h-4 w-5 bg-rdc-green"
+                  style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
+                />
+                <span className="text-sm font-semibold tracking-wider text-white/70">Vols</span>
+              </div>
+              <h1 className="font-display text-5xl font-bold text-white md:text-6xl">
+                {t('flights.arrivals')}
+              </h1>
+              <p className="mt-3 max-w-sm text-white/60">{t('vols.arrivees.subtitle')}</p>
+
+              <div className="mt-5 flex items-center gap-2.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rdc-green opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-rdc-green" />
+                </span>
+                <span className="text-xs font-medium text-rdc-green">{t('flights.realtime')}</span>
+                {updatedAt && (
+                  <span className="text-xs text-white/40">
+                    · {t('home.liveFlights.updatedLabel')} {updatedAt}
+                  </span>
+                )}
+                <button
+                  onClick={() => void refetch()}
+                  disabled={isFetching}
+                  aria-label="Actualiser"
+                  className="text-white/40 transition-colors hover:text-white/70 disabled:opacity-30"
+                >
+                  <RefreshCw size={12} className={isFetching ? 'animate-spin' : ''} />
+                </button>
+              </div>
+            </div>
+
+            {/* Droite — widget recherche (fond semi-opaque sur l'image) */}
+            <div className="w-full bg-[#0D1B2A]/90 backdrop-blur-sm p-6 lg:max-w-md lg:flex-shrink-0">
+              <div className="mb-4 flex items-center gap-2.5">
+                <Search size={15} className="text-white" />
+                <span className="font-semibold text-white">Trouver un vol</span>
+              </div>
+
+              <div className="mb-4 flex border border-white/10">
+                <Link
+                  to="/vols/departs"
+                  className="flex flex-1 items-center justify-center py-2.5 text-sm font-semibold text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+                >
+                  Départs
+                </Link>
+                <div className="flex flex-1 items-center justify-center gap-1.5 bg-rdc-green py-2.5 text-sm font-semibold text-white">
+                  <PlaneLanding size={13} /> Arrivées
+                </div>
+              </div>
+
+              <div className="relative">
+                <PlaneLanding size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <input
+                  type="text"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  placeholder="Vol, compagnie, ville ou code IATA…"
+                  className="w-full bg-white py-3 pl-9 pr-4 text-sm text-rdc-anthracite placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-rdc-green"
+                />
+              </div>
+              <p className="mt-2.5 text-[11px] text-white/30">
+                Ex&nbsp;: SN457 · Bruxelles · Brussels Airlines · ADD
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* ─── Barre sticky — s'affiche quand le hero est scrollé hors vue ─ */}
+      <div
+        className={`fixed top-[70px] left-0 right-0 z-30 bg-[#0D1B2A] border-b border-white/10 shadow-lg transition-all duration-200 ${
+          heroVisible
+            ? 'opacity-0 pointer-events-none -translate-y-1'
+            : 'opacity-100 translate-y-0'
+        }`}
+      >
         <div className="container">
           <button
             type="button"
-            onClick={() => setExpanded(v => !v)}
+            onClick={() => setStickyExpanded(v => !v)}
             className="flex w-full items-center justify-between py-3.5"
           >
             <div className="flex items-center gap-2.5">
@@ -61,12 +172,12 @@ function ArriveesPage() {
               </span>
               <ChevronDown
                 size={15}
-                className={`text-white/60 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+                className={`text-white/60 transition-transform duration-200 ${stickyExpanded ? 'rotate-180' : ''}`}
               />
             </div>
           </button>
 
-          {expanded && (
+          {stickyExpanded && (
             <div className="border-t border-white/10 pb-4 pt-3">
               <div className="mb-3 flex border border-white/10">
                 <Link
@@ -92,46 +203,6 @@ function ArriveesPage() {
               </div>
             </div>
           )}
-        </div>
-      </div>
-
-      {/* ─── Hero diagonal style ADMTL ───────────────────────────────── */}
-      <div className="relative overflow-hidden bg-[#0F2A1E]" style={{ minHeight: '360px' }}>
-        {/* Photo full opacity — visible à droite de la diagonale */}
-        <img
-          src="/images/fih-checkin-ethiopian.jpg"
-          className="absolute inset-0 h-full w-full select-none object-cover object-right pointer-events-none"
-          alt=""
-          aria-hidden="true"
-        />
-        {/* Panneau sombre avec bord oblique (style ADMTL) */}
-        <div
-          className="absolute inset-0 bg-[#0F2A1E]"
-          style={{ clipPath: 'polygon(0 0, 55% 0, 67% 100%, 0 100%)' }}
-        />
-
-        <div className="container relative z-10 py-14 md:py-20">
-          <div className="max-w-xs md:max-w-sm">
-            <div className="mb-3 flex items-center gap-2.5">
-              <span
-                className="inline-block h-4 w-5 bg-rdc-green"
-                style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
-              />
-              <span className="text-sm font-semibold tracking-wider text-white/70">Vols</span>
-            </div>
-            <h1 className="font-display text-5xl font-bold text-white md:text-6xl">
-              {t('flights.arrivals')}
-            </h1>
-            <p className="mt-3 text-white/60">{t('vols.arrivees.subtitle')}</p>
-
-            <div className="mt-5 flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rdc-green opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-rdc-green" />
-              </span>
-              <span className="text-xs font-medium text-rdc-green">{t('flights.realtime')}</span>
-            </div>
-          </div>
         </div>
       </div>
 
