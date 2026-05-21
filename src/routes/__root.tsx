@@ -12,9 +12,9 @@ function RootLayout() {
     <div className="flex min-h-screen flex-col bg-white text-foreground">
       {/* Header is fixed — no AlertBanner pushing it down */}
       <Header />
-      <main id="main-content" className="flex-1" tabIndex={-1}>
+      <div className="flex-1 pt-[70px]">
         <Outlet />
-      </main>
+      </div>
       <Footer />
       {import.meta.env.DEV ? (
         <TanStackRouterDevtools position="bottom-right" />
