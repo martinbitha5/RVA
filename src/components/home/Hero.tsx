@@ -87,7 +87,7 @@ export function Hero() {
             src={SLIDES[current].src}
             alt={SLIDES[current].alt}
             className={`h-full w-full object-cover ${SLIDES[current].position}`}
-            style={{ filter: 'brightness(0.45) contrast(1.12) saturate(1.2)' }}
+            style={{ filter: 'brightness(0.72) saturate(1.05)' }}
             loading={current === 0 ? 'eager' : 'lazy'}
             onError={(e) => {
               const el = e.currentTarget.parentElement as HTMLElement;
@@ -96,8 +96,9 @@ export function Hero() {
                 'linear-gradient(155deg,#060D1E 0%,#0A1628 35%,#0D2144 55%,#003DA5 100%)';
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/55" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-transparent" />
+          {/* Léger dégradé bas pour lisibilité du texte, droite transparent */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
         </motion.div>
       </AnimatePresence>
 
