@@ -7,6 +7,7 @@ import { FlightsPreview } from '@/components/home/FlightsPreview';
 import { ServicesGrid } from '@/components/home/ServicesGrid';
 import { NewsCarousel } from '@/components/home/NewsCarousel';
 import { CommunityHighlight } from '@/components/home/CommunityHighlight';
+import { ExploreGrid } from '@/components/home/ExploreGrid';
 import { NewsletterCTA } from '@/components/home/NewsletterCTA';
 
 export const Route = createFileRoute('/')({
@@ -66,7 +67,10 @@ function HomePage() {
       {/* 8. Community highlight */}
       <CommunityHighlight />
 
-      {/* 9. Newsletter / SMS CTA */}
+      {/* 9. Illustrated sections grid — ADMTL style */}
+      <ExploreGrid />
+
+      {/* 10. Newsletter / SMS CTA */}
       <NewsletterCTA />
     </>
   );
