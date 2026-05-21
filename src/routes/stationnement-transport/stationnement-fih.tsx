@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Car, Zap, Accessibility, RefreshCw, CreditCard, ArrowRight, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -29,7 +28,6 @@ function occupancyPct(): number {
 }
 
 function StationnementFih() {
-  const { t } = useTranslation();
   const { data: lots = [], isLoading, refetch, isFetching } = useParkingAvailability();
   const [selectedLot, setSelectedLot] = useState<ParkingLot | null>(null);
 

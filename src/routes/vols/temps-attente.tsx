@@ -1,5 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 import { Clock, RefreshCw, AlertTriangle, CheckCircle2, XCircle } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PageHero } from '@/components/ui/page-hero';
@@ -44,7 +43,6 @@ const CP: Record<WaitTime['checkpoint_type'], { label: string; desc: string }> =
 };
 
 function TempsAttentePage() {
-  const { t } = useTranslation();
   const { data = [], isLoading, refetch, isFetching, dataUpdatedAt } = useWaitTimes();
 
   const updatedAt  = dataUpdatedAt

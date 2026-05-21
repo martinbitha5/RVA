@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 import { CheckCircle2, Smartphone, ArrowRight, Tag, Clock, Calendar } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PageHero } from '@/components/ui/page-hero';
@@ -24,7 +23,6 @@ const AVANTAGES = [
 ];
 
 function OffresPage() {
-  const { t } = useTranslation();
   const { data: lots = [], isLoading } = useParkingAvailability();
 
   return (

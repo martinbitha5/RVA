@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Search, Plane, ArrowRight } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PageHero } from '@/components/ui/page-hero';
@@ -26,7 +25,6 @@ const AIRLINE_BG: Record<string, string> = {
 const getAirlineBg = (iata: string) => AIRLINE_BG[iata] ?? '#003DA5';
 
 function CompagniesPage() {
-  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data: airlines = [], isLoading } = useAirlines();
 
