@@ -88,18 +88,20 @@ export function FlightList({ data, type, isLoading, globalFilter, statusFilter, 
     return rows;
   }, [data, globalFilter, statusFilter, terminalFilter]);
 
-  /* ─── Group by date ──────────────────────────────────────────────── */
+  /* ─── Group by date (aujourd'hui et futur uniquement) ───────────── */
+  const today = format(new Date(), 'yyyy-MM-dd');
   const groups = useMemo(() => {
     const map = new Map<string, FlightWithAirline[]>();
     for (const f of filtered) {
       if (!f.scheduled_time) continue;
       const key = format(new Date(f.scheduled_time), 'yyyy-MM-dd');
+      if (key < today) continue; // exclure les jours passés
       const arr = map.get(key) ?? [];
       arr.push(f);
       map.set(key, arr);
     }
     return [...map.entries()];
-  }, [filtered]);
+  }, [filtered, today]);
 
   /* ─── Loading skeleton ───────────────────────────────────────────── */
   if (isLoading) {

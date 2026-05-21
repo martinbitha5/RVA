@@ -158,12 +158,19 @@ async function fetchFlights(params: URLSearchParams): Promise<FlightWithAirline[
   return mapped;
 }
 
-/** Vols au départ de FIH */
-export function fetchFIHDepartures(): Promise<FlightWithAirline[]> {
-  return fetchFlights(new URLSearchParams({ dep_iata: 'FIH' }));
+/** Date du jour au format YYYY-MM-DD (timezone Kinshasa UTC+2) */
+function todayFIH(): string {
+  return new Date(Date.now() + 2 * 3600_000)
+    .toISOString()
+    .slice(0, 10);
 }
 
-/** Vols à l'arrivée à FIH */
+/** Vols au départ de FIH — aujourd'hui uniquement */
+export function fetchFIHDepartures(): Promise<FlightWithAirline[]> {
+  return fetchFlights(new URLSearchParams({ dep_iata: 'FIH', flight_date: todayFIH() }));
+}
+
+/** Vols à l'arrivée à FIH — aujourd'hui uniquement */
 export function fetchFIHArrivals(): Promise<FlightWithAirline[]> {
-  return fetchFlights(new URLSearchParams({ arr_iata: 'FIH' }));
+  return fetchFlights(new URLSearchParams({ arr_iata: 'FIH', flight_date: todayFIH() }));
 }
