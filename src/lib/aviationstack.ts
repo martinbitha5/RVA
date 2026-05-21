@@ -106,7 +106,7 @@ function mapFlight(raw: AvStackFlight, type: 'departure' | 'arrival'): FlightWit
     airlines: {
       iata_code: raw.airline?.iata  ?? '',
       name:      raw.airline?.name  ?? '',
-      logo_url:  null,
+      logo_url:  raw.airline?.iata ? `https://pics.avs.io/200/200/${raw.airline.iata}.png` : null,
       slug:      (raw.airline?.iata ?? '').toLowerCase(),
     },
   };

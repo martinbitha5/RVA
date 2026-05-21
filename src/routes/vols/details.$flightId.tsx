@@ -428,32 +428,53 @@ function FlightDetailPage() {
           {/* ─── Right sidebar: info boxes ─────────────────────── */}
           <aside className="space-y-4">
 
-            {/* Airline contact */}
-            {flight.airlines?.website && (
-              <div className="border border-border bg-white p-5">
-                <p className="mb-3 text-sm font-bold text-rdc-anthracite">Informations compagnie</p>
-                <div
-                  className="mb-3 flex h-14 w-14 items-center justify-center text-base font-bold text-white"
-                  style={{ backgroundColor: bgColor }}
-                >
-                  {iata}
-                </div>
-                <p className="text-sm font-semibold text-rdc-anthracite">{flight.airlines.name}</p>
+            {/* Airline info */}
+            <div className="border border-border bg-white p-5">
+              <p className="mb-3 text-sm font-bold text-rdc-anthracite">Informations compagnie</p>
+              {/* Logo with IATA fallback */}
+              <div
+                className="mb-3 flex h-16 w-16 items-center justify-center overflow-hidden border border-border bg-white"
+              >
+                {flight.airlines?.logo_url ? (
+                  <img
+                    src={flight.airlines.logo_url}
+                    alt={flight.airlines.name ?? iata}
+                    className="h-full w-full object-contain p-1"
+                    onError={e => {
+                      const el = e.currentTarget;
+                      el.style.display = 'none';
+                      el.parentElement!.style.backgroundColor = bgColor;
+                      el.parentElement!.style.border = 'none';
+                      el.insertAdjacentHTML('afterend', `<span style="color:white;font-weight:700;font-size:1rem">${iata}</span>`);
+                    }}
+                  />
+                ) : (
+                  <span
+                    className="flex h-full w-full items-center justify-center text-base font-bold text-white"
+                    style={{ backgroundColor: bgColor }}
+                  >
+                    {iata}
+                  </span>
+                )}
+              </div>
+              <p className="text-sm font-semibold text-rdc-anthracite">{flight.airlines?.name ?? '—'}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">Code IATA : {iata}</p>
+              {flight.airlines?.website && (
                 <a
                   href={flight.airlines.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-1 text-xs text-rdc-blue hover:underline"
+                  className="mt-2 block text-xs text-rdc-blue hover:underline"
                 >
                   Site officiel de la compagnie
                 </a>
-                {flight.airlines.checkin_counter && (
-                  <p className="mt-2 text-xs text-muted-foreground">
-                    Comptoir enregistrement : <strong>{flight.airlines.checkin_counter}</strong>
-                  </p>
-                )}
-              </div>
-            )}
+              )}
+              {flight.airlines?.checkin_counter && (
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Comptoir enregistrement : <strong>{flight.airlines.checkin_counter}</strong>
+                </p>
+              )}
+            </div>
 
             {/* Congo-specific alert for arrivals */}
             {!isDeparture && (

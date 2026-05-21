@@ -172,13 +172,32 @@ export function FlightList({ data, type, isLoading, globalFilter, statusFilter, 
                     )}
                   </div>
 
-                  {/* Airline badge */}
+                  {/* Airline logo / badge */}
                   <div
-                    className="flex h-11 w-11 flex-shrink-0 items-center justify-center text-[11px] font-bold text-white"
-                    style={{ backgroundColor: bgColor }}
+                    className="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden bg-white border border-border"
                     aria-label={f.airlines?.name ?? iata}
                   >
-                    {iata || '—'}
+                    {f.airlines?.logo_url ? (
+                      <img
+                        src={f.airlines.logo_url}
+                        alt={f.airlines.name ?? iata}
+                        className="h-full w-full object-contain p-0.5"
+                        onError={e => {
+                          const el = e.currentTarget;
+                          el.style.display = 'none';
+                          el.parentElement!.style.backgroundColor = bgColor;
+                          el.parentElement!.style.border = 'none';
+                          el.insertAdjacentHTML('afterend', `<span class="text-[11px] font-bold text-white">${iata}</span>`);
+                        }}
+                      />
+                    ) : (
+                      <span
+                        className="flex h-full w-full items-center justify-center text-[11px] font-bold text-white"
+                        style={{ backgroundColor: bgColor }}
+                      >
+                        {iata || '—'}
+                      </span>
+                    )}
                   </div>
 
                   {/* Flight info */}
