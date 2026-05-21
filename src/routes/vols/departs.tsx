@@ -140,13 +140,13 @@ function DepartsPage() {
 
       {/* ─── Barre sticky — s'affiche quand le hero est scrollé hors vue ─ */}
       <div
-        className={`fixed top-[70px] left-0 right-0 z-30 bg-[#0D1B2A] border-b border-white/10 shadow-lg transition-all duration-200 ${
+        className={`fixed top-[78px] right-4 md:right-8 z-30 w-[420px] max-w-[calc(100vw-2rem)] bg-[#0D1B2A] border border-white/10 shadow-xl transition-all duration-200 ${
           heroVisible
-            ? 'opacity-0 pointer-events-none -translate-y-1'
+            ? 'opacity-0 pointer-events-none -translate-y-2'
             : 'opacity-100 translate-y-0'
         }`}
       >
-        <div className="container">
+        <div>
           <button
             type="button"
             onClick={() => setStickyExpanded(v => !v)}
