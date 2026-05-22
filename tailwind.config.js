@@ -15,6 +15,9 @@ export default {
       },
     },
     extend: {
+      screens: {
+        xs: '380px',
+      },
       colors: {
         // RDC institutional palette (used with restraint per CLAUDE.md §1.2)
         rdc: {

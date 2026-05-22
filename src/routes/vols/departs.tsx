@@ -50,6 +50,8 @@ function DepartsPage() {
         {/* Photo avion — full opacity, positionnée à droite */}
         <img
           src="/images/fih-tarmac.jpg"
+          loading="eager"
+          fetchPriority="high"
           className="absolute inset-0 h-full w-full select-none object-cover object-right pointer-events-none"
           alt=""
           aria-hidden="true"

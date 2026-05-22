@@ -35,6 +35,7 @@ export function TransportWaitTime() {
               <img
                 src="/images/fih-checkin.jpg"
                 alt="Terminal FIH — Hall d'enregistrement"
+                loading="lazy"
                 className="h-full w-full object-cover"
                 style={{ filter: 'brightness(0.8) saturate(1.1)' }}
                 onError={e => {
@@ -84,6 +85,7 @@ export function TransportWaitTime() {
               <img
                 src="/images/fih-tarmac.jpg"
                 alt="Tarmac FIH — opérations au sol"
+                loading="lazy"
                 className="h-full w-full object-cover"
                 style={{ filter: 'brightness(0.75) saturate(1.15)' }}
                 onError={e => {

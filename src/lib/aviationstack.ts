@@ -159,19 +159,17 @@ async function fetchFlights(params: URLSearchParams): Promise<FlightWithAirline[
     .filter(Boolean) as ReturnType<typeof mapFlight>[];
 }
 
-/** Date du jour au format YYYY-MM-DD (timezone Kinshasa UTC+2) */
-function todayFIH(): string {
-  return new Date(Date.now() + 2 * 3600_000)
-    .toISOString()
-    .slice(0, 10);
-}
-
-/** Vols au départ de FIH — aujourd'hui uniquement */
+/**
+ * Vols au départ de FIH.
+ * NB : le paramètre `flight_date` est réservé aux plans payants AviationStack
+ * (renvoie `function_access_restricted` sur le free tier). On laisse donc
+ * l'API renvoyer ses vols les plus récents/à venir.
+ */
 export function fetchFIHDepartures(): Promise<FlightWithAirline[]> {
-  return fetchFlights(new URLSearchParams({ dep_iata: 'FIH', flight_date: todayFIH() }));
+  return fetchFlights(new URLSearchParams({ dep_iata: 'FIH' }));
 }
 
-/** Vols à l'arrivée à FIH — aujourd'hui uniquement */
+/** Vols à l'arrivée à FIH (voir note ci-dessus pour `flight_date`). */
 export function fetchFIHArrivals(): Promise<FlightWithAirline[]> {
-  return fetchFlights(new URLSearchParams({ arr_iata: 'FIH', flight_date: todayFIH() }));
+  return fetchFlights(new URLSearchParams({ arr_iata: 'FIH' }));
 }

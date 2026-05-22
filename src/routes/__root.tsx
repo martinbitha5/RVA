@@ -12,7 +12,7 @@ function RootLayout() {
     <div className="flex min-h-screen flex-col bg-white text-foreground">
       {/* Header is fixed — no AlertBanner pushing it down */}
       <Header />
-      <div className="flex-1 pt-[70px]">
+      <div className="flex-1 pt-16 md:pt-[70px]">
         <Outlet />
       </div>
       <Footer />

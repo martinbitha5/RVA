@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 import {
   ArrowRight, Plane, ChevronLeft, ChevronRight,
   Search, ParkingCircle, Crown, Car,
@@ -13,13 +12,13 @@ const SLIDES = [
     src: '/images/fih-hero-1.jpg',
     alt: 'Tarmac FIH — Ethiopian Airlines Star Alliance A350, MG Airlines A320',
     caption: 'Ethiopian Airlines A350 · Star Alliance · Kinshasa FIH',
-    position: 'object-center',
+    position: 'object-bottom',
   },
   {
     src: '/images/fih-hero-2.jpg',
     alt: 'Tarmac FIH — flotte internationale au sol, terminal RVA',
     caption: 'Opérations au sol · Terminal International · FIH',
-    position: 'object-center',
+    position: 'object-bottom',
   },
 ] as const;
 
@@ -35,7 +34,6 @@ const SLIDE_DURATION = 7000;
 
 /* ─── Component ──────────────────────────────────────────────────────── */
 export function Hero() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   // Slideshow
@@ -68,7 +66,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative w-full min-h-screen flex flex-col overflow-hidden bg-[#060D1E]"
+      className="relative w-full min-h-[calc(100vh-64px)] md:min-h-screen flex flex-col overflow-hidden bg-[#060D1E]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -87,8 +85,8 @@ export function Hero() {
             src={SLIDES[current].src}
             alt={SLIDES[current].alt}
             className={`h-full w-full object-cover ${SLIDES[current].position}`}
-            style={{ filter: 'brightness(0.72) saturate(1.05)' }}
             loading={current === 0 ? 'eager' : 'lazy'}
+            fetchPriority={current === 0 ? 'high' : 'auto'}
             onError={(e) => {
               const el = e.currentTarget.parentElement as HTMLElement;
               e.currentTarget.style.display = 'none';
@@ -96,9 +94,6 @@ export function Hero() {
                 'linear-gradient(155deg,#060D1E 0%,#0A1628 35%,#0D2144 55%,#003DA5 100%)';
             }}
           />
-          {/* Léger dégradé bas pour lisibilité du texte, droite transparent */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-transparent" />
         </motion.div>
       </AnimatePresence>
 
@@ -122,81 +117,36 @@ export function Hero() {
       </motion.div>
 
       {/* ── Main content ─────────────────────────────────────────── */}
-      <div className="relative z-10 flex flex-1 flex-col justify-center">
-        <div className="container py-24 md:py-28 lg:py-32">
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_400px] xl:grid-cols-[1fr_440px]">
+      <div className="relative z-10 flex flex-1 flex-col justify-end lg:justify-center">
+        <div className="container pb-20 md:pb-24 lg:py-32">
+          <div className="flex justify-center lg:justify-end">
 
-            {/* ── LEFT: hero text ── */}
-            <div>
-              {/* Eyebrow */}
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mb-5 text-xs font-bold uppercase tracking-[0.35em] text-white/50"
-              >
-                Vous accueillir
-              </motion.p>
-
-              {/* Title */}
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="display-hero text-white"
-              >
-                Bienvenue à{' '}
-                <span className="text-rdc-red">Kinshasa</span>
-              </motion.h1>
-
-              {/* Subtitle */}
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-5 max-w-lg text-base leading-relaxed text-white/70"
-              >
-                Porte d&apos;entrée de la République Démocratique du Congo,
-                l&apos;aéroport international de N&apos;djili vous accueille 24h/24.
-              </motion.p>
-
-              {/* Live indicator */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                className="mt-7 text-[11px] font-bold uppercase tracking-[0.2em] text-white/20"
-              >
-                {t('home.liveFlights.updatedLabel')}
-              </motion.p>
-            </div>
-
-            {/* ── RIGHT: flight search panel (style ADMTL) ── */}
+            {/* ── Flight search panel (style ADMTL) ── */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full"
+              className="w-full sm:max-w-md lg:max-w-[420px] xl:max-w-[460px]"
             >
-              <div className="bg-[#0B1628]/92 backdrop-blur-lg border border-white/10 p-6 shadow-2xl">
+              <div className="bg-[#0B1628]/92 backdrop-blur-lg border border-white/10 p-4 sm:p-6 shadow-2xl">
 
                 {/* Panel header */}
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center bg-rdc-blue">
-                    <Search size={15} className="text-white" />
+                <div className="flex items-center gap-3 mb-3 sm:mb-5">
+                  <div className="flex h-8 w-8 sm:h-9 sm:w-9 flex-shrink-0 items-center justify-center bg-rdc-blue">
+                    <Search size={14} className="text-white" />
                   </div>
-                  <h2 className="text-base font-black text-white tracking-tight">
+                  <h2 className="text-sm sm:text-base font-black text-white tracking-tight">
                     Trouver un vol
                   </h2>
                 </div>
 
                 {/* Tabs Départs / Arrivées */}
-                <div className="flex mb-5 border border-white/10">
+                <div className="flex mb-3 sm:mb-4 border border-white/10">
                   {(['departs', 'arrivees'] as const).map(t2 => (
                     <button
                       key={t2}
                       onClick={() => setTab(t2)}
-                      className={`flex-1 py-2.5 text-sm font-bold transition-colors ${
+                      className={`flex-1 py-2 sm:py-2.5 text-sm font-bold transition-colors ${
                         tab === t2
                           ? 'bg-white text-[#1A1A1A]'
                           : 'bg-transparent text-white/50 hover:text-white'
@@ -209,7 +159,7 @@ export function Hero() {
 
                 {/* Search form */}
                 <form onSubmit={handleSearch}>
-                  <div className="flex items-center gap-2 border border-white/20 bg-white/6 px-4 py-3 mb-1 focus-within:border-rdc-yellow/50 transition-colors">
+                  <div className="flex items-center gap-2 border border-white/20 bg-white/6 px-3 sm:px-4 py-2.5 sm:py-3 mb-2 focus-within:border-rdc-yellow/50 transition-colors">
                     <Plane size={13} className="-rotate-45 text-white/35 flex-shrink-0" />
                     <input
                       value={query}
@@ -219,8 +169,8 @@ export function Hero() {
                     />
                   </div>
 
-                  {/* Suggested chips */}
-                  <div className="flex flex-wrap gap-1.5 mb-4">
+                  {/* Suggested chips — masqués sur mobile */}
+                  <div className="hidden sm:flex flex-wrap gap-1.5 mb-3">
                     {SUGGESTIONS.map(s => (
                       <button
                         key={s}
@@ -236,7 +186,7 @@ export function Hero() {
                   {/* See all link */}
                   <Link
                     to={(tab === 'departs' ? '/vols/departs' : '/vols/arrivees') as never}
-                    className="flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-5"
+                    className="flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-3 sm:mb-4"
                   >
                     {tab === 'departs' ? 'Voir tous les départs' : 'Voir toutes les arrivées'}
                     <ArrowRight size={13} />
@@ -244,7 +194,7 @@ export function Hero() {
                 </form>
 
                 {/* Divider */}
-                <div className="border-t border-white/10 mb-4" />
+                <div className="border-t border-white/10 mb-3" />
 
                 {/* Quick action buttons */}
                 <div className="flex flex-wrap gap-2">

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   Search, Menu, X, User, Plane, ChevronDown,
   ParkingCircle, UtensilsCrossed, MapPin, Building2, Users,
+  ShoppingBag, Info,
 } from 'lucide-react';
 // Plane is used in NAV_ITEMS — logo uses the RVA image instead
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -16,7 +17,7 @@ import { cn } from '@/lib/utils';
 function FihLogo({ light = false }: { light?: boolean }) {
   return (
     <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
-      className="flex items-center gap-3 group shrink-0">
+      className="flex items-center gap-2 sm:gap-3 group shrink min-w-0">
       {/* RVA Logo — on dark bg we give it a white pill so colours stay readable */}
       <div className={cn(
         'flex-shrink-0 flex items-center justify-center transition-all',
@@ -27,17 +28,41 @@ function FihLogo({ light = false }: { light?: boolean }) {
         <img
           src="/images/rva-logo.png"
           alt="RVA — Régie des Voies Aériennes"
-          className="h-9 w-auto object-contain"
+          className="h-8 sm:h-9 w-auto object-contain"
           onError={e => { e.currentTarget.style.display = 'none'; }}
         />
       </div>
-      <div className="leading-tight">
-        <p className={cn('text-[9px] font-bold uppercase tracking-[0.25em]', light ? 'text-white/50' : 'text-black/30')}>
+      <div className="leading-tight min-w-0">
+        {/* Subtitle hidden on very narrow screens to keep action buttons visible */}
+        <p className={cn(
+          'hidden xs:block text-[9px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] truncate',
+          light ? 'text-white/50' : 'text-black/30',
+        )}>
           Aéroport International de N&apos;djili
         </p>
-        <p className={cn('font-display text-[14px] font-bold leading-none mt-0.5', light ? 'text-white' : 'text-rdc-anthracite')}>
+        <p className={cn(
+          'font-display text-[13px] sm:text-[14px] font-bold leading-none mt-0.5 truncate',
+          light ? 'text-white' : 'text-rdc-anthracite',
+        )}>
           Kinshasa <span className={light ? 'text-rdc-yellow' : 'text-rdc-blue'}>· FIH</span>
         </p>
+      </div>
+    </Link>
+  );
+}
+
+/* ─── Mobile logo (YUL-style: big "FIH" + descriptive text) ───── */
+function FihLogoMobile() {
+  return (
+    <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
+      className="flex items-center gap-2.5 shrink-0">
+      <span className="font-display text-[34px] font-black leading-none text-rdc-blue tracking-tight">
+        FIH
+      </span>
+      <div className="leading-[1.15] text-[11px] text-rdc-anthracite">
+        <p className="font-normal">Aéroport</p>
+        <p className="font-normal">International</p>
+        <p className="font-bold">de N&apos;djili</p>
       </div>
     </Link>
   );
@@ -244,11 +269,70 @@ export function Header() {
 
       <header className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        // Mobile : toujours blanc. Desktop : transparent en haut, blanc au scroll.
         scrolled
-          ? 'bg-white/98 shadow-[0_1px_0_rgba(0,0,0,0.06)] backdrop-blur-md'
-          : 'bg-gradient-to-b from-black/60 to-transparent',
+          ? 'bg-white shadow-[0_1px_0_rgba(0,0,0,0.06)]'
+          : 'bg-white md:bg-gradient-to-b md:from-black/60 md:to-transparent',
       )}>
-        <div className="container">
+        {/* ─── Mobile compact icon bar (scrolled state only) ─── */}
+        <div className={cn(
+          'md:hidden transition-opacity duration-200',
+          scrolled ? 'block' : 'hidden',
+        )}>
+          <nav className="flex h-14 items-stretch" aria-label="Navigation rapide">
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Menu"
+              className="flex-1 flex items-center justify-center text-rdc-anthracite active:bg-gray-100 border-r border-gray-200">
+              <Menu size={22} strokeWidth={2.2} />
+            </button>
+            <Link to={'/vols/departs' as never} aria-label="Vols"
+              className="flex-1 flex items-center justify-center text-rdc-anthracite active:bg-gray-100 border-r border-gray-200">
+              <Plane size={20} strokeWidth={2} />
+            </Link>
+            <Link to={'/stationnement-transport/stationnement-fih' as never} aria-label="Stationnement"
+              className="flex-1 flex items-center justify-center text-rdc-anthracite active:bg-gray-100 border-r border-gray-200 font-display text-[22px] font-bold leading-none">
+              P
+            </Link>
+            <Link to={'/boutiques-restaurants/repertoire' as never} aria-label="Boutiques et restaurants"
+              className="flex-1 flex items-center justify-center text-rdc-anthracite active:bg-gray-100 border-r border-gray-200">
+              <ShoppingBag size={20} strokeWidth={2} />
+            </Link>
+            <div className="flex-1 flex items-center justify-center">
+              <Link to={'/guide' as never} aria-label="Guide"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-rdc-anthracite text-white active:bg-black">
+                <Info size={18} strokeWidth={2.2} />
+              </Link>
+            </div>
+          </nav>
+        </div>
+
+        {/* ─── Mobile top-of-page header (style YUL : menu | FIH logo | recherche) ─── */}
+        <div className={cn(
+          'md:hidden',
+          scrolled ? 'hidden' : 'block',
+        )}>
+          <div className="flex h-16 items-center justify-between px-4">
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Menu"
+              className="flex h-10 w-10 items-center justify-center text-rdc-anthracite active:bg-gray-100 -ml-2">
+              <Menu size={24} strokeWidth={2.2} />
+            </button>
+
+            <FihLogoMobile />
+
+            <button
+              onClick={() => setSearchOpen(true)}
+              aria-label="Rechercher"
+              className="flex h-10 w-10 items-center justify-center text-rdc-anthracite active:bg-gray-100 -mr-2">
+              <Search size={22} strokeWidth={2.2} />
+            </button>
+          </div>
+        </div>
+
+        {/* ─── Desktop / tablet header (≥md) ─── */}
+        <div className="container hidden md:block">
           <div className="flex h-[70px] items-center justify-between gap-6">
 
             {/* Logo */}
@@ -274,12 +358,12 @@ export function Header() {
               </button>
 
               <LanguageSwitcher
-                className={cn('hidden md:flex', scrolled ? '' : '[&_button]:text-white/80 [&_button]:hover:text-white')}
+                className={cn(scrolled ? '' : '[&_button]:text-white/80 [&_button]:hover:text-white')}
               />
 
               <Link to={'/compte' as never}
                 className={cn(
-                  'hidden md:flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ml-2',
+                  'flex items-center gap-2 px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all ml-2',
                   scrolled
                     ? 'bg-rdc-blue text-white hover:bg-rdc-blue-dark'
                     : 'bg-white text-rdc-anthracite hover:bg-rdc-yellow',
