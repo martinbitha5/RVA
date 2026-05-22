@@ -184,13 +184,13 @@ function HubCard({ airline }: { airline: Airline }) {
   const website = getWebsite(airline);
   return (
     <div className="flex flex-col overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
-      {/* Colour banner */}
-      <div className="relative flex h-36 items-center justify-center" style={{ backgroundColor: bg }}>
+      {/* Zone logo — fond blanc, pas de couleur compagnie */}
+      <div className="relative flex h-36 items-center justify-center border-b border-border bg-white">
         <AirlineLogoImg
           iata={airline.iata_code} name={airline.name} bg={bg} size="lg"
-          className="h-20 w-20 rounded-full border-4 border-white/20"
+          className="h-24 w-24"
         />
-        <span className="absolute right-3 top-3 rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white backdrop-blur-sm">
+        <span className="absolute right-3 top-3 rounded-full border border-rdc-blue/30 bg-rdc-blue/10 px-2 py-0.5 text-[10px] font-bold text-rdc-blue">
           Hub FIH
         </span>
       </div>
