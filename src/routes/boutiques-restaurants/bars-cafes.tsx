@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { MapPin, Clock, ChevronRight } from 'lucide-react';
 import { CONCESSIONS, ZONE_LABELS } from '@/lib/concessions-data';
 import type { Concession, ZoneKey } from '@/lib/concessions-data';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/boutiques-restaurants/bars-cafes')({
   component: BarsCafesPage,
@@ -20,6 +21,7 @@ const AVAILABLE_ZONES = [...new Set(PAGE_DATA.map((c) => c.zoneKey))] as ZoneKey
 
 /* ─── Card ───────────────────────────────────────────────────────────── */
 function BarCard({ c }: { c: Concession }) {
+  const { t } = useTranslation();
   return (
     <Link
       to={`/boutiques-restaurants/repertoire/${c.slug}` as never}
@@ -75,7 +77,7 @@ function BarCard({ c }: { c: Concession }) {
 
       <div className="px-5 py-3 border-t border-[#F0F0F0] flex items-center justify-between bg-[#FAFAFA] group-hover:bg-[#003DA5] transition-colors duration-300">
         <span className="text-[11px] font-bold uppercase tracking-wider text-[#003DA5] group-hover:text-white transition-colors">
-          En savoir plus
+          {t('common.learnMore')}
         </span>
         <ChevronRight size={13} className="text-[#003DA5] group-hover:text-white transition-colors" />
       </div>
@@ -85,6 +87,7 @@ function BarCard({ c }: { c: Concession }) {
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 function BarsCafesPage() {
+  const { t } = useTranslation();
   const [zone, setZone] = useState<'all' | ZoneKey>('all');
 
   const filtered = zone === 'all' ? PAGE_DATA : PAGE_DATA.filter((c) => c.zoneKey === zone);
@@ -112,10 +115,10 @@ function BarsCafesPage() {
             <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
             <ChevronRight size={10} />
             <Link to={'/boutiques-restaurants' as never} className="hover:text-white transition-colors">
-              Boutiques et restaurants
+              {t('nav.shopsRestaurants')}
             </Link>
             <ChevronRight size={10} />
-            <span className="text-white/70">Bars &amp; Cafés</span>
+            <span className="text-white/70">{t('shops.barsCafes')}</span>
           </nav>
           <div className="mb-3 flex items-center gap-2.5">
             <span

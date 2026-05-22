@@ -4,6 +4,7 @@ import {
   Search, MapPin, ChevronRight, ChevronDown, ChevronUp,
   UtensilsCrossed, ShoppingBag, Wrench, Crown, X,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   CONCESSIONS,
   FILTER_GROUPS,
@@ -116,6 +117,7 @@ function SidebarGroup({
 
 /* ─── Card ───────────────────────────────────────────────────────────── */
 function ConcessionCard({ c }: { c: (typeof CONCESSIONS)[number] }) {
+  const { t } = useTranslation();
   return (
     <Link
       to={`/boutiques-restaurants/repertoire/${c.slug}` as never}
@@ -172,7 +174,7 @@ function ConcessionCard({ c }: { c: (typeof CONCESSIONS)[number] }) {
       {/* CTA bar */}
       <div className="px-5 py-3 border-t border-[#F0F0F0] flex items-center justify-between bg-[#FAFAFA] group-hover:bg-[#003DA5] transition-colors duration-300">
         <span className="text-[11px] font-bold uppercase tracking-wider text-[#003DA5] group-hover:text-white transition-colors">
-          En savoir plus
+          {t('common.learnMore')}
         </span>
         <ChevronRight size={13} className="text-[#003DA5] group-hover:text-white transition-colors" />
       </div>
@@ -201,6 +203,7 @@ function RepertoireLayout() {
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 function RepertoirePage() {
+  const { t } = useTranslation();
   const [search, setSearch]         = useState('');
   const [zones, setZones]           = useState<ZoneKey[]>([]);
   const [subcats, setSubcats]       = useState<SubcategoryKey[]>([]);
@@ -245,10 +248,10 @@ function RepertoirePage() {
             <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
             <ChevronRight size={10} />
             <Link to={'/boutiques-restaurants' as never} className="hover:text-white transition-colors">
-              Boutiques et restaurants
+              {t('nav.shopsRestaurants')}
             </Link>
             <ChevronRight size={10} />
-            <span className="text-white/70">Répertoire</span>
+            <span className="text-white/70">{t('shops.directory')}</span>
           </nav>
           <div className="flex items-center gap-3 mb-2">
             <div className="h-5 w-0.5 bg-[#FFCE00]" />
@@ -375,7 +378,7 @@ function RepertoirePage() {
 
             {results.length === 0 ? (
               <div className="py-20 text-center">
-                <p className="text-2xl font-bold text-[#1A1A1A]">Aucun résultat</p>
+                <p className="text-2xl font-bold text-[#1A1A1A]">{t('common.noResults')}</p>
                 <p className="mt-2 text-sm text-[#888]">
                   Essayez d'élargir vos critères de recherche.
                 </p>

@@ -4,6 +4,7 @@ import {
   CheckCircle, MapPin, Clock, Phone, ChevronRight,
   CreditCard, Plane, Star,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/boutiques-restaurants/salons')({
   component: SalonsPage,
@@ -82,6 +83,7 @@ function AmenityChip({ id }: { id: keyof typeof AMENITIES }) {
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 function SalonsPage() {
+  const { t } = useTranslation();
   return (
     <main id="main-content">
 
@@ -105,10 +107,10 @@ function SalonsPage() {
             <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
             <ChevronRight size={10} />
             <Link to={'/boutiques-restaurants' as never} className="hover:text-white transition-colors">
-              Boutiques et restaurants
+              {t('nav.shopsRestaurants')}
             </Link>
             <ChevronRight size={10} />
-            <span className="text-white/70">Salons VIP</span>
+            <span className="text-white/70">{t('shops.lounges')}</span>
           </nav>
           <div className="mb-3 flex items-center gap-2.5">
             <span
@@ -220,7 +222,7 @@ function SalonsPage() {
                   to={'/boutiques-restaurants/repertoire/pearl-lounge' as never}
                   className="flex items-center gap-1.5 bg-rdc-blue px-4 py-2 text-xs font-bold text-white hover:bg-rdc-blue/90 transition-colors"
                 >
-                  En savoir plus <ChevronRight size={12} />
+                  {t('common.learnMore')} <ChevronRight size={12} />
                 </Link>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import { ArrowLeft, MapPin, Clock, Phone, Globe, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   CONCESSIONS,
   CONCESSIONS_BY_SLUG,
@@ -25,6 +26,7 @@ export const Route = createFileRoute('/boutiques-restaurants/repertoire/$slug')(
 
 /* ─── Related card ───────────────────────────────────────────────────── */
 function RelatedCard({ c }: { c: Concession }) {
+  const { t } = useTranslation();
   return (
     <Link
       to={`/boutiques-restaurants/repertoire/${c.slug}` as never}
@@ -50,7 +52,7 @@ function RelatedCard({ c }: { c: Concession }) {
         </p>
         <p className="text-[11px] text-[#888] line-clamp-2">{c.description}</p>
         <div className="mt-2 flex items-center gap-1 text-[11px] font-bold text-[#003DA5] group-hover:gap-2 transition-all">
-          En savoir plus <ChevronRight size={11} />
+          {t('common.learnMore')} <ChevronRight size={11} />
         </div>
       </div>
     </Link>
@@ -59,6 +61,7 @@ function RelatedCard({ c }: { c: Concession }) {
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 function ConcessionsDetailPage() {
+  const { t } = useTranslation();
   const item = Route.useLoaderData();
   const relatedItems = (item.relatedIds ?? [])
     .map(id => CONCESSIONS.find(c => c.id === id))
@@ -79,7 +82,7 @@ function ConcessionsDetailPage() {
             to={'/boutiques-restaurants/repertoire' as never}
             className="mb-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-white/40 hover:text-white transition-colors"
           >
-            <ArrowLeft size={12} /> Retour au répertoire
+            <ArrowLeft size={12} /> {t('common.back')}
           </Link>
 
           {/* Category badge */}
