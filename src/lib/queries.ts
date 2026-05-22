@@ -3,6 +3,50 @@ import { supabase } from './supabase';
 import { fetchFIHDepartures, fetchFIHArrivals } from './aviationstack';
 import type { FlightWithAirline, NewsArticle, ParkingLot, Airline, WaitTime } from '@/types/database';
 
+/**
+ * Compagnies basées à FIH — données statiques de secours.
+ * Affichées même si absentes de la base Supabase, pour garantir
+ * la présence des compagnies congolaises dans la section "Hub FIH".
+ */
+const STATIC_HUB_AIRLINES: Airline[] = [
+  {
+    id: 'static-air-congo',
+    iata_code: '4H',
+    icao_code: 'GCO',
+    name: 'Air Congo',
+    slug: 'air-congo',
+    logo_url: null,
+    website: 'https://www.aircongo.com',
+    description_fr: 'Compagnie aérienne congolaise basée à Kinshasa, desservant les destinations intérieures et régionales depuis N\'djili.',
+    description_en: 'Congolese airline based in Kinshasa, serving domestic and regional destinations from N\'djili.',
+    hub_at_fih: true,
+    alliance: null,
+    checkin_counter: null,
+    lounge_name: null,
+    active: true,
+    created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: 'static-congo-airways',
+    iata_code: '8Z',
+    icao_code: 'CGO',
+    name: 'Congo Airways',
+    slug: 'congo-airways',
+    logo_url: null,
+    website: 'https://www.congairways.com',
+    description_fr: 'Compagnie nationale de la RDC, basée à l\'aéroport de N\'djili, desservant les principales villes congolaises.',
+    description_en: 'National airline of the DRC, based at N\'djili airport, serving major Congolese cities.',
+    hub_at_fih: true,
+    alliance: null,
+    checkin_counter: null,
+    lounge_name: null,
+    active: true,
+    created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-01T00:00:00Z',
+  },
+];
+
 export function useUpcomingFlights(type: 'departure' | 'arrival', limit = 6) {
   return useQuery<FlightWithAirline[]>({
     queryKey: ['flights', type, limit],
@@ -67,7 +111,13 @@ export function useAirlines() {
         .eq('active', true)
         .order('name');
       if (error) throw error;
-      return data ?? [];
+      const dbAirlines: Airline[] = data ?? [];
+      // Injecter les compagnies statiques absentes de la DB
+      const dbCodes = new Set(dbAirlines.map((a) => a.iata_code));
+      const missing = STATIC_HUB_AIRLINES.filter((a) => !dbCodes.has(a.iata_code));
+      return [...dbAirlines, ...missing].sort((a, b) =>
+        a.name.localeCompare(b.name, 'fr'),
+      );
     },
     staleTime: 10 * 60_000,
     gcTime: 30 * 60_000,

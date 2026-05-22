@@ -18,10 +18,12 @@ export const Route = createFileRoute('/vols/compagnies-aeriennes')({
 });
 
 const AIRLINE_BG: Record<string, string> = {
-  '4H': '#CE1126', ET: '#1B4F72', SN: '#003DA5', AF: '#002395',
-  KQ: '#006633', QR: '#5C0632', MS: '#6B0F1A', TK: '#E30A17',
-  HF: '#1A6B3C', WB: '#00A86B', SA: '#1C2F4A', RA: '#009A44',
-  DT: '#C8102E', '8U': '#008751',
+  '4H': '#CE1126', '8Z': '#003DA5',
+  ET: '#1B4F72',   SN: '#003DA5',   AF: '#002395',
+  KQ: '#006633',   QR: '#5C0632',   MS: '#6B0F1A',
+  TK: '#E30A17',   HF: '#1A6B3C',   WB: '#00A86B',
+  SA: '#1C2F4A',   RA: '#009A44',   DT: '#C8102E',
+  '8U': '#008751',
 };
 const AIRLINE_WEBSITES: Record<string, string> = {
   '4H': 'https://www.aircongo.com',
@@ -140,27 +142,28 @@ function CompagniesPage() {
   );
 }
 
-/* ── Shared logo with avs.io + fallback ──────────────────────────────── */
+/* ── Shared logo with avs.io + styled fallback badge ─────────────────── */
 function AirlineLogoImg({
   iata, name, bg, size, className,
 }: { iata: string; name: string; bg: string; size: 'sm' | 'lg'; className?: string }) {
   const dim  = size === 'lg' ? 'h-16 w-16' : 'h-9 w-9';
-  const text = size === 'lg' ? 'text-xl' : 'text-xs';
+  const text = size === 'lg' ? 'text-base' : 'text-[9px]';
   return (
     <div className={`relative flex items-center justify-center overflow-hidden bg-white ${className ?? ''}`}>
       <img
         src={getAirlineLogoUrl(iata)}
         alt={name}
-        className={`${dim} object-contain p-0.5`}
+        className={`${dim} object-contain p-1`}
         onError={(e) => {
           e.currentTarget.style.display = 'none';
           const fallback = e.currentTarget.nextSibling as HTMLElement | null;
           if (fallback) fallback.style.display = 'flex';
         }}
       />
+      {/* Fallback badge : texte IATA blanc sur fond couleur compagnie */}
       <span
-        className={`${dim} ${text} absolute inset-0 hidden items-center justify-center font-bold`}
-        style={{ color: bg }}
+        className={`${text} absolute inset-0 hidden items-center justify-center font-black tracking-widest text-white`}
+        style={{ backgroundColor: bg }}
       >
         {iata}
       </span>

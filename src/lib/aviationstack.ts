@@ -74,9 +74,8 @@ function mapArrivalStatus(api: string, delay: number | null): FlightStatus {
 }
 
 // ── Logo overrides (airlines absentes ou incorrectes sur pics.avs.io) ─────────
-export const LOGO_OVERRIDES: Record<string, string> = {
-  '4H': 'https://upload.wikimedia.org/wikipedia/en/thumb/2/20/Air_Congo_Logo.png/250px-Air_Congo_Logo.png',
-};
+// Note : les URLs Wikipedia bloquent le hotlinking. N'ajouter ici que des CDN fiables.
+export const LOGO_OVERRIDES: Record<string, string> = {};
 
 /** Retourne l'URL du logo depuis pics.avs.io (ou override si nécessaire). */
 export function getAirlineLogoUrl(iataCode: string): string {
