@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Map } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/plan-de-site')({
   component: PlanDeSitePage,
@@ -116,6 +117,7 @@ const SECTIONS = [
 ] as const;
 
 function PlanDeSitePage() {
+  const { t } = useTranslation();
   return (
     <div className="container py-10 md:py-14">
       <div className="mb-8 flex items-center gap-3">
@@ -124,7 +126,7 @@ function PlanDeSitePage() {
         </div>
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-rdc-blue">Navigation</p>
-          <h1 className="font-display font-bold text-3xl text-rdc-anthracite">Plan du site</h1>
+          <h1 className="font-display font-bold text-3xl text-rdc-anthracite">{t('footer.legalLinks.sitemap')}</h1>
         </div>
       </div>
 

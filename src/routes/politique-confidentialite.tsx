@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Shield } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/politique-confidentialite')({
   component: PolitiqueConfidentialitePage,
@@ -50,6 +51,7 @@ const SECTIONS = [
 ] as const;
 
 function PolitiqueConfidentialitePage() {
+  const { t } = useTranslation();
   return (
     <div className="container py-10 md:py-14 max-w-3xl">
       <div className="mb-8 flex items-center gap-3">
@@ -58,7 +60,7 @@ function PolitiqueConfidentialitePage() {
         </div>
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-rdc-blue">Légal</p>
-          <h1 className="font-display font-bold text-3xl text-rdc-anthracite">Politique de confidentialité</h1>
+          <h1 className="font-display font-bold text-3xl text-rdc-anthracite">{t('footer.legalLinks.privacy')}</h1>
         </div>
       </div>
 

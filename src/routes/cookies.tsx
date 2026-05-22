@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Cookie } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/cookies')({
   component: CookiesPage,
@@ -39,6 +40,7 @@ const COOKIE_TYPES = [
 ] as const;
 
 function CookiesPage() {
+  const { t } = useTranslation();
   return (
     <div className="container py-10 md:py-14 max-w-3xl">
       <div className="mb-8 flex items-center gap-3">
@@ -47,7 +49,7 @@ function CookiesPage() {
         </div>
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-rdc-blue">Légal</p>
-          <h1 className="font-display font-bold text-3xl text-rdc-anthracite">Politique cookies</h1>
+          <h1 className="font-display font-bold text-3xl text-rdc-anthracite">{t('footer.legalLinks.cookies')}</h1>
         </div>
       </div>
 
