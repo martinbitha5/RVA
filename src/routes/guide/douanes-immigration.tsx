@@ -3,6 +3,7 @@ import {
   ScrollText, AlertTriangle, CheckCircle, ExternalLink,
   ChevronRight, FileText, ShieldCheck, BadgeAlert,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/guide/douanes-immigration')({
   component: DouanesImmigrationPage,
@@ -47,6 +48,7 @@ const DGDA_RULES = [
 ];
 
 function DouanesImmigrationPage() {
+  const { t } = useTranslation();
   return (
     <main id="main-content">
 
@@ -67,18 +69,18 @@ function DouanesImmigrationPage() {
 
         <div className="container relative z-10 py-14 md:py-20">
           <nav className="mb-4 flex items-center gap-1.5 text-[11px] font-medium text-white/40">
-            <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
+            <Link to="/" className="hover:text-white transition-colors">{t('home.hero.cta')}</Link>
             <ChevronRight size={10} />
-            <Link to={'/guide' as never} className="hover:text-white transition-colors">Guide de l'aéroport</Link>
+            <Link to={'/guide' as never} className="hover:text-white transition-colors">{t('nav.guide')}</Link>
             <ChevronRight size={10} />
-            <span className="text-white/70">Douanes &amp; Immigration</span>
+            <span className="text-white/70">{t('guide.customsImmigration')}</span>
           </nav>
           <div className="mb-3 flex items-center gap-2.5">
             <span
               className="inline-block h-4 w-5 bg-rdc-blue"
               style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
             />
-            <span className="text-sm font-semibold tracking-wider text-white/70">Guide de l'aéroport</span>
+            <span className="text-sm font-semibold tracking-wider text-white/70">{t('nav.guide')}</span>
           </div>
           <h1 className="font-display text-5xl font-bold text-white md:text-6xl">
             Douanes &amp;<br />Immigration

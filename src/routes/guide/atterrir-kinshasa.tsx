@@ -6,6 +6,7 @@ import {
   CheckCircle, ArrowRight, Globe,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/guide/atterrir-kinshasa')({
   component: AtterrirKinshasaPage,
@@ -196,17 +197,18 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 function AtterrirKinshasaPage() {
+  const { t } = useTranslation();
   return (
     <>
       {/* ── HERO — tarmac photo ─────────────────────────────────────── */}
       <PageHero
-        eyebrow="Guide arrivée"
-        title="Atterrir à Kinshasa"
-        subtitle="Tout ce qu'il faut savoir pour votre arrivée à l'Aéroport International de N'djili : immigration, bagages, douanes et transport vers la ville."
+        eyebrow={t('nav.guide')}
+        title={t('guide.arrivingKinshasa')}
+        subtitle={t('guide.arrivingSubtitle')}
         breadcrumbs={[
-          { label: 'Accueil', href: '/' },
-          { label: "Guide de l'aéroport", href: '/guide' },
-          { label: 'Atterrir à Kinshasa' },
+          { label: t('home.hero.cta'), href: '/' },
+          { label: t('nav.guide'), href: '/guide' },
+          { label: t('guide.arrivingKinshasa') },
         ]}
         image="/images/fih-tarmac.jpg"
         gradient="night"
