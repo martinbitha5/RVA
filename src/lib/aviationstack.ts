@@ -73,12 +73,15 @@ function mapArrivalStatus(api: string, delay: number | null): FlightStatus {
   return 'scheduled';
 }
 
-// ── Logo overrides (airlines absentes ou incorrectes sur pics.avs.io) ─────────
-// - 4H → avs.io retourne Hi Air (Danemark) au lieu d'Air Congo → logo SVG local
-// - BZ → avs.io retourne Bluebird Airways au lieu de CAA (RDC) → logo SVG local
+// ── Logo overrides — logos locaux servis depuis /public/images/ ───────────────
+// avs.io renvoie des compagnies homonymes pour ces codes IATA partagés :
+//   4H → Hi Air (DK)       | réel : Air Congo (RDC)
+//   BZ → Bluebird Airways  | réel : CAA — Compagnie Africaine d'Aviation (RDC)
+//   8Z → stocké localement pour fiabilité (avs.io ok mais externe)
 export const LOGO_OVERRIDES: Record<string, string> = {
-  '4H': '/images/airlines/4H.svg',
-  'BZ': '/images/airlines/BZ.svg',
+  '4H': '/images/4H.png',
+  'BZ': '/images/BZ.png',
+  '8Z': '/images/8Z.png',
 };
 
 /** Retourne l'URL du logo depuis pics.avs.io (ou override si nécessaire). */
