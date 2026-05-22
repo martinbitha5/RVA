@@ -74,9 +74,14 @@ function mapArrivalStatus(api: string, delay: number | null): FlightStatus {
 }
 
 // ── Logo overrides (airlines absentes ou incorrectes sur pics.avs.io) ─────────
-const LOGO_OVERRIDES: Record<string, string> = {
+export const LOGO_OVERRIDES: Record<string, string> = {
   '4H': 'https://upload.wikimedia.org/wikipedia/en/thumb/2/20/Air_Congo_Logo.png/250px-Air_Congo_Logo.png',
 };
+
+/** Retourne l'URL du logo depuis pics.avs.io (ou override si nécessaire). */
+export function getAirlineLogoUrl(iataCode: string): string {
+  return LOGO_OVERRIDES[iataCode] ?? `https://pics.avs.io/200/200/${iataCode}.png`;
+}
 
 // ── Data mapper ───────────────────────────────────────────────────────────────
 function mapFlight(raw: AvStackFlight, type: 'departure' | 'arrival'): FlightWithAirline {

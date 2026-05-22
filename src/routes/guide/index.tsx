@@ -2,9 +2,9 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   PlaneTakeoff, PlaneLanding, Shield, Stethoscope, Wifi,
   Banknote, PackageSearch, Accessibility, Shuffle,
-  ScrollText, Users, ArrowRight, AlertTriangle,
+  ScrollText, Users, ArrowRight, AlertTriangle, ChevronRight,
+  CheckCircle, Syringe,
 } from 'lucide-react';
-import { PageHero } from '@/components/ui/page-hero';
 
 export const Route = createFileRoute('/guide/')({
   component: GuideHub,
@@ -16,88 +16,142 @@ export const Route = createFileRoute('/guide/')({
   }),
 });
 
+/* ─── Data ───────────────────────────────────────────────────────────────── */
+
+const DEPART_STEPS = [
+  'Enregistrement & bagages',
+  'Contrôle de sécurité',
+  'Formalités DGM — passeport',
+  'Zone réglementée & embarquement',
+];
+
+const ARRIVEE_STEPS = [
+  'Carnet jaune OMS — contrôle santé',
+  'Contrôle passeport DGM',
+  'Récupération des bagages',
+  'Douanes DGDA & sortie',
+];
+
 const JOURNEY = [
   {
     phase: '01',
     label: 'Quitter Kinshasa',
     href: '/guide/quitter-kinshasa',
-    icon: PlaneTakeoff,
+    Icon: PlaneTakeoff,
     desc: 'Enregistrement, sécurité, immigration DGM — procédures de départ pas à pas.',
-    accent: '#003DA5',
+    color: '#003DA5',
+    colorLight: '#003DA510',
   },
   {
     phase: '02',
     label: 'Sécurité & Bagages',
     href: '/guide/securite-bagages',
-    icon: Shield,
+    Icon: Shield,
     desc: 'Objets interdits, liquides, bagages en soute et règles en vigueur à FIH.',
-    accent: '#CE1126',
+    color: '#CE1126',
+    colorLight: '#CE112610',
   },
   {
     phase: '03',
     label: 'Atterrir à Kinshasa',
     href: '/guide/atterrir-kinshasa',
-    icon: PlaneLanding,
+    Icon: PlaneLanding,
     desc: 'Contrôle passeport DGM, douanes DGDA, réclamation bagages et sortie.',
-    accent: '#009A44',
+    color: '#009A44',
+    colorLight: '#009A4410',
   },
   {
     phase: '04',
     label: 'Douanes & Immigration',
     href: '/guide/douanes-immigration',
-    icon: ScrollText,
-    desc: "Formalités DGM et DGDA — déclarations, visa à l'arrivée, carnet jaune.",
-    accent: '#FFCE00',
+    Icon: ScrollText,
+    desc: "Formalités DGM et DGDA — déclarations, visa à l'arrivée, carnet jaune OMS.",
+    color: '#B8940A',
+    colorLight: '#FFCE0015',
   },
 ] as const;
 
 const SERVICES = [
-  { icon: Shuffle, href: '/guide/correspondances', label: 'Correspondances', desc: 'Transiter à FIH — procédures et délais minimum.' },
-  { icon: Stethoscope, href: '/guide/sante', label: 'Santé', desc: 'Centre médical, fièvre jaune, carnet OMS.' },
-  { icon: Wifi, href: '/guide/wifi-connectivite', label: 'Wi-Fi & Connectivité', desc: 'Wi-Fi gratuit et couverture mobile Vodacom / Airtel / Orange.' },
-  { icon: Banknote, href: '/guide/services-bancaires', label: 'Services bancaires', desc: 'ATM Rawbank, Equity BCDC, TMB et change de devises.' },
-  { icon: PackageSearch, href: '/guide/objets-trouves', label: 'Objets trouvés', desc: 'Déclarez un objet perdu ou récupérez un bien trouvé à FIH.' },
-  { icon: Users, href: '/guide/passagers-mineurs', label: 'Mineurs non accompagnés', desc: 'Service UM — procédures et frais de supervision.' },
-  { icon: Accessibility, href: '/guide/passagers-handicap', label: 'Personnes à mobilité réduite', desc: 'Assistance fauteuil, accès PMR et services adaptés.' },
+  { Icon: Shuffle,        href: '/guide/correspondances',     label: 'Correspondances',          desc: 'Transiter à FIH — procédures et délais minimum de connexion.' },
+  { Icon: Stethoscope,   href: '/guide/sante',               label: 'Santé & Vaccination',       desc: 'Centre médical FIH, fièvre jaune, carnet OMS, paludisme.' },
+  { Icon: Wifi,           href: '/guide/wifi-connectivite',   label: 'Wi-Fi & Connectivité',      desc: 'RAM WiFi gratuit et illimité, Vodacom / Airtel / Orange.' },
+  { Icon: Banknote,       href: '/guide/services-bancaires',  label: 'Services bancaires',        desc: 'ATM Rawbank, Equity BCDC, TMB et bureaux de change USD/CDF.' },
+  { Icon: PackageSearch,  href: '/guide/objets-trouves',      label: 'Objets trouvés',            desc: 'Déclarez un objet perdu ou récupérez un bien trouvé à FIH.' },
+  { Icon: Users,          href: '/guide/passagers-mineurs',   label: 'Mineurs non accompagnés',   desc: 'Service UM — procédures et accompagnement sécurisé.' },
+  { Icon: Accessibility,  href: '/guide/passagers-handicap',  label: 'Mobilité réduite (PMR)',    desc: 'Assistance fauteuil, accès adapté et services spécialisés.' },
 ] as const;
 
+/* ─── Page ───────────────────────────────────────────────────────────────── */
 function GuideHub() {
   return (
-    <>
-      <PageHero
-        eyebrow="Guide de l'aéroport"
-        title="Votre passage à FIH, simplifié"
-        subtitle="Tout ce qu'il faut savoir avant, pendant et après votre vol depuis ou vers l'Aéroport International de N'djili — départs, arrivées, correspondances."
-        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: "Guide de l'aéroport" }]}
-        cta={
-          <div className="flex flex-wrap gap-3">
-            <Link to={'/guide/quitter-kinshasa' as never} className="btn-primary">
+    <main id="main-content">
+
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <div className="relative overflow-hidden bg-[#0D1626]">
+        <img
+          src="/images/fih-hero-1.jpg"
+          loading="eager"
+          className="absolute inset-0 h-full w-full select-none object-cover object-center pointer-events-none"
+          alt=""
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0 bg-[#0D1626]"
+          style={{ clipPath: 'polygon(0 0, 55% 0, 68% 100%, 0 100%)' }}
+        />
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#003DA5] via-[#FFCE00] to-[#CE1126]" />
+
+        <div className="container relative z-10 py-16 md:py-24">
+          <nav className="mb-5 flex items-center gap-1.5 text-[11px] font-medium text-white/40">
+            <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
+            <ChevronRight size={10} />
+            <span className="text-white/70">Guide de l'aéroport</span>
+          </nav>
+          <div className="mb-3 flex items-center gap-2.5">
+            <span
+              className="inline-block h-4 w-5 bg-rdc-yellow"
+              style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
+            />
+            <span className="text-sm font-semibold tracking-wider text-white/70">Guide de l'aéroport</span>
+          </div>
+          <h1 className="font-display text-5xl font-bold text-white md:text-6xl lg:text-7xl">
+            Votre passage<br />à FIH, simplifié
+          </h1>
+          <p className="mt-4 max-w-md text-white/60 md:text-lg">
+            Tout ce qu'il faut savoir avant, pendant et après votre vol depuis ou vers Kinshasa N'djili.
+          </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              to={'/guide/quitter-kinshasa' as never}
+              className="inline-flex items-center gap-2 bg-[#003DA5] px-5 py-3 text-sm font-bold text-white hover:bg-[#003DA5]/90 transition-colors"
+            >
               <PlaneTakeoff size={15} /> Je pars de Kinshasa
             </Link>
-            <Link to={'/guide/atterrir-kinshasa' as never} className="btn-outline-white">
+            <Link
+              to={'/guide/atterrir-kinshasa' as never}
+              className="inline-flex items-center gap-2 border border-white/30 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur-sm hover:bg-white/20 transition-colors"
+            >
               <PlaneLanding size={15} /> J'arrive à Kinshasa
             </Link>
           </div>
-        }
-      />
+        </div>
+      </div>
 
-      {/* Yellow fever alert */}
-      <div className="bg-rdc-yellow/10 border-b-2 border-rdc-yellow">
+      {/* ── Alerte fièvre jaune ──────────────────────────────────────────── */}
+      <div className="border-b-2 border-red-300 bg-red-50">
         <div className="container py-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle size={18} className="text-rdc-anthracite shrink-0 mt-0.5" />
+            <Syringe size={16} className="mt-0.5 flex-shrink-0 text-red-600" />
             <div className="flex-1">
-              <p className="text-sm font-bold text-rdc-anthracite">
-                Vaccination contre la fièvre jaune obligatoire
-              </p>
-              <p className="text-xs text-rdc-anthracite/70 mt-0.5">
-                Le carnet de vaccination international (carnet jaune OMS) est exigé pour entrer en RDC.
-                Sans ce document, l'accès peut être refusé aux postes de contrôle sanitaire.
+              <p className="text-sm font-bold text-red-900">Vaccination contre la fièvre jaune — OBLIGATOIRE</p>
+              <p className="mt-0.5 text-xs text-red-700">
+                Le carnet de vaccination international (carnet jaune OMS) est exigé à l'entrée ET à la sortie de RDC. Vérifiez votre carnet avant de voyager.
               </p>
             </div>
             <Link
               to={'/guide/sante' as never}
-              className="shrink-0 text-xs font-bold text-rdc-anthracite underline hover:no-underline"
+              className="flex-shrink-0 text-xs font-bold text-red-700 underline hover:no-underline"
             >
               En savoir plus
             </Link>
@@ -105,53 +159,127 @@ function GuideHub() {
         </div>
       </div>
 
-      {/* Journey steps */}
-      <section className="bg-white py-20 lg:py-28">
+      {/* ── Deux parcours (Départ / Arrivée) ────────────────────────────── */}
+      <section className="bg-[#F7F7F7] py-12 md:py-16">
         <div className="container">
-          <div className="flex items-center gap-3 mb-3">
+          <div className="mb-3 flex items-center gap-3">
             <div className="accent-line" />
             <p className="eyebrow text-rdc-blue">Votre parcours</p>
           </div>
-          <h2 className="display-sub text-rdc-anthracite mb-12">
+          <h2 className="font-display mb-8 text-2xl font-bold text-rdc-anthracite md:text-3xl">
+            Deux parcours, un seul guide
+          </h2>
+
+          <div className="grid gap-4 md:grid-cols-2">
+
+            {/* Départ */}
+            <div className="overflow-hidden bg-white shadow-sm">
+              <div className="flex items-center gap-4 bg-[#003DA5] px-6 py-5">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center bg-white/20">
+                  <PlaneTakeoff size={20} className="text-white" />
+                </div>
+                <div>
+                  <p className="font-display text-lg font-bold text-white">Je pars de Kinshasa</p>
+                  <p className="text-xs text-white/60">Procédures de départ — Terminal International</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <ul className="mb-6 space-y-3">
+                  {DEPART_STEPS.map((step, i) => (
+                    <li key={step} className="flex items-center gap-3">
+                      <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center bg-[#003DA5] text-[10px] font-black text-white">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-sm text-[#333]">{step}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  to={'/guide/quitter-kinshasa' as never}
+                  className="inline-flex items-center gap-2 bg-[#003DA5] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#003DA5]/90 transition-colors"
+                >
+                  Voir le guide départ <ArrowRight size={12} />
+                </Link>
+              </div>
+            </div>
+
+            {/* Arrivée */}
+            <div className="overflow-hidden bg-white shadow-sm">
+              <div className="flex items-center gap-4 bg-[#009A44] px-6 py-5">
+                <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center bg-white/20">
+                  <PlaneLanding size={20} className="text-white" />
+                </div>
+                <div>
+                  <p className="font-display text-lg font-bold text-white">J'arrive à Kinshasa</p>
+                  <p className="text-xs text-white/60">Procédures d'arrivée — de l'avion à la sortie</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <ul className="mb-6 space-y-3">
+                  {ARRIVEE_STEPS.map((step, i) => (
+                    <li key={step} className="flex items-center gap-3">
+                      <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center bg-[#009A44] text-[10px] font-black text-white">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-sm text-[#333]">{step}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  to={'/guide/atterrir-kinshasa' as never}
+                  className="inline-flex items-center gap-2 bg-[#009A44] px-4 py-2.5 text-xs font-bold text-white hover:bg-[#009A44]/90 transition-colors"
+                >
+                  Voir le guide arrivée <ArrowRight size={12} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Étapes clés ─────────────────────────────────────────────────── */}
+      <section className="bg-white py-12 md:py-16">
+        <div className="container">
+          <div className="mb-3 flex items-center gap-3">
+            <div className="accent-line" />
+            <p className="eyebrow text-rdc-blue">Guides détaillés</p>
+          </div>
+          <h2 className="font-display mb-8 text-2xl font-bold text-rdc-anthracite md:text-3xl">
             Les étapes clés à FIH
           </h2>
 
-          <div className="grid gap-0.5 bg-border sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-0.5 sm:grid-cols-2 lg:grid-cols-4" style={{ background: '#E8E8E8' }}>
             {JOURNEY.map((step) => (
               <Link
                 key={step.href}
                 to={step.href as never}
-                className="group relative bg-white p-8 flex flex-col gap-4 overflow-hidden hover:bg-rdc-blue/2 transition-colors"
+                className="group relative flex flex-col gap-4 overflow-hidden bg-white p-7 transition-colors hover:bg-[#FAFAFA]"
               >
                 <div
-                  className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-500"
-                  style={{ backgroundColor: step.accent }}
+                  className="absolute bottom-0 left-0 h-0.5 w-0 transition-all duration-500 group-hover:w-full"
+                  style={{ backgroundColor: step.color }}
                 />
-
                 <span
-                  className="font-display text-6xl font-bold leading-none"
-                  style={{ color: `${step.accent}18` }}
+                  className="font-display text-6xl font-bold leading-none select-none"
+                  style={{ color: `${step.color}14` }}
                 >
                   {step.phase}
                 </span>
-
                 <div
-                  className="flex h-12 w-12 items-center justify-center"
-                  style={{ background: `${step.accent}12`, border: `1px solid ${step.accent}25` }}
+                  className="flex h-11 w-11 items-center justify-center border"
+                  style={{ background: step.colorLight, borderColor: `${step.color}25` }}
                 >
-                  <step.icon size={22} style={{ color: step.accent }} strokeWidth={1.5} />
+                  <step.Icon size={20} style={{ color: step.color }} strokeWidth={1.5} />
                 </div>
-
                 <div>
-                  <h3 className="font-display font-bold text-rdc-anthracite text-lg leading-snug group-hover:text-rdc-blue transition-colors">
+                  <h3 className="font-display text-base font-bold text-rdc-anthracite leading-snug transition-colors group-hover:text-rdc-blue">
                     {step.label}
                   </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
                 </div>
-
-                <div className="flex items-center gap-2 text-sm font-bold text-rdc-blue mt-auto">
+                <div className="mt-auto flex items-center gap-1.5 text-xs font-bold text-rdc-blue">
                   Lire le guide
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             ))}
@@ -159,36 +287,36 @@ function GuideHub() {
         </div>
       </section>
 
-      {/* Other services */}
-      <section className="section-night py-20 lg:py-28">
+      {/* ── Services ─────────────────────────────────────────────────────── */}
+      <section className="bg-[#0D1626] py-12 md:py-16">
         <div className="container">
-          <div className="flex items-center gap-3 mb-3">
+          <div className="mb-3 flex items-center gap-3">
             <div className="accent-line" />
-            <p className="eyebrow text-rdc-yellow">Services à bord</p>
+            <p className="eyebrow text-[#FFCE00]">À votre service</p>
           </div>
-          <h2 className="display-sub text-white mb-10">
-            Tous nos services disponibles
+          <h2 className="font-display mb-8 text-2xl font-bold text-white md:text-3xl">
+            Tous les services disponibles
           </h2>
 
-          <div className="grid gap-0.5 bg-white/8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-0.5 sm:grid-cols-2 lg:grid-cols-4" style={{ background: '#1A2535' }}>
             {SERVICES.map((s) => (
               <Link
                 key={s.href}
                 to={s.href as never}
-                className="group bg-rdc-anthracite p-6 flex flex-col gap-4 hover:bg-white/5 transition-colors relative overflow-hidden"
+                className="group relative flex flex-col gap-4 overflow-hidden bg-[#0D1626] p-6 transition-colors hover:bg-[#0A1F40]"
               >
-                <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-rdc-yellow transition-all duration-500" />
-                <div className="flex h-11 w-11 items-center justify-center bg-white/8 border border-white/10">
-                  <s.icon size={20} className="text-white/60" strokeWidth={1.5} />
+                <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#FFCE00] transition-all duration-500 group-hover:w-full" />
+                <div className="flex h-10 w-10 items-center justify-center border border-white/10 bg-white/5">
+                  <s.Icon size={18} className="text-white/50" strokeWidth={1.5} />
                 </div>
                 <div>
-                  <h3 className="font-display font-bold text-white text-base group-hover:text-rdc-yellow transition-colors">
+                  <h3 className="font-display text-sm font-bold text-white transition-colors group-hover:text-[#FFCE00]">
                     {s.label}
                   </h3>
-                  <p className="mt-1.5 text-xs text-white/40 leading-relaxed">{s.desc}</p>
+                  <p className="mt-1.5 text-[11px] leading-relaxed text-white/40">{s.desc}</p>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs font-bold text-white/20 group-hover:text-white/50 transition-colors mt-auto">
-                  Voir <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                <div className="mt-auto flex items-center gap-1.5 text-[11px] font-bold text-white/25 transition-colors group-hover:text-white/60">
+                  Voir <ArrowRight size={11} className="transition-transform group-hover:translate-x-1" />
                 </div>
               </Link>
             ))}
@@ -196,23 +324,59 @@ function GuideHub() {
         </div>
       </section>
 
-      {/* Stats strip */}
-      <section className="bg-border py-0">
-        <div className="grid grid-cols-2 gap-px md:grid-cols-4">
-          {[
-            { value: '2', label: 'Terminaux', sub: 'International + Domestique' },
-            { value: '24h', label: 'Ouverture', sub: 'Opérations non-stop' },
-            { value: '50+', label: 'Services', sub: 'Commerces et assistance' },
-            { value: '1953', label: 'Fondation', sub: 'Histoire de FIH' },
-          ].map((s) => (
-            <div key={s.label} className="bg-white px-8 py-10 text-center">
-              <p className="font-display text-4xl font-bold text-rdc-blue">{s.value}</p>
-              <p className="mt-1 text-xs font-bold uppercase tracking-wider text-rdc-anthracite">{s.label}</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">{s.sub}</p>
-            </div>
-          ))}
+      {/* ── Checklist rapide ─────────────────────────────────────────────── */}
+      <section className="bg-[#F7F7F7] py-12 md:py-16">
+        <div className="container">
+          <div className="mb-3 flex items-center gap-3">
+            <div className="accent-line" />
+            <p className="eyebrow text-rdc-blue">Avant de voyager</p>
+          </div>
+          <h2 className="font-display mb-8 text-2xl font-bold text-rdc-anthracite md:text-3xl">
+            Checklist essentielle
+          </h2>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { label: 'Carnet jaune OMS — fièvre jaune (OBLIGATOIRE)', href: '/guide/sante',               urgent: true  },
+              { label: 'Passeport valide 6 mois minimum',               href: '/guide/douanes-immigration',  urgent: false },
+              { label: 'Visa ou eVisa RDC selon nationalité',           href: '/guide/douanes-immigration',  urgent: false },
+              { label: 'Assurance voyage avec rapatriement médical',    href: '/guide/sante',                urgent: false },
+              { label: 'Prophylaxie antipaludéenne recommandée',        href: '/guide/sante',                urgent: false },
+              { label: 'Monnaie : USD fortement conseillé en RDC',      href: '/guide/services-bancaires',   urgent: false },
+            ].map(({ label, href, urgent }) => (
+              <Link
+                key={label}
+                to={href as never}
+                className="group flex items-start gap-3 border border-[#E0E0E0] bg-white p-4 transition-colors hover:border-rdc-blue/30 hover:bg-[#F0F4FF]"
+              >
+                <CheckCircle
+                  size={15}
+                  className={`mt-0.5 flex-shrink-0 ${urgent ? 'text-red-500' : 'text-rdc-green'}`}
+                />
+                <span className={`text-sm leading-snug transition-colors group-hover:text-rdc-blue ${urgent ? 'font-bold text-red-900' : 'text-[#333]'}`}>
+                  {label}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
-    </>
+
+      {/* ── Stats ────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-2 gap-px md:grid-cols-4" style={{ background: '#E0E0E0' }}>
+        {[
+          { value: '2',    label: 'Terminaux',  sub: 'International + Domestique' },
+          { value: '24h',  label: 'Ouverture',  sub: 'Opérations non-stop'        },
+          { value: '50+',  label: 'Services',   sub: 'Commerces et assistance'    },
+          { value: '1953', label: 'Fondation',  sub: 'Histoire de N\'djili'       },
+        ].map((s) => (
+          <div key={s.label} className="bg-white px-8 py-10 text-center">
+            <p className="font-display text-4xl font-bold text-rdc-blue">{s.value}</p>
+            <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-rdc-anthracite">{s.label}</p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">{s.sub}</p>
+          </div>
+        ))}
+      </div>
+
+    </main>
   );
 }

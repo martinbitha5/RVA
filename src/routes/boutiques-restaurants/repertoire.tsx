@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, useMatches } from '@tanstack/react-router';
 import { useState, useMemo } from 'react';
 import {
   Search, MapPin, ChevronRight, ChevronDown, ChevronUp,
@@ -15,7 +15,7 @@ import {
 } from '@/lib/concessions-data';
 
 export const Route = createFileRoute('/boutiques-restaurants/repertoire')({
-  component: RepertoirePage,
+  component: RepertoireLayout,
   head: () => ({
     meta: [{ title: 'Répertoire boutiques & restaurants — FIH Kinshasa' }],
   }),
@@ -190,6 +190,13 @@ function FilterChip({ label, onRemove }: { label: string; onRemove: () => void }
       </button>
     </span>
   );
+}
+
+/* ─── Layout wrapper ─────────────────────────────────────────────────── */
+function RepertoireLayout() {
+  const matches = useMatches();
+  const isLeaf  = matches.at(-1)?.routeId === '/boutiques-restaurants/repertoire';
+  return isLeaf ? <RepertoirePage /> : <Outlet />;
 }
 
 /* ─── Page ───────────────────────────────────────────────────────────── */

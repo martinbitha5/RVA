@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { Plane, Globe, ChevronLeft, PlaneTakeoff, PlaneLanding } from 'lucide-react';
+import { Plane, Globe, ChevronLeft, PlaneTakeoff, PlaneLanding, RefreshCw } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { FlightTable } from '@/components/flights/FlightTable';
-import { useAirlineBySlug, useAirlineFlights } from '@/lib/queries';
+import { useAirlineBySlug, useFlightBoard } from '@/lib/queries';
+import { getAirlineLogoUrl } from '@/lib/aviationstack';
 
 export const Route = createFileRoute('/vols/compagnies-aeriennes/$slug')({
   component: AirlinePage,
@@ -22,10 +23,28 @@ function AirlinePage() {
   const { slug } = Route.useParams();
   const { t, i18n } = useTranslation();
   const { data: airline, isLoading } = useAirlineBySlug(slug);
-  const { data: flights = [], isLoading: flightsLoading } = useAirlineFlights(airline?.id ?? '');
 
-  const departures = flights.filter((f) => f.type === 'departure');
-  const arrivals   = flights.filter((f) => f.type === 'arrival');
+  /* ── Live flight data from AviationStack board ── */
+  const {
+    data: allDeps = [], isLoading: depsLoading,
+    refetch: refetchDeps, isFetching: fetchingDeps,
+  } = useFlightBoard('departure');
+  const {
+    data: allArrs = [], isLoading: arrsLoading,
+    refetch: refetchArrs, isFetching: fetchingArrs,
+  } = useFlightBoard('arrival');
+
+  const iata       = airline?.iata_code ?? '';
+  const departures = allDeps.filter(f =>
+    f.airline_id === iata || f.airlines?.iata_code === iata
+  );
+  const arrivals   = allArrs.filter(f =>
+    f.airline_id === iata || f.airlines?.iata_code === iata
+  );
+
+  const flightsLoading = depsLoading || arrsLoading;
+  const isFetching     = fetchingDeps || fetchingArrs;
+  const refetch        = () => { void refetchDeps(); void refetchArrs(); };
 
   const description = i18n.language === 'fr'
     ? airline?.description_fr
@@ -46,21 +65,20 @@ function AirlinePage() {
     );
   }
 
-  const bg = getAirlineBg(airline.iata_code);
+  const bg      = getAirlineBg(airline.iata_code);
+  const logoUrl = getAirlineLogoUrl(airline.iata_code);
+  const website = airline.website ?? null;
 
   return (
     <main id="main-content">
 
       {/* ── Hero compagnie ───────────────────────────────────────── */}
-      <div className="relative overflow-hidden" style={{ backgroundColor: bg, minHeight: '320px' }}>
-        {/* Motif subtil */}
+      <div className="relative overflow-hidden" style={{ backgroundColor: bg, minHeight: '300px' }}>
         <div className="absolute inset-0 opacity-10"
           style={{ backgroundImage: 'repeating-linear-gradient(45deg, white 0, white 1px, transparent 0, transparent 50%)', backgroundSize: '24px 24px' }} />
-        {/* Dégradé bas */}
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/30 to-transparent" />
 
         <div className="container relative z-10 pb-10 pt-16 md:pt-20">
-          {/* Breadcrumb */}
           <Link to="/vols/compagnies-aeriennes"
             className="mb-8 inline-flex items-center gap-1.5 text-xs font-semibold text-white/70 hover:text-white transition-colors">
             <ChevronLeft size={14} /> Compagnies aériennes
@@ -68,13 +86,23 @@ function AirlinePage() {
 
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end">
             {/* Logo */}
-            <div className="flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-2xl border-2 border-white/20 bg-white shadow-lg">
-              {airline.logo_url ? (
-                <img src={airline.logo_url} alt={airline.name}
-                  className="h-16 w-16 object-contain" />
-              ) : (
-                <span className="text-2xl font-bold" style={{ color: bg }}>{airline.iata_code}</span>
-              )}
+            <div className="relative flex h-24 w-24 flex-shrink-0 items-center justify-center rounded-2xl border-2 border-white/20 bg-white shadow-lg overflow-hidden">
+              <img
+                src={logoUrl}
+                alt={airline.name}
+                className="h-16 w-16 object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fb = e.currentTarget.nextSibling as HTMLElement | null;
+                  if (fb) fb.style.display = 'flex';
+                }}
+              />
+              <span
+                className="absolute inset-0 hidden items-center justify-center text-2xl font-bold"
+                style={{ color: bg }}
+              >
+                {airline.iata_code}
+              </span>
             </div>
 
             {/* Nom + badges */}
@@ -95,6 +123,12 @@ function AirlinePage() {
                   <> · OACI : <strong className="text-white">{airline.icao_code}</strong></>
                 )}
               </p>
+              {website && (
+                <a href={website} target="_blank" rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-white/70 hover:text-white transition-colors">
+                  <Globe size={12} /> Site officiel
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -103,18 +137,10 @@ function AirlinePage() {
       {/* ── Contenu ──────────────────────────────────────────────── */}
       <div className="container py-10 md:py-12">
 
-        {/* Description + site web */}
-        {(description || airline.website) && (
+        {/* Description */}
+        {description && (
           <div className="mb-10 rounded-2xl border border-border bg-white p-6 shadow-sm">
-            {description && (
-              <p className="leading-relaxed text-muted-foreground">{description}</p>
-            )}
-            {airline.website && (
-              <a href={airline.website} target="_blank" rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:underline">
-                <Globe size={14} /> Visiter le site officiel
-              </a>
-            )}
+            <p className="leading-relaxed text-muted-foreground">{description}</p>
           </div>
         )}
 
@@ -135,9 +161,19 @@ function AirlinePage() {
         </div>
 
         {/* Vols du jour */}
-        <h2 className="font-display mb-5 text-xl font-bold text-rdc-anthracite">
-          {t('vols.airline.todayFlights')}
-        </h2>
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="font-display text-xl font-bold text-rdc-anthracite">
+            {t('vols.airline.todayFlights')}
+          </h2>
+          <button
+            onClick={refetch}
+            disabled={isFetching}
+            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-rdc-blue transition-colors disabled:opacity-40"
+          >
+            <RefreshCw size={12} className={isFetching ? 'animate-spin' : ''} />
+            Actualiser
+          </button>
+        </div>
 
         <Tabs defaultValue="departures">
           <TabsList className="mb-5">
@@ -151,11 +187,11 @@ function AirlinePage() {
 
           <TabsContent value="departures">
             <FlightTable data={departures} type="departure" isLoading={flightsLoading}
-              globalFilter="" statusFilter={''} terminalFilter="" />
+              globalFilter="" statusFilter="" terminalFilter="" />
           </TabsContent>
           <TabsContent value="arrivals">
             <FlightTable data={arrivals} type="arrival" isLoading={flightsLoading}
-              globalFilter="" statusFilter={''} terminalFilter="" />
+              globalFilter="" statusFilter="" terminalFilter="" />
           </TabsContent>
         </Tabs>
       </div>
@@ -166,7 +202,7 @@ function AirlinePage() {
 function AirlineSkeleton() {
   return (
     <div className="space-y-6">
-      <Skeleton className="h-[320px] w-full" />
+      <Skeleton className="h-[300px] w-full" />
       <div className="container space-y-6">
         <div className="grid grid-cols-4 gap-4">
           {[1,2,3,4].map(i => <Skeleton key={i} className="h-24 rounded-xl" />)}
