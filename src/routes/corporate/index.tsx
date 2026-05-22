@@ -4,6 +4,7 @@ import {
   Handshake, Plane, Shield, ArrowRight, Users,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/corporate/')({
   component: CorporateHub,
@@ -15,42 +16,42 @@ export const Route = createFileRoute('/corporate/')({
   }),
 });
 
-const MAIN_SECTIONS = [
+const MAIN_SECTIONS_DATA = [
   {
     icon: Building2,
     href: '/corporate/a-propos',
-    label: "À propos de l'aéroport",
-    desc: "Mission, valeurs et rôle de l'Aéroport International de N'djili dans le développement du transport aérien en RDC.",
+    labelKey: 'corporate.about',
+    descKey: 'corporate.aboutDesc',
     accent: '#003DA5',
   },
   {
     icon: Scale,
     href: '/corporate/gouvernance',
-    label: 'Gouvernance',
-    desc: "Conseil d'administration, comité de direction, directions fonctionnelles et structure de gouvernance.",
+    labelKey: 'corporate.governance',
+    descKey: 'corporate.governanceDesc',
     accent: '#1A1A1A',
   },
   {
     icon: Rocket,
     href: '/corporate/projets-avenir',
-    label: "Projets d'avenir",
-    desc: 'Reconstruction du terminal international, modernisation de la piste et vision 2030 pour FIH.',
+    labelKey: 'corporate.futureProjects',
+    descKey: 'corporate.futureProjectsDesc',
     accent: '#FFCE00',
   },
   {
     icon: History,
     href: '/corporate/historique',
-    label: 'Historique',
-    desc: "De 1953 à aujourd'hui — Sabena, Air Congo, Air Zaïre et la renaissance de l'aviation congolaise.",
+    labelKey: 'corporate.history',
+    descKey: 'corporate.historyDesc',
     accent: '#CE1126',
   },
 ] as const;
 
-const OTHER_SECTIONS = [
-  { icon: Briefcase, href: '/corporate/carriere', label: 'Carrières', desc: "Rejoignez la communauté FIH — offres d'emploi et opportunités de carrière à la RVA." },
-  { icon: Handshake, href: '/corporate/partenariats-commerciaux', label: 'Partenariats', desc: 'Concessions, publicité, immobilier aéroportuaire et opportunités commerciales à FIH.' },
-  { icon: Plane, href: '/corporate/services-aeriens', label: 'Services aériens', desc: 'Fret, aviation générale et commerciale — services dédiés aux opérateurs aériens.' },
-  { icon: Shield, href: '/corporate/surete-securite', label: 'Sûreté & Sécurité', desc: 'Écosystème sécurité de FIH — SSLIA, SMS, SST et engagement qualité.' },
+const OTHER_SECTIONS_DATA = [
+  { icon: Briefcase, href: '/corporate/carriere', labelKey: 'corporate.careers', descKey: 'corporate.careersDesc' },
+  { icon: Handshake, href: '/corporate/partenariats-commerciaux', labelKey: 'corporate.partnerships', descKey: 'corporate.partnershipsDesc' },
+  { icon: Plane, href: '/corporate/services-aeriens', labelKey: 'corporate.airServices', descKey: 'corporate.airServicesDesc' },
+  { icon: Shield, href: '/corporate/surete-securite', labelKey: 'corporate.safetyAndSecurity', descKey: 'corporate.safetyDesc' },
 ] as const;
 
 const STATS = [
@@ -61,20 +62,22 @@ const STATS = [
 ] as const;
 
 function CorporateHub() {
+  const { t } = useTranslation();
+
   return (
     <>
       <PageHero
-        eyebrow="Aéroport International de N'djili · FIH"
-        title="Un aéroport au cœur du Congo"
-        subtitle="L'Aéroport International de N'djili (FIH/FZAA), géré par la RVA depuis 1970, est le pilier du transport aérien de la République Démocratique du Congo."
-        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Corporate' }]}
+        eyebrow={t('corporate.hubTitle')}
+        title={t('corporate.hubTitle')}
+        subtitle={t('corporate.hubSubtitle')}
+        breadcrumbs={[{ label: t('home.hero.cta'), href: '/' }, { label: t('nav.corporate') }]}
         cta={
           <div className="flex flex-wrap gap-3">
             <Link to={'/corporate/a-propos' as never} className="btn-primary">
-              <Building2 size={15} /> À propos de FIH
+              <Building2 size={15} /> {t('corporate.about')}
             </Link>
             <Link to={'/corporate/projets-avenir' as never} className="btn-outline-white">
-              <Rocket size={15} /> Projets d'avenir
+              <Rocket size={15} /> {t('corporate.futureProjects')}
             </Link>
           </div>
         }
@@ -105,7 +108,7 @@ function CorporateHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-white/8 sm:grid-cols-2">
-            {MAIN_SECTIONS.map((s) => (
+            {MAIN_SECTIONS_DATA.map((s) => (
               <Link
                 key={s.href}
                 to={s.href as never}
@@ -132,9 +135,9 @@ function CorporateHub() {
 
                 <div>
                   <h3 className="font-display font-bold text-white text-2xl leading-snug group-hover:text-rdc-yellow transition-colors">
-                    {s.label}
+                    {t(s.labelKey)}
                   </h3>
-                  <p className="mt-3 text-sm text-white/45 leading-relaxed">{s.desc}</p>
+                  <p className="mt-3 text-sm text-white/45 leading-relaxed">{t(s.descKey)}</p>
                 </div>
               </Link>
             ))}
@@ -154,7 +157,7 @@ function CorporateHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {OTHER_SECTIONS.map((s) => (
+            {OTHER_SECTIONS_DATA.map((s) => (
               <Link
                 key={s.href}
                 to={s.href as never}
@@ -166,12 +169,12 @@ function CorporateHub() {
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-rdc-anthracite text-lg leading-snug group-hover:text-rdc-blue transition-colors">
-                    {s.label}
+                    {t(s.labelKey)}
                   </h3>
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{t(s.descKey)}</p>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-bold text-rdc-blue/60 group-hover:text-rdc-blue transition-colors mt-auto">
-                  Voir <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
+                  {t('common.viewAll')} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
             ))}
@@ -192,17 +195,15 @@ function CorporateHub() {
                 Construisez votre carrière à l'aéroport
               </h2>
               <p className="mt-4 text-white/60 text-base max-w-xl leading-relaxed">
-                L'Aéroport International de N'djili recrute des talents congolais pour
-                façonner l'avenir du transport aérien en RDC. Découvrez nos offres
-                d'emploi et programmes de formation.
+                {t('corporate.careersSubtitle')}
               </p>
             </div>
             <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <Link to={'/corporate/carriere/offres-emploi' as never} className="btn-primary whitespace-nowrap">
-                <Users size={15} /> Voir les offres d'emploi
+                <Users size={15} /> {t('corporate.jobOffers')}
               </Link>
               <Link to={'/corporate/carriere' as never} className="btn-outline-white whitespace-nowrap">
-                La communauté FIH <ArrowRight size={14} />
+                {t('corporate.community')} <ArrowRight size={14} />
               </Link>
             </div>
           </div>

@@ -4,6 +4,7 @@ import {
   AlertTriangle, ArrowRight, CreditCard,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/stationnement-transport/')({
   component: StationnementHub,
@@ -18,52 +19,54 @@ const PARKING = [
   { code: 'P3', name: 'Parking PMR', rate: 'Gratuit', spots: 24 },
 ] as const;
 
-const TRANSPORT = [
+const TRANSPORT_DATA = [
   {
     icon: Car,
     href: '/stationnement-transport/taxis',
-    label: 'Taxis officiels agréés',
-    desc: 'Taxis RVA agréés — tarifés, sécurisés, disponibles 24h/24 à la sortie des arrivées.',
+    labelKey: 'parking.taxis',
+    descKey: 'stat.hub.taxisDesc',
     accent: '#FFCE00',
   },
   {
     icon: Bus,
     href: '/stationnement-transport/transcom-bus',
-    label: 'Bus Transco / Esprit de Vie',
-    desc: 'Lignes directes depuis le centre-ville de Kinshasa — Gombe, Commune de la N\'sele.',
+    labelKey: 'parking.bus',
+    descKey: 'stat.hub.busDesc',
     accent: '#003DA5',
   },
   {
     icon: Car,
     href: '/stationnement-transport/location-voitures',
-    label: 'Location de voitures',
-    desc: 'Avis, Europcar et agences locales disponibles au niveau des arrivées.',
+    labelKey: 'parking.carRental',
+    descKey: 'stat.hub.rentalDesc',
     accent: '#CE1126',
   },
   {
     icon: Bike,
     href: '/stationnement-transport/mobilite-reduite',
-    label: 'Mobilité réduite',
-    desc: 'Assistance fauteuil roulant, places PMR prioritaires et accès facilité aux terminaux.',
+    labelKey: 'parking.reducedMobility',
+    descKey: 'stat.hub.pmrDesc',
     accent: '#003DA5',
   },
 ] as const;
 
 function StationnementHub() {
+  const { t } = useTranslation();
+
   return (
     <>
       <PageHero
-        eyebrow="Stationnement & Transport"
-        title="Arriver & Repartir facilement"
-        subtitle="Stationnement officiel RVA, taxis agréés, bus Transco et accès via le Boulevard Lumumba — tout pour votre mobilité depuis et vers FIH."
-        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Stationnement & Transport' }]}
+        eyebrow={t('nav.parkingTransport')}
+        title={t('stat.hub.title')}
+        subtitle={t('stat.hub.subtitle')}
+        breadcrumbs={[{ label: t('home.hero.cta'), href: '/' }, { label: t('nav.parkingTransport') }]}
         cta={
           <div className="flex flex-wrap gap-3">
             <Link to={'/stationnement-transport/offres' as never} className="btn-primary">
-              <CreditCard size={15} /> Voir les tarifs
+              <CreditCard size={15} /> {t('parking.offers')}
             </Link>
             <Link to={'/stationnement-transport/depose-recuperation' as never} className="btn-outline-white">
-              <MapPin size={15} /> Dépose & Récupération
+              <MapPin size={15} /> {t('parking.dropOff')}
             </Link>
           </div>
         }
@@ -78,7 +81,7 @@ function StationnementHub() {
           >
             <AlertTriangle size={16} className="text-amber-600 shrink-0" />
             <p className="text-sm font-semibold text-amber-800 flex-1">
-              Travaux en cours — Perturbations possibles sur certaines voies d'accès au P2
+              {t('stat.hub.worksAlert')} — {t('stat.hub.worksAlertDesc')}
             </p>
             <ArrowRight size={14} className="text-amber-600 group-hover:translate-x-1 transition-transform" />
           </Link>
@@ -90,7 +93,7 @@ function StationnementHub() {
         <div className="container">
           <div className="flex items-center gap-3 mb-3">
             <div className="accent-line" />
-            <p className="eyebrow text-rdc-blue">Stationnement FIH</p>
+            <p className="eyebrow text-rdc-blue">{t('parking.parkingFih')}</p>
           </div>
           <div className="flex items-end justify-between mb-10">
             <h2 className="display-sub text-rdc-anthracite">Nos parkings officiels</h2>
@@ -98,7 +101,7 @@ function StationnementHub() {
               to={'/stationnement-transport/stationnement-fih' as never}
               className="hidden sm:inline-flex items-center gap-2 text-sm font-bold text-rdc-anthracite hover:text-rdc-blue transition-colors group"
             >
-              Tout savoir
+              {t('common.learnMore')}
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -118,12 +121,12 @@ function StationnementHub() {
                   <h3 className="font-display font-bold text-rdc-anthracite text-lg group-hover:text-rdc-blue transition-colors">
                     {p.name}
                   </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{p.spots} places disponibles</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{p.spots} {t('parking.spots')} {t('parking.available')}</p>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-display font-bold text-rdc-blue">{p.rate}</span>
                   <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                    Disponible
+                    {t('parking.available')}
                   </span>
                 </div>
               </Link>
@@ -144,7 +147,7 @@ function StationnementHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-white/8 sm:grid-cols-2 lg:grid-cols-3">
-            {TRANSPORT.map((s) => (
+            {TRANSPORT_DATA.map((s) => (
               <Link
                 key={s.href}
                 to={s.href as never}
@@ -164,13 +167,13 @@ function StationnementHub() {
 
                 <div className="flex-1">
                   <h3 className="font-display font-bold text-white text-lg leading-snug group-hover:text-rdc-yellow transition-colors">
-                    {s.label}
+                    {t(s.labelKey)}
                   </h3>
-                  <p className="mt-2 text-sm text-white/40 leading-relaxed">{s.desc}</p>
+                  <p className="mt-2 text-sm text-white/40 leading-relaxed">{t(s.descKey)}</p>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm font-bold text-white/30 group-hover:text-white transition-colors">
-                  En savoir plus
+                  {t('common.learnMore')}
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -189,19 +192,17 @@ function StationnementHub() {
                 <p className="eyebrow text-rdc-yellow">Accès principal</p>
               </div>
               <h2 className="font-display font-bold text-white text-2xl lg:text-3xl">
-                Boulevard Lumumba
+                {t('parking.boulevard')}
               </h2>
               <p className="mt-3 text-white/60 text-sm max-w-lg">
-                Route principale d'accès depuis le centre-ville de Kinshasa (Gombe).
-                Comptez 45–90 min selon la circulation. Consultez les informations
-                en temps réel avant de partir.
+                {t('stat.blvd.subtitle')}
               </p>
             </div>
             <Link
               to={'/stationnement-transport/boulevard-lumumba' as never}
               className="btn-outline-white shrink-0"
             >
-              <MapPin size={15} /> Infos d'accès <ArrowRight size={14} />
+              <MapPin size={15} /> {t('stat.hub.boulevardDesc')} <ArrowRight size={14} />
             </Link>
           </div>
         </div>

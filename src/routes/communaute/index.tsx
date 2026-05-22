@@ -4,6 +4,7 @@ import {
   ArrowRight, MessageSquare, Paintbrush2,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/communaute/')({
   component: CommunauteHub,
@@ -15,36 +16,36 @@ export const Route = createFileRoute('/communaute/')({
   }),
 });
 
-const MAIN_CARDS = [
+const MAIN_CARDS_DATA = [
   {
     icon: Leaf,
     href: '/communaute/environnement-durabilite',
-    label: 'Environnement & Durabilité',
-    desc: "Gestion de l'impact environnemental — Pool Malebo, fleuve Congo, faune aviaire et programmes de durabilité.",
+    labelKey: 'community.environmentSustainability',
+    descKey: 'community.envSubtitle',
     gradient: 'linear-gradient(135deg, #005A28 0%, #009A44 100%)',
     count: '4 sous-sections',
   },
   {
     icon: Volume2,
     href: '/communaute/environnement-sonore',
-    label: 'Environnement sonore',
-    desc: 'Gestion du bruit aéronautique — indicateurs, atténuation, plaintes et bulletin de suivi.',
+    labelKey: 'community.noiseEnvironment',
+    descKey: 'community.noiseSubtitle',
     gradient: 'linear-gradient(135deg, #B45309 0%, #D97706 100%)',
     count: '6 sous-sections',
   },
   {
     icon: Users,
     href: '/communaute/relations-communaute',
-    label: 'Relations communautaires',
-    desc: "Dialogue permanent avec les communes de Nsele, Masina, Kimbanseke et N'djili.",
+    labelKey: 'community.communityRelations',
+    descKey: 'community.communitySubtitle',
     gradient: 'linear-gradient(135deg, #003DA5 0%, #0052CC 100%)',
     count: '5 initiatives',
   },
   {
     icon: Paintbrush2,
     href: '/communaute/relations-communaute',
-    label: 'FIH Art',
-    desc: "Programme artistique — Chéri Samba, Moke et la nouvelle génération d'artistes kinois exposés à FIH.",
+    labelKey: 'community.fihArt',
+    descKey: 'home.community.art.desc',
     gradient: 'linear-gradient(135deg, #7C1B28 0%, #CE1126 100%)',
     count: 'Programme actif',
   },
@@ -58,20 +59,22 @@ const COMMUNES = [
 ] as const;
 
 function CommunauteHub() {
+  const { t } = useTranslation();
+
   return (
     <>
       <PageHero
-        eyebrow="Communauté & Responsabilité"
-        title="Enracinés dans Kinshasa"
-        subtitle="La RVA s'engage activement auprès des communautés riveraines de Nsele, Masina et Kimbanseke — environnement, culture, dialogue et développement durable."
-        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Communauté' }]}
+        eyebrow={t('community.hubTitle')}
+        title={t('community.hubTitle')}
+        subtitle={t('community.hubSubtitle')}
+        breadcrumbs={[{ label: t('home.hero.cta'), href: '/' }, { label: t('nav.community') }]}
         cta={
           <div className="flex flex-wrap gap-3">
             <Link to={'/communaute/relations-communaute' as never} className="btn-primary">
-              <Users size={15} /> Relations communautaires
+              <Users size={15} /> {t('community.communityRelations')}
             </Link>
             <Link to={'/communaute/environnement-sonore' as never} className="btn-outline-white">
-              <MessageSquare size={15} /> Déposer une plainte
+              <MessageSquare size={15} /> {t('community.noiseComplaints')}
             </Link>
           </div>
         }
@@ -89,9 +92,9 @@ function CommunauteHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-border sm:grid-cols-2">
-            {MAIN_CARDS.map((card) => (
+            {MAIN_CARDS_DATA.map((card) => (
               <Link
-                key={card.href + card.label}
+                key={card.href + card.labelKey}
                 to={card.href as never}
                 className="group relative overflow-hidden flex flex-col"
                 style={{ background: card.gradient }}
@@ -112,9 +115,9 @@ function CommunauteHub() {
                     {card.count}
                   </span>
                   <h3 className="font-display font-bold text-white text-2xl leading-snug group-hover:text-rdc-yellow transition-colors">
-                    {card.label}
+                    {t(card.labelKey)}
                   </h3>
-                  <p className="mt-3 text-sm text-white/60 leading-relaxed">{card.desc}</p>
+                  <p className="mt-3 text-sm text-white/60 leading-relaxed">{t(card.descKey)}</p>
                 </div>
               </Link>
             ))}
@@ -129,15 +132,13 @@ function CommunauteHub() {
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="accent-line" />
-                <p className="eyebrow text-rdc-yellow">Communes riveraines</p>
+                <p className="eyebrow text-rdc-yellow">{t('community.riverineCommunesTitle')}</p>
               </div>
               <h2 className="display-sub text-white mb-5">
                 Un dialogue permanent avec nos voisins
               </h2>
               <p className="text-white/50 text-base leading-relaxed max-w-lg">
-                La RVA maintient un comité consultatif communautaire actif
-                avec les représentants des quatre communes directement impactées
-                par les activités de l'aéroport de N'djili.
+                {t('community.committeeDesc')}
               </p>
 
               <div className="mt-10 space-y-0 border-t border-white/10">
@@ -172,11 +173,11 @@ function CommunauteHub() {
                 >
                   <div className="border border-white/10 p-5 hover:border-white/25 hover:bg-white/5 transition-colors">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="font-bold text-white text-sm">Nuisances sonores</p>
+                      <p className="font-bold text-white text-sm">{t('community.noiseEnvironment')}</p>
                       <ArrowRight size={13} className="text-white/30 group-hover:text-rdc-yellow group-hover:translate-x-1 transition-all" />
                     </div>
                     <p className="text-xs text-white/40 leading-relaxed">
-                      Déposez une plainte formelle concernant le bruit des aéronefs.
+                      {t('community.noiseComplaints')}
                     </p>
                   </div>
                 </Link>
@@ -187,7 +188,7 @@ function CommunauteHub() {
                 >
                   <div className="border border-white/10 p-5 hover:border-white/25 hover:bg-white/5 transition-colors">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="font-bold text-white text-sm">Consultations publiques</p>
+                      <p className="font-bold text-white text-sm">{t('community.consultations')}</p>
                       <ArrowRight size={13} className="text-white/30 group-hover:text-rdc-yellow group-hover:translate-x-1 transition-all" />
                     </div>
                     <p className="text-xs text-white/40 leading-relaxed">
@@ -202,11 +203,11 @@ function CommunauteHub() {
                 >
                   <div className="border border-white/10 p-5 hover:border-white/25 hover:bg-white/5 transition-colors">
                     <div className="flex items-center justify-between mb-2">
-                      <p className="font-bold text-white text-sm">Travaux sur pistes</p>
+                      <p className="font-bold text-white text-sm">{t('community.runwayWorks')}</p>
                       <ArrowRight size={13} className="text-white/30 group-hover:text-rdc-yellow group-hover:translate-x-1 transition-all" />
                     </div>
                     <p className="text-xs text-white/40 leading-relaxed">
-                      Calendrier et impact des travaux sur les trajectoires de vol.
+                      {t('community.runwayWorksSubtitle')}
                     </p>
                   </div>
                 </Link>
@@ -214,7 +215,7 @@ function CommunauteHub() {
 
               <div className="mt-6 pt-6 border-t border-white/10">
                 <p className="text-xs font-bold uppercase tracking-wider text-white/30 mb-3">
-                  Comité consultatif
+                  {t('community.noiseCommittee')}
                 </p>
                 <p className="text-xs text-white/40 leading-relaxed">
                   Prochain comité consultatif communautaire — Juin 2026.
@@ -235,7 +236,7 @@ function CommunauteHub() {
             </div>
             <div className="flex-1">
               <h3 className="font-display font-bold text-rdc-anthracite text-lg">
-                Travaux sur pistes — Mise à jour
+                {t('community.runwayWorks')} — Mise à jour
               </h3>
               <p className="mt-2 text-sm text-muted-foreground max-w-2xl leading-relaxed">
                 Des travaux de réhabilitation sont en cours sur les voies de circulation principales.
@@ -247,7 +248,7 @@ function CommunauteHub() {
               to={'/communaute/travaux-pistes' as never}
               className="shrink-0 btn-primary text-sm hidden sm:inline-flex"
             >
-              Plus d'infos <ArrowRight size={14} />
+              {t('common.seeMore')} <ArrowRight size={14} />
             </Link>
           </div>
         </div>

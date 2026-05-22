@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { PlaneTakeoff, PlaneLanding, Building2, Bell, Clock, Map, ArrowRight } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/vols/')({
   component: VolsHub,
@@ -12,47 +13,47 @@ export const Route = createFileRoute('/vols/')({
   }),
 });
 
-const SERVICES = [
+const SERVICES_DATA = [
   {
     icon: PlaneTakeoff,
     href: '/vols/departs',
-    label: 'Départs',
-    desc: 'Tableau en temps réel de tous les vols au départ de FIH — statuts, portes et retards.',
+    labelKey: 'flights.departures',
+    descKey: 'vols.hub.departuresDesc',
     accent: '#003DA5',
   },
   {
     icon: PlaneLanding,
     href: '/vols/arrivees',
-    label: 'Arrivées',
-    desc: 'Suivi en direct des vols atterrissant à Kinshasa — réclamation bagages et couloirs DGM.',
+    labelKey: 'flights.arrivals',
+    descKey: 'vols.hub.arrivalsDesc',
     accent: '#009A44',
   },
   {
     icon: Building2,
     href: '/vols/compagnies-aeriennes',
-    label: 'Compagnies aériennes',
-    desc: 'Toutes les compagnies opérant à FIH — horaires, comptoirs, conditions bagages.',
+    labelKey: 'flights.airlines',
+    descKey: 'vols.hub.airlinesDesc',
     accent: '#CE1126',
   },
   {
     icon: Bell,
     href: '/vols/alertes-sms',
-    label: 'Alertes SMS',
-    desc: 'Abonnez-vous aux alertes SMS pour votre vol — départs retardés, changements de porte.',
+    labelKey: 'flights.smsAlerts',
+    descKey: 'vols.hub.smsDesc',
     accent: '#FFCE00',
   },
   {
     icon: Clock,
     href: '/vols/temps-attente',
-    label: 'Temps d\'attente',
-    desc: 'Temps estimés aux contrôles sécurité, immigration et douanes en ce moment.',
+    labelKey: 'flights.waitTimes',
+    descKey: 'vols.hub.waitTimesDesc',
     accent: '#003DA5',
   },
   {
     icon: Map,
     href: '/vols/plans-aerogares',
-    label: 'Plans des terminaux',
-    desc: 'Plans interactifs du Terminal International et du Terminal Domestique de FIH.',
+    labelKey: 'flights.terminalMaps',
+    descKey: 'vols.hub.mapsDesc',
     accent: '#1A1A1A',
   },
 ] as const;
@@ -64,20 +65,22 @@ const AIRLINES = [
 ];
 
 function VolsHub() {
+  const { t } = useTranslation();
+
   return (
     <>
       <PageHero
-        eyebrow="Informations vols"
-        title="Vols & Horaires"
-        subtitle="Départs, arrivées, compagnies aériennes et alertes en temps réel depuis l'Aéroport International de N'djili (FIH), Kinshasa."
-        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Vols' }]}
+        eyebrow={t('vols.hub.title')}
+        title={t('vols.hub.title')}
+        subtitle={t('vols.hub.subtitle')}
+        breadcrumbs={[{ label: t('home.hero.cta'), href: '/' }, { label: t('nav.flights') }]}
         cta={
           <div className="flex flex-wrap gap-3">
             <Link to={'/vols/departs' as never} className="btn-primary">
-              <PlaneTakeoff size={15} /> Voir les départs
+              <PlaneTakeoff size={15} /> {t('flights.departures')}
             </Link>
             <Link to={'/vols/arrivees' as never} className="btn-outline-white">
-              <PlaneLanding size={15} /> Voir les arrivées
+              <PlaneLanding size={15} /> {t('flights.arrivals')}
             </Link>
           </div>
         }
@@ -95,7 +98,7 @@ function VolsHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((s) => (
+            {SERVICES_DATA.map((s) => (
               <Link
                 key={s.href}
                 to={s.href as never}
@@ -116,15 +119,15 @@ function VolsHub() {
 
                 <div className="flex-1">
                   <h3 className="font-display font-bold text-rdc-anthracite text-lg leading-snug group-hover:text-rdc-blue transition-colors">
-                    {s.label}
+                    {t(s.labelKey)}
                   </h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {s.desc}
+                    {t(s.descKey)}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-2 text-sm font-bold text-rdc-blue">
-                  En savoir plus
+                  {t('common.learnMore')}
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
@@ -148,7 +151,7 @@ function VolsHub() {
               to={'/vols/compagnies-aeriennes' as never}
               className="hidden sm:inline-flex items-center gap-2 text-sm font-bold text-white/60 hover:text-white transition-colors group"
             >
-              Toutes les compagnies
+              {t('flights.airlines')}
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -171,7 +174,7 @@ function VolsHub() {
               to={'/vols/compagnies-aeriennes' as never}
               className="inline-flex items-center gap-2 text-sm font-bold text-white"
             >
-              Toutes les compagnies <ArrowRight size={14} />
+              {t('flights.airlines')} <ArrowRight size={14} />
             </Link>
           </div>
         </div>

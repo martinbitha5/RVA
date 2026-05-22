@@ -4,6 +4,7 @@ import {
   Package, Crown, ArrowRight, Search,
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/boutiques-restaurants/')({
   component: BoutiquesRestaurantsHub,
@@ -15,68 +16,70 @@ export const Route = createFileRoute('/boutiques-restaurants/')({
   }),
 });
 
-const FEATURED = [
+const FEATURED_DATA = [
   {
     href: '/boutiques-restaurants/restaurants',
     icon: UtensilsCrossed,
-    label: 'Restaurants',
-    desc: 'Cuisine congolaise, plats internationaux et fast-food dans les deux terminaux.',
+    labelKey: 'shops.restaurants',
+    descKey: 'shops.restaurantsSubtitle',
     gradient: 'linear-gradient(135deg, #009A44 0%, #005A28 100%)',
     count: '8 établissements',
   },
   {
     href: '/boutiques-restaurants/hors-taxes',
     icon: Package,
-    label: 'Duty Free',
-    desc: 'Parfums, alcools, tabac et souvenirs hors-taxes avant votre embarquement.',
+    labelKey: 'shops.dutyFree',
+    descKey: 'shops.dutyFreeDesc',
     gradient: 'linear-gradient(135deg, #6B21A8 0%, #3B0764 100%)',
     count: '3 boutiques',
   },
   {
     href: '/boutiques-restaurants/salons',
     icon: Crown,
-    label: 'Salons VIP',
-    desc: 'Pearl Lounge, Brussels Airlines Lounge — un confort exclusif avant votre vol.',
+    labelKey: 'shops.lounges',
+    descKey: 'shops.loungesDesc',
     gradient: 'linear-gradient(135deg, #003DA5 0%, #001E6E 100%)',
     count: '2 salons',
   },
 ] as const;
 
-const CATEGORIES = [
+const CATEGORIES_DATA = [
   {
     href: '/boutiques-restaurants/boutiques',
     icon: ShoppingBag,
-    label: 'Boutiques',
-    desc: 'Artisanat congolais, presse, souvenirs et produits locaux.',
+    labelKey: 'shops.shops',
+    descKey: 'shops.shopsSubtitle',
     accent: '#FFCE00',
   },
   {
     href: '/boutiques-restaurants/bars-cafes',
     icon: Coffee,
-    label: 'Bars & Cafés',
-    desc: 'Café, boissons chaudes et cocktails dans une atmosphère détendue.',
+    labelKey: 'shops.barsCafes',
+    descKey: 'shops.barsCafesSubtitle',
     accent: '#C2702F',
   },
   {
     href: '/boutiques-restaurants/echange-devises',
     icon: ArrowRightLeft,
-    label: 'Change de devises',
-    desc: 'USD, CDF, EUR et autres devises — bureaux de change agréés.',
+    labelKey: 'shops.currencyExchange',
+    descKey: 'shops.currencyExchangeDesc',
     accent: '#009A44',
   },
 ] as const;
 
 function BoutiquesRestaurantsHub() {
+  const { t } = useTranslation();
+
   return (
     <>
       <PageHero
-        eyebrow="Boutiques & Restaurants"
-        title="Vivez l'aéroport autrement"
-        subtitle="Restaurants, boutiques hors-taxes, salons VIP et bureaux de change — tout le confort de FIH avant et après votre vol."
-        breadcrumbs={[{ label: 'Accueil', href: '/' }, { label: 'Boutiques & Restaurants' }]}
+        eyebrow={t('nav.shopsRestaurants')}
+        title={t('shops.hubTitle')}
+        subtitle={t('shops.hubSubtitle')}
+        breadcrumbs={[{ label: t('home.hero.cta'), href: '/' }, { label: t('nav.shopsRestaurants') }]}
         cta={
           <Link to={'/boutiques-restaurants/repertoire' as never} className="btn-primary">
-            <Search size={15} /> Répertoire complet
+            <Search size={15} /> {t('shops.directory')}
           </Link>
         }
       />
@@ -93,7 +96,7 @@ function BoutiquesRestaurantsHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-border sm:grid-cols-3">
-            {FEATURED.map((f) => (
+            {FEATURED_DATA.map((f) => (
               <Link
                 key={f.href}
                 to={f.href as never}
@@ -123,9 +126,9 @@ function BoutiquesRestaurantsHub() {
 
                 <div className="p-6 bg-black/20 backdrop-blur-sm border-t border-white/10">
                   <h3 className="font-display font-bold text-white text-xl group-hover:text-rdc-yellow transition-colors">
-                    {f.label}
+                    {t(f.labelKey)}
                   </h3>
-                  <p className="mt-2 text-sm text-white/60 leading-relaxed">{f.desc}</p>
+                  <p className="mt-2 text-sm text-white/60 leading-relaxed">{t(f.descKey)}</p>
                 </div>
               </Link>
             ))}
@@ -145,7 +148,7 @@ function BoutiquesRestaurantsHub() {
           </h2>
 
           <div className="grid gap-0.5 bg-white/8 sm:grid-cols-3">
-            {CATEGORIES.map((c) => (
+            {CATEGORIES_DATA.map((c) => (
               <Link
                 key={c.href}
                 to={c.href as never}
@@ -163,11 +166,11 @@ function BoutiquesRestaurantsHub() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="font-display font-bold text-white text-lg group-hover:text-rdc-yellow transition-colors">
-                    {c.label}
+                    {t(c.labelKey)}
                   </h3>
-                  <p className="mt-1.5 text-sm text-white/40 leading-relaxed">{c.desc}</p>
+                  <p className="mt-1.5 text-sm text-white/40 leading-relaxed">{t(c.descKey)}</p>
                   <div className="flex items-center gap-2 mt-4 text-xs font-bold text-white/25 group-hover:text-white/60 transition-colors">
-                    Découvrir <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                    {t('common.learnMore')} <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
               </Link>
