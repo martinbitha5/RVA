@@ -197,7 +197,7 @@ function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrol
 function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl gap-0 p-0 overflow-hidden">
+      <DialogContent className="max-w-xl gap-0 p-0 overflow-hidden" aria-describedby={undefined}>
         <DialogHeader className="px-6 pt-5 pb-4 border-b border-border">
           <DialogTitle className="text-base font-semibold">Recherche rapide</DialogTitle>
         </DialogHeader>
@@ -388,7 +388,7 @@ export function Header() {
 
       {/* Mobile drawer */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
-        <SheetContent side="right" className="w-full max-w-sm bg-rdc-anthracite border-0 overflow-y-auto p-0">
+        <SheetContent side="right" className="w-full max-w-sm bg-rdc-anthracite border-0 overflow-y-auto p-0" aria-describedby={undefined}>
           <SheetHeader className="flex-row items-center justify-between px-6 py-5 border-b border-white/10">
             <SheetTitle asChild><FihLogo light /></SheetTitle>
             <button onClick={() => setMobileOpen(false)} className="text-white/60 hover:text-white">

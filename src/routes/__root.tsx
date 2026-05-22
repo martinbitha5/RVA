@@ -1,6 +1,6 @@
 import { Component, type ReactNode } from 'react';
 import { createRootRoute, Outlet, Link } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 

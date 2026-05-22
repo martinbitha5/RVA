@@ -75,10 +75,10 @@ export function Hero() {
       <AnimatePresence mode="sync">
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.4, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 1.0, ease: 'easeInOut' }}
           className="absolute inset-0"
         >
           <img
@@ -86,7 +86,6 @@ export function Hero() {
             alt={SLIDES[current].alt}
             className={`h-full w-full object-cover ${SLIDES[current].position}`}
             loading={current === 0 ? 'eager' : 'lazy'}
-            fetchPriority={current === 0 ? 'high' : 'auto'}
             onError={(e) => {
               const el = e.currentTarget.parentElement as HTMLElement;
               e.currentTarget.style.display = 'none';
@@ -105,16 +104,6 @@ export function Hero() {
             'repeating-linear-gradient(-45deg,rgba(255,206,0,0.04) 0,rgba(255,206,0,0.04) 1px,transparent 0,transparent 28px)',
         }}
       />
-
-      {/* ── Flying plane silhouette ─────────────────────────────── */}
-      <motion.div
-        initial={{ x: '-10%', y: '5%', opacity: 0 }}
-        animate={{ x: '110%', y: '-8%', opacity: [0, 0.15, 0.15, 0] }}
-        transition={{ duration: 16, ease: 'linear', repeat: Infinity, repeatDelay: 12 }}
-        className="absolute top-1/4 left-0 pointer-events-none z-[2]"
-      >
-        <Plane size={26} className="text-white -rotate-12" />
-      </motion.div>
 
       {/* ── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 flex flex-1 flex-col justify-end lg:justify-center">

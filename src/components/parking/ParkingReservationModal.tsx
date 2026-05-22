@@ -137,7 +137,7 @@ export function ParkingReservationModal({ lot, open, onClose }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={(v) => !v && handleClose()}>
-      <DialogContent className="max-w-lg gap-0 p-0 overflow-hidden">
+      <DialogContent className="max-w-lg gap-0 p-0 overflow-hidden" aria-describedby={undefined}>
         <DialogHeader className="border-b border-border px-6 py-4">
           <DialogTitle className="font-display text-lg">
             {step < 4 ? t('parking.reservation.title', { lot: lot.name }) : t('parking.reservation.confirmed')}
