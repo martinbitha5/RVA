@@ -98,28 +98,18 @@ export function Footer() {
 
           {/* Column 1 — FIH */}
           <div className="col-span-2 md:col-span-1">
-            {/* Logo */}
+            {/* Logo — grand FIH sans image */}
             <Link
               to="/"
-              className="mb-5 flex items-center gap-3 transition-opacity hover:opacity-80"
+              className="mb-5 flex items-center gap-2.5 transition-opacity hover:opacity-80"
             >
-              {/* RVA logo on white pill — footer is dark so we need the pill */}
-              <div className="flex-shrink-0 bg-white/95 rounded px-1.5 py-0.5">
-                <img
-                  src="/images/rva-logo.png"
-                  alt="RVA — Régie des Voies Aériennes"
-                  className="h-8 w-auto object-contain"
-                  onError={e => { e.currentTarget.style.display = 'none'; }}
-                />
-              </div>
-              <div className="leading-tight">
-                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white/40">
-                  Aéroport International de N&apos;djili
-                </p>
-                <p className="font-display text-[13px] font-bold leading-none text-white">
-                  Kinshasa{' '}
-                  <span className="text-rdc-yellow">· FIH</span>
-                </p>
+              <span className="font-display text-[36px] font-black leading-none tracking-tight text-rdc-yellow">
+                FIH
+              </span>
+              <div className="leading-[1.2] text-[11px]">
+                <p className="font-normal text-white/60">Aéroport</p>
+                <p className="font-normal text-white/60">International</p>
+                <p className="font-bold text-white">de N&apos;djili</p>
               </div>
             </Link>
             <p className="mb-5 text-xs leading-relaxed text-white/50">

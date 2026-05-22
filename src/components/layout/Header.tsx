@@ -13,39 +13,21 @@ import { Input } from '@/components/ui/input';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
 
-/* ─── Logo ──────────────────────────────────────────────────── */
+/* ─── Logo desktop (grand FIH + texte, sans image RVA) ─────── */
 function FihLogo({ light = false }: { light?: boolean }) {
   return (
     <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
-      className="flex items-center gap-2 sm:gap-3 group shrink min-w-0">
-      {/* RVA Logo — on dark bg we give it a white pill so colours stay readable */}
-      <div className={cn(
-        'flex-shrink-0 flex items-center justify-center transition-all',
-        light
-          ? 'bg-white/95 rounded px-1.5 py-0.5 shadow-sm'
-          : 'bg-transparent'
+      className="flex items-center gap-2.5 shrink-0 group">
+      <span className={cn(
+        'font-display text-[32px] sm:text-[36px] font-black leading-none tracking-tight transition-colors',
+        light ? 'text-rdc-yellow group-hover:text-white' : 'text-rdc-blue group-hover:text-rdc-blue/80',
       )}>
-        <img
-          src="/images/rva-logo.png"
-          alt="RVA — Régie des Voies Aériennes"
-          className="h-8 sm:h-9 w-auto object-contain"
-          onError={e => { e.currentTarget.style.display = 'none'; }}
-        />
-      </div>
-      <div className="leading-tight min-w-0">
-        {/* Subtitle hidden on very narrow screens to keep action buttons visible */}
-        <p className={cn(
-          'hidden xs:block text-[9px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] truncate',
-          light ? 'text-white/50' : 'text-black/30',
-        )}>
-          Aéroport International de N&apos;djili
-        </p>
-        <p className={cn(
-          'font-display text-[13px] sm:text-[14px] font-bold leading-none mt-0.5 truncate',
-          light ? 'text-white' : 'text-rdc-anthracite',
-        )}>
-          Kinshasa <span className={light ? 'text-rdc-yellow' : 'text-rdc-blue'}>· FIH</span>
-        </p>
+        FIH
+      </span>
+      <div className="leading-[1.2] text-[11px]">
+        <p className={cn('font-normal', light ? 'text-white/60' : 'text-rdc-anthracite/50')}>Aéroport</p>
+        <p className={cn('font-normal', light ? 'text-white/60' : 'text-rdc-anthracite/50')}>International</p>
+        <p className={cn('font-bold',   light ? 'text-white'    : 'text-rdc-anthracite')}>de N&apos;djili</p>
       </div>
     </Link>
   );
