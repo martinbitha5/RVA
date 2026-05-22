@@ -6,6 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { PageHero } from '@/components/ui/page-hero';
 import { useAirlines } from '@/lib/queries';
 import type { Airline } from '@/types/database';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/vols/compagnies-aeriennes')({
   component: CompagniesLayout,
@@ -58,6 +59,7 @@ function CompagniesLayout() {
 }
 
 function CompagniesPage() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { data: airlines = [], isLoading } = useAirlines();
 
@@ -75,14 +77,14 @@ function CompagniesPage() {
     <main id="main-content">
 
       <PageHero
-        eyebrow="Vols"
-        title="Compagnies aériennes"
-        subtitle="Découvrez les compagnies qui desservent FIH et leurs destinations depuis Kinshasa — Afrique, Europe, Moyen-Orient."
+        eyebrow={t('nav.flights')}
+        title={t('flights.airlines')}
+        subtitle={t('vols.airlines.subtitle')}
         image="/images/fih-tarmac.jpg"
         breadcrumbs={[
-          { label: 'Accueil', href: '/' },
-          { label: 'Vols' },
-          { label: 'Compagnies aériennes' },
+          { label: t('home.hero.cta'), href: '/' },
+          { label: t('nav.flights') },
+          { label: t('flights.airlines') },
         ]}
       />
 
@@ -95,7 +97,7 @@ function CompagniesPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher une compagnie ou code IATA…"
+            placeholder={t('vols.airlines.searchPlaceholder')}
             className="w-full rounded-lg border border-border bg-white py-2.5 pl-9 pr-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-rdc-blue"
           />
         </div>
@@ -111,7 +113,7 @@ function CompagniesPage() {
               <section className="mb-16">
                 <div className="mb-3 flex items-center gap-3">
                   <div className="accent-line" />
-                  <p className="eyebrow text-rdc-blue">Hub FIH</p>
+                  <p className="eyebrow text-rdc-blue">{t('vols.airlines.hub')}</p>
                 </div>
                 <h2 className="font-display mb-6 text-2xl font-bold text-rdc-anthracite">Basées à Kinshasa</h2>
                 <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -128,7 +130,7 @@ function CompagniesPage() {
                   <p className="eyebrow text-rdc-blue">Liaisons internationales</p>
                 </div>
                 <div className="mb-6 flex items-end justify-between">
-                  <h2 className="font-display text-2xl font-bold text-rdc-anthracite">Compagnies internationales</h2>
+                  <h2 className="font-display text-2xl font-bold text-rdc-anthracite">{t('vols.airlines.international')}</h2>
                   <span className="text-sm text-muted-foreground">{others.length} compagnie{others.length > 1 ? 's' : ''}</span>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -140,7 +142,7 @@ function CompagniesPage() {
             {filtered.length === 0 && (
               <div className="py-16 text-center">
                 <Plane size={32} className="mx-auto mb-3 text-muted-foreground/30" />
-                <p className="text-sm text-muted-foreground">Aucune compagnie trouvée pour «&nbsp;{search}&nbsp;»</p>
+                <p className="text-sm text-muted-foreground">{t('common.noResults')}</p>
               </div>
             )}
           </>

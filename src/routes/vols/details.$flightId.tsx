@@ -11,6 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useFlightById } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import type { FlightStatus } from '@/types/database';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/vols/details/$flightId')({
   component: FlightDetailPage,
@@ -173,6 +174,7 @@ function buildArrivalSteps(actualTime: string | null, estimatedTime: string | nu
 
 /* ─── Main page component ───────────────────────────────────────────── */
 function FlightDetailPage() {
+  const { t } = useTranslation();
   const { flightId } = Route.useParams();
   const { data: flight, isLoading, dataUpdatedAt, refetch, isFetching, isError } = useFlightById(flightId);
 
@@ -205,15 +207,15 @@ function FlightDetailPage() {
       <main id="main-content">
         <div className="container py-20 text-center">
           <AlertTriangle size={40} className="mx-auto mb-4 text-rdc-red" />
-          <h1 className="font-display text-2xl font-bold text-rdc-anthracite">Vol introuvable</h1>
+          <h1 className="font-display text-2xl font-bold text-rdc-anthracite">{t('common.noResults')}</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Ce vol n'existe pas ou n'est plus disponible dans notre système.
+            {t('common.error')}
           </p>
           <Link
             to={'/vols/departs' as never}
             className="mt-6 inline-flex items-center gap-2 bg-rdc-blue px-5 py-2.5 text-sm font-semibold text-white hover:bg-rdc-blue/85"
           >
-            <ArrowLeft size={14} /> Retour aux départs
+            <ArrowLeft size={14} /> {t('common.back')}
           </Link>
         </div>
       </main>
@@ -256,7 +258,7 @@ function FlightDetailPage() {
             className="mb-6 flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
           >
             <ArrowLeft size={14} />
-            Retour au répertoire des {isDeparture ? 'départs' : 'arrivées'}
+            {t('common.back')} — {isDeparture ? t('flights.departures') : t('flights.arrivals')}
           </Link>
 
           <h1 className="font-display text-3xl font-bold text-white md:text-4xl">
@@ -307,18 +309,18 @@ function FlightDetailPage() {
                   to="/vols/alertes-sms"
                   className="flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:text-rdc-blue/80"
                 >
-                  <Bell size={13} /> Alertes
+                  <Bell size={13} /> {t('flights.smsAlerts')}
                 </Link>
               </div>
 
               {/* Card body — flight fields */}
               <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-3">
                 <div className="bg-white px-5 py-4">
-                  <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Origine</p>
+                  <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('flights.origin')}</p>
                   <p className="text-sm font-semibold text-rdc-anthracite">{origin}</p>
                 </div>
                 <div className="bg-white px-5 py-4">
-                  <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Destination</p>
+                  <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('flights.destination')}</p>
                   <p className="text-sm font-semibold text-rdc-anthracite">{dest}</p>
                 </div>
                 <div className="bg-white px-5 py-4">
@@ -346,13 +348,13 @@ function FlightDetailPage() {
                 </div>
                 {flight.gate && (
                   <div className="bg-white px-5 py-4">
-                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Porte</p>
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('flights.gate')}</p>
                     <p className="font-mono text-lg font-bold text-rdc-anthracite">{flight.gate}</p>
                   </div>
                 )}
                 {flight.terminal && (
                   <div className="bg-white px-5 py-4">
-                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Terminal</p>
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">{t('flights.terminal')}</p>
                     <p className="text-sm font-semibold text-rdc-anthracite">{flight.terminal}</p>
                   </div>
                 )}
@@ -549,7 +551,7 @@ function FlightDetailPage() {
                 to={'/stationnement-transport/taxis' as never}
                 className="mt-3 text-xs font-semibold text-rdc-blue hover:underline"
               >
-                Voir tous les services de transport
+                {t('common.seeAll')}
               </Link>
             </div>
 

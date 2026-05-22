@@ -6,6 +6,7 @@ import {
   Wifi, Accessibility, Info, ChevronRight, X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/vols/plans-aerogares')({
   component: PlansAerogares,
@@ -307,6 +308,7 @@ function PoiPanel({ poi, onClose }: { poi: POI; onClose: () => void }) {
 
 /* ─── Main component ──────────────────────────────────────────────────── */
 function PlansAerogares() {
+  const { t } = useTranslation();
   const [terminal, setTerminal]     = useState<Terminal>('international');
   const [floor, setFloor]           = useState<Floor>('departures');
   const [activeFilter, setActiveFilter] = useState<Category | null>(null);
@@ -342,9 +344,9 @@ function PlansAerogares() {
             <span className="inline-block h-4 w-5 bg-rdc-yellow" style={{ clipPath: 'polygon(20% 0%,100% 0%,80% 100%,0% 100%)' }} />
             <span className="text-sm font-semibold tracking-wider text-white/70">Vols</span>
           </div>
-          <h1 className="font-display text-4xl font-bold text-white md:text-5xl">Plans des aérogares</h1>
+          <h1 className="font-display text-4xl font-bold text-white md:text-5xl">{t('flights.terminalMaps')}</h1>
           <p className="mt-3 max-w-lg text-white/60">
-            Plans schématiques interactifs des terminaux de l'Aéroport International de N'djili (FIH) — Kinshasa, RDC.
+            {t('vols.plans.subtitle')}
           </p>
         </div>
       </div>
@@ -355,7 +357,7 @@ function PlansAerogares() {
         <div className="mb-6 flex flex-wrap items-center gap-4">
           {/* Terminal */}
           <div className="flex border border-border">
-            {([['international','Terminal International'], ['domestic','Terminal Domestique']] as const).map(([id, label]) => (
+            {([['international', t('flights.terminals.international')], ['domestic', t('flights.terminals.domestic')]] as const).map(([id, label]) => (
               <button
                 key={id}
                 onClick={() => { setTerminal(id); setSelectedPoi(null); setActiveFilter(null); }}
@@ -379,7 +381,7 @@ function PlansAerogares() {
                   floor === 'departures' ? 'bg-[#1C2F4A] text-white' : 'bg-white text-muted-foreground hover:bg-muted'
                 )}
               >
-                <PlaneTakeoff size={13} /> Départs
+                <PlaneTakeoff size={13} /> {t('flights.departures')}
               </button>
               <button
                 onClick={() => { setFloor('arrivals'); setSelectedPoi(null); }}
@@ -387,7 +389,7 @@ function PlansAerogares() {
                   floor === 'arrivals' ? 'bg-[#0F2A1E] text-white' : 'bg-white text-muted-foreground hover:bg-muted'
                 )}
               >
-                <PlaneLanding size={13} /> Arrivées
+                <PlaneLanding size={13} /> {t('flights.arrivals')}
               </button>
             </div>
           )}
@@ -403,7 +405,7 @@ function PlansAerogares() {
                 : 'border-border text-muted-foreground hover:border-rdc-anthracite/40'
             )}
           >
-            Tout afficher
+            {t('vols.plans.filters')}
           </button>
           {activeCats.map(cat => {
             const c = CAT[cat];

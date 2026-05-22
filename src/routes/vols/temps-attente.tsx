@@ -5,6 +5,7 @@ import { PageHero } from '@/components/ui/page-hero';
 import { useWaitTimes } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import type { WaitTime } from '@/types/database';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/vols/temps-attente')({
   component: TempsAttentePage,
@@ -43,6 +44,7 @@ const CP: Record<WaitTime['checkpoint_type'], { label: string; desc: string }> =
 };
 
 function TempsAttentePage() {
+  const { t } = useTranslation();
   const { data = [], isLoading, refetch, isFetching, dataUpdatedAt } = useWaitTimes();
 
   const updatedAt  = dataUpdatedAt
@@ -56,14 +58,14 @@ function TempsAttentePage() {
     <main id="main-content">
 
       <PageHero
-        eyebrow="Vols"
-        title="Temps d'attente"
-        subtitle="Estimations en temps réel aux postes de sécurité, d'immigration et de douanes — préparez votre passage en toute sérénité."
+        eyebrow={t('nav.flights')}
+        title={t('flights.waitTimes')}
+        subtitle={t('vols.waitTimes.subtitle')}
         image="/images/fih-checkin.jpg"
         breadcrumbs={[
-          { label: 'Accueil', href: '/' },
-          { label: 'Vols' },
-          { label: "Temps d'attente" },
+          { label: t('home.hero.cta'), href: '/' },
+          { label: t('nav.flights') },
+          { label: t('flights.waitTimes') },
         ]}
       />
 
@@ -112,7 +114,7 @@ function TempsAttentePage() {
               className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs transition-colors hover:border-rdc-blue/40 hover:text-rdc-blue disabled:opacity-40"
             >
               <RefreshCw size={11} className={isFetching ? 'animate-spin' : ''} />
-              Actualiser
+              {t('common.retry')}
             </button>
           </div>
         </div>
@@ -132,7 +134,7 @@ function TempsAttentePage() {
         ) : data.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-16 text-center">
             <AlertTriangle size={36} className="text-muted-foreground/30" />
-            <p className="text-sm font-medium text-muted-foreground">Données temporairement indisponibles</p>
+            <p className="text-sm font-medium text-muted-foreground">{t('vols.waitTimes.noData')}</p>
             <p className="text-xs text-muted-foreground">Consultez les agents RVA sur place pour les temps d'attente.</p>
           </div>
         ) : (
@@ -184,8 +186,8 @@ function TempsAttentePage() {
                             </div>
                             <div className="flex items-center gap-1 text-xs">
                               {w.status === 'closed'
-                                ? <><XCircle size={13} className="text-red-400" /><span className="text-red-400">Fermé</span></>
-                                : <><CheckCircle2 size={13} className="text-rdc-green" /><span className="text-rdc-green">Ouvert</span></>
+                                ? <><XCircle size={13} className="text-red-400" /><span className="text-red-400">{t('vols.waitTimes.closed')}</span></>
+                                : <><CheckCircle2 size={13} className="text-rdc-green" /><span className="text-rdc-green">{t('vols.waitTimes.open')}</span></>
                               }
                             </div>
                           </div>
