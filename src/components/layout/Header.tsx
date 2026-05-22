@@ -123,18 +123,56 @@ const NAV_ITEMS = [
   },
 ] as const;
 
-const NAV_LABELS: Record<string, string> = {
-  flights: 'Vols',
-  parking: 'Stationnement',
-  shops: 'Boutiques',
-  guide: 'Guide',
-  corporate: 'Corporate',
-  community: 'Communauté',
+const NAV_LABEL_KEYS: Record<string, string> = {
+  flights:   'nav.flights',
+  parking:   'nav.parkingTransport',
+  shops:     'nav.shopsRestaurants',
+  guide:     'nav.guide',
+  corporate: 'nav.corporate',
+  community: 'nav.community',
+};
+
+/** Correspondance href → clé i18n pour les liens des dropdowns */
+const NAV_LINK_KEYS: Record<string, string> = {
+  '/vols/departs':                                  'flights.departures',
+  '/vols/arrivees':                                 'flights.arrivals',
+  '/vols/compagnies-aeriennes':                     'flights.airlines',
+  '/vols/alertes-sms':                              'flights.smsAlerts',
+  '/vols/temps-attente':                            'flights.waitTimes',
+  '/vols/plans-aerogares':                          'flights.terminalMaps',
+  '/stationnement-transport/stationnement-fih':     'parking.parkingFih',
+  '/stationnement-transport/offres':                'parking.offers',
+  '/stationnement-transport/taxis':                 'parking.taxis',
+  '/stationnement-transport/transcom-bus':          'parking.bus',
+  '/stationnement-transport/location-voitures':     'parking.carRental',
+  '/boutiques-restaurants/repertoire':              'shops.directory',
+  '/boutiques-restaurants/restaurants':             'shops.restaurants',
+  '/boutiques-restaurants/boutiques':               'shops.shops',
+  '/boutiques-restaurants/echange-devises':         'shops.currencyExchange',
+  '/boutiques-restaurants/hors-taxes':              'shops.dutyFree',
+  '/boutiques-restaurants/salons':                  'shops.lounges',
+  '/guide/quitter-kinshasa':                        'guide.leavingKinshasa',
+  '/guide/atterrir-kinshasa':                       'guide.arrivingKinshasa',
+  '/guide/douanes-immigration':                     'guide.customsImmigration',
+  '/guide/securite-bagages':                        'guide.luggageSecurity',
+  '/guide/sante':                                   'guide.health',
+  '/guide/wifi-connectivite':                       'guide.wifiConnectivity',
+  '/corporate/a-propos':                            'corporate.about',
+  '/corporate/gouvernance':                         'corporate.governance',
+  '/corporate/projets-avenir':                      'corporate.futureProjects',
+  '/corporate/historique':                          'corporate.history',
+  '/corporate/carriere':                            'corporate.careers',
+  '/corporate/partenariats-commerciaux':            'corporate.partnerships',
+  '/communaute/environnement-durabilite':           'community.environmentSustainability',
+  '/communaute/environnement-sonore':               'community.noiseEnvironment',
+  '/communaute/travaux-pistes':                     'community.runwayWorks',
+  '/communaute/relations-communaute':               'community.communityRelations',
 };
 
 /* ─── Desktop dropdown ──────────────────────────────────────── */
 function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrolled: boolean }) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
@@ -147,9 +185,8 @@ function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrol
         )}
         aria-expanded={open}
       >
-        {NAV_LABELS[item.key]}
+        {t(NAV_LABEL_KEYS[item.key] ?? item.key)}
         <ChevronDown size={13} className={cn('transition-transform duration-200', open && 'rotate-180')} />
-        {/* Underline */}
         <span className={cn(
           'absolute -bottom-1 left-0 h-px transition-all duration-300',
           scrolled ? 'bg-rdc-blue' : 'bg-rdc-yellow',
@@ -159,13 +196,12 @@ function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrol
 
       {open && (
         <div className="absolute left-1/2 top-full z-50 mt-2 w-56 -translate-x-1/2 bg-white shadow-premium-lg ring-1 ring-black/5">
-          {/* Blue top accent */}
           <div className="h-0.5 bg-rdc-blue" />
           <div className="py-2">
             {item.links.map(link => (
               <Link key={link.href} to={link.href as never}
                 className="block px-5 py-2.5 text-sm text-gray-700 hover:bg-rdc-blue hover:text-white transition-colors">
-                {link.label}
+                {t(NAV_LINK_KEYS[link.href] ?? link.label)}
               </Link>
             ))}
           </div>
@@ -177,16 +213,17 @@ function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrol
 
 /* ─── Search Dialog ─────────────────────────────────────────── */
 function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-xl gap-0 p-0 overflow-hidden" aria-describedby={undefined}>
         <DialogHeader className="px-6 pt-5 pb-4 border-b border-border">
-          <DialogTitle className="text-base font-semibold">Recherche rapide</DialogTitle>
+          <DialogTitle className="text-base font-semibold">{t('search.title')}</DialogTitle>
         </DialogHeader>
         <div className="px-6 py-4">
           <div className="relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            <Input autoFocus placeholder="N° de vol, destination, service…" className="pl-9 h-11 text-sm" />
+            <Input autoFocus placeholder={t('search.placeholder')} className="pl-9 h-11 text-sm" />
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
             {['SN491', 'Lubumbashi', 'Stationnement', 'Taxis', 'Visa'].map(s => (
@@ -205,13 +242,14 @@ function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
 /* ─── Mobile accordion nav item ─────────────────────────────── */
 function MobileNavItem({ item, onClose }: { item: typeof NAV_ITEMS[number]; onClose: () => void }) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   return (
     <div className="border-b border-white/10 last:border-0">
       <button onClick={() => setOpen(v => !v)}
         className="flex w-full items-center justify-between px-0 py-4 text-sm font-semibold text-white">
         <span className="flex items-center gap-3">
           <item.Icon size={15} className="text-rdc-yellow shrink-0" />
-          {NAV_LABELS[item.key]}
+          {t(NAV_LABEL_KEYS[item.key] ?? item.key)}
         </span>
         <ChevronDown size={14} className={cn('text-white/40 transition-transform', open && 'rotate-180')} />
       </button>
@@ -220,7 +258,7 @@ function MobileNavItem({ item, onClose }: { item: typeof NAV_ITEMS[number]; onCl
           {item.links.map(link => (
             <Link key={link.href} to={link.href as never} onClick={onClose}
               className="block py-2 text-sm text-white/60 hover:text-white transition-colors">
-              {link.label}
+              {t(NAV_LINK_KEYS[link.href] ?? link.label)}
             </Link>
           ))}
         </div>
@@ -383,7 +421,7 @@ export function Header() {
             <div className="relative">
               <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
               <input
-                placeholder="Rechercher…"
+                placeholder={t('common.search')}
                 className="w-full bg-white/10 border border-white/20 text-white text-sm pl-9 pr-3 py-2.5 placeholder:text-white/30 focus:outline-none focus:border-rdc-yellow"
                 onClick={() => { setMobileOpen(false); setSearchOpen(true); }}
                 readOnly
@@ -404,7 +442,7 @@ export function Header() {
             <Link to={'/compte' as never} onClick={() => setMobileOpen(false)}
               className="flex w-full items-center justify-center gap-2 bg-rdc-blue text-white font-bold text-sm py-3 tracking-wide hover:bg-rdc-blue-dark transition-colors">
               <User size={15} />
-              Mon espace client
+              {t('nav.clientSpace')}
             </Link>
           </div>
         </SheetContent>
