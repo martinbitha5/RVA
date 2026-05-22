@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   PlaneTakeoff, PlaneLanding, Shield, Stethoscope, Wifi,
   Banknote, PackageSearch, Accessibility, Shuffle,
-  ScrollText, Users, ArrowRight, AlertTriangle, ChevronRight,
+  ScrollText, Users, ArrowRight, ChevronRight,
   CheckCircle, Syringe,
 } from 'lucide-react';
 

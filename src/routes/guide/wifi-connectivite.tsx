@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import {
-  Wifi, Smartphone, Signal, CheckCircle, ChevronRight,
+  Wifi, Signal, CheckCircle, ChevronRight,
   Zap, Globe, ShieldCheck, MapPin, Info,
   MonitorSmartphone, PlaneTakeoff, PlaneLanding,
   Luggage, DoorOpen, Star, Building2,
