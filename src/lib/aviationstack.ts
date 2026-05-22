@@ -74,8 +74,12 @@ function mapArrivalStatus(api: string, delay: number | null): FlightStatus {
 }
 
 // ── Logo overrides (airlines absentes ou incorrectes sur pics.avs.io) ─────────
-// Note : les URLs Wikipedia bloquent le hotlinking. N'ajouter ici que des CDN fiables.
-export const LOGO_OVERRIDES: Record<string, string> = {};
+// - 4H → avs.io retourne Hi Air (Danemark) au lieu d'Air Congo → logo SVG local
+// - BZ → avs.io retourne Bluebird Airways au lieu de CAA (RDC) → logo SVG local
+export const LOGO_OVERRIDES: Record<string, string> = {
+  '4H': '/images/airlines/4H.svg',
+  'BZ': '/images/airlines/BZ.svg',
+};
 
 /** Retourne l'URL du logo depuis pics.avs.io (ou override si nécessaire). */
 export function getAirlineLogoUrl(iataCode: string): string {

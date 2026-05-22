@@ -17,6 +17,13 @@ export const Route = createFileRoute('/vols/compagnies-aeriennes')({
   }),
 });
 
+/**
+ * Codes IATA incorrects dans la DB Supabase à masquer.
+ * Ces entrées sont remplacées par les données statiques correctes dans useAirlines().
+ * Ex : Congo Airways a le code C0 en DB mais son vrai code IATA est 8Z.
+ */
+const HIDDEN_IATA: Set<string> = new Set(['C0']);
+
 const AIRLINE_BG: Record<string, string> = {
   '4H': '#CE1126', '8Z': '#003DA5',
   ET: '#1B4F72',   SN: '#003DA5',   AF: '#002395',
@@ -56,9 +63,10 @@ function CompagniesPage() {
 
   const filtered = airlines.filter(
     (a) =>
-      search === '' ||
-      a.name.toLowerCase().includes(search.toLowerCase()) ||
-      a.iata_code.toLowerCase().includes(search.toLowerCase()),
+      !HIDDEN_IATA.has(a.iata_code) &&
+      (search === '' ||
+        a.name.toLowerCase().includes(search.toLowerCase()) ||
+        a.iata_code.toLowerCase().includes(search.toLowerCase())),
   );
   const hub    = filtered.filter((a) => a.hub_at_fih);
   const others = filtered.filter((a) => !a.hub_at_fih);

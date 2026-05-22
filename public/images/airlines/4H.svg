@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#ffffff"/>
+  <!-- RDC flag stripe top (bleu) -->
+  <rect x="0" y="0" width="200" height="6" fill="#003DA5"/>
+  <!-- RDC flag stripe bottom (jaune) -->
+  <rect x="0" y="194" width="200" height="6" fill="#FFCE00"/>
+
+  <!-- Plane silhouette (pointant vers la droite) -->
+  <g transform="translate(100,84)" fill="#CE1126">
+    <!-- Fuselage -->
+    <path d="M-38,0 C-20,-7 5,-7 30,-2 L38,0 L30,2 C5,7 -20,7 -38,0 Z"/>
+    <!-- Aile principale -->
+    <path d="M-5,-7 L-12,-34 L0,-32 L14,-2 Z"/>
+    <path d="M-5,7  L-12,34  L0,32  L14,2  Z"/>
+    <!-- Empennage vertical -->
+    <path d="M-32,-7 L-44,-24 L-36,-22 L-28,-7 Z"/>
+    <!-- Empennage horizontal -->
+    <path d="M-34,-1 L-48,-1 L-48,1 L-34,1 Z"/>
+  </g>
+
+  <!-- "AIR CONGO" -->
+  <text x="100" y="148" font-family="Arial Black,Arial,Helvetica,sans-serif"
+        font-size="20" font-weight="900" fill="#CE1126"
+        text-anchor="middle" letter-spacing="3">AIR CONGO</text>
+</svg>
