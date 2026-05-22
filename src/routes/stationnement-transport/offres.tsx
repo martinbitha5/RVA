@@ -3,6 +3,7 @@ import { CheckCircle2, Smartphone, ArrowRight, Tag, Clock, Calendar } from 'luci
 import { Skeleton } from '@/components/ui/skeleton';
 import { PageHero } from '@/components/ui/page-hero';
 import { useParkingAvailability } from '@/lib/queries';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/stationnement-transport/offres')({
   component: OffresPage,
@@ -23,20 +24,21 @@ const AVANTAGES = [
 ];
 
 function OffresPage() {
+  const { t } = useTranslation();
   const { data: lots = [], isLoading } = useParkingAvailability();
 
   return (
     <main id="main-content">
 
       <PageHero
-        eyebrow="Stationnement & Transport"
-        title="Tarifs & Offres"
-        subtitle="Consultez les tarifs officiels RVA pour le stationnement à l'Aéroport International de N'djili — paiement en USD, CDF ou Mobile Money."
+        eyebrow={t('nav.parkingTransport')}
+        title={t('parking.offers')}
+        subtitle={t('stat.offres.subtitle')}
         image="/images/fih-bus-cobus.jpg"
         breadcrumbs={[
-          { label: 'Accueil', href: '/' },
-          { label: 'Stationnement & Transport', href: '/stationnement-transport' },
-          { label: 'Tarifs & Offres' },
+          { label: t('home.hero.cta'), href: '/' },
+          { label: t('nav.parkingTransport'), href: '/stationnement-transport' },
+          { label: t('parking.offers') },
         ]}
       />
 
@@ -83,11 +85,11 @@ function OffresPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-rdc-anthracite text-white">
-                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">Parking</th>
-                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">À l'heure</th>
-                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">Par jour</th>
-                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">Par semaine</th>
-                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">Places</th>
+                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">{t('stat.offres.parking')}</th>
+                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">{t('parking.hourly')}</th>
+                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">{t('parking.daily')}</th>
+                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">{t('parking.weekly')}</th>
+                    <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider">{t('parking.spots')}</th>
                     <th className="px-5 py-4"></th>
                   </tr>
                 </thead>
@@ -112,7 +114,7 @@ function OffresPage() {
                       <td className="px-5 py-4">
                         <Link to={'/stationnement-transport/stationnement-fih' as never}
                           className="inline-flex items-center gap-1 rounded-lg bg-rdc-blue px-3 py-1.5 text-xs font-semibold text-white hover:bg-rdc-blue/85 transition-colors">
-                          Réserver <ArrowRight size={11} />
+                          {t('parking.reserve')} <ArrowRight size={11} />
                         </Link>
                       </td>
                     </tr>
@@ -132,7 +134,7 @@ function OffresPage() {
             <div className="accent-line" />
             <p className="eyebrow text-rdc-blue">Paiement</p>
           </div>
-          <h2 className="font-display mb-6 text-2xl font-bold text-rdc-anthracite">Mobile Money accepté</h2>
+          <h2 className="font-display mb-6 text-2xl font-bold text-rdc-anthracite">{t('stat.offres.mobileMoney')}</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {MOBILE_MONEY.map((m) => (
               <div key={m.name}
@@ -142,7 +144,7 @@ function OffresPage() {
                   <p className="font-semibold text-rdc-anthracite">{m.name}</p>
                   <p className="text-xs text-muted-foreground">{m.desc}</p>
                   <div className="mt-1 flex items-center gap-1 text-xs text-rdc-green">
-                    <CheckCircle2 size={11} /> Accepté
+                    <CheckCircle2 size={11} /> {t('stat.offres.accepted')}
                   </div>
                 </div>
               </div>
@@ -153,13 +155,13 @@ function OffresPage() {
         {/* Conditions */}
         <div className="rounded-2xl border border-border bg-muted/40 p-6">
           <h3 className="mb-3 flex items-center gap-2 font-semibold text-rdc-anthracite">
-            <Smartphone size={16} className="text-rdc-blue" /> Conditions de stationnement
+            <Smartphone size={16} className="text-rdc-blue" /> {t('stat.offres.conditions')}
           </h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>Le ticket de parking doit être conservé tout au long du séjour.</li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>En cas de perte du ticket, des frais administratifs s'appliquent.</li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>La RVA décline toute responsabilité en cas de dommages ou vol à l'intérieur du véhicule.</li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>Pour les abonnements longue durée, contactez le bureau RVA Stationnement à l'aéroport.</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition1')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition2')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition3')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition4')}</li>
           </ul>
         </div>
       </div>

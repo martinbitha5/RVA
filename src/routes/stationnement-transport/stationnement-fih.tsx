@@ -8,6 +8,7 @@ import { ParkingReservationModal } from '@/components/parking/ParkingReservation
 import { useParkingAvailability } from '@/lib/queries';
 import { cn } from '@/lib/utils';
 import type { ParkingLot } from '@/types/database';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/stationnement-transport/stationnement-fih')({
   component: StationnementFih,
@@ -28,6 +29,7 @@ function occupancyPct(): number {
 }
 
 function StationnementFih() {
+  const { t } = useTranslation();
   const { data: lots = [], isLoading, refetch, isFetching } = useParkingAvailability();
   const [selectedLot, setSelectedLot] = useState<ParkingLot | null>(null);
 
@@ -35,22 +37,22 @@ function StationnementFih() {
     <main id="main-content">
 
       <PageHero
-        eyebrow="Stationnement & Transport"
-        title="Stationnement FIH"
-        subtitle="Réservez votre place de stationnement officiel RVA — paiement Mobile Money, USD ou CDF acceptés."
+        eyebrow={t('nav.parkingTransport')}
+        title={t('parking.parkingFih')}
+        subtitle={t('stat.parking.subtitle')}
         image="/images/fih-bus-cobus.jpg"
         breadcrumbs={[
-          { label: 'Accueil', href: '/' },
-          { label: 'Stationnement & Transport', href: '/stationnement-transport' },
-          { label: 'Stationnement FIH' },
+          { label: t('home.hero.cta'), href: '/' },
+          { label: t('nav.parkingTransport'), href: '/stationnement-transport' },
+          { label: t('parking.parkingFih') },
         ]}
         cta={
           <div className="flex flex-wrap gap-3">
             <Link to={'/stationnement-transport/offres' as never} className="btn-outline-white">
-              <CreditCard size={15} /> Voir les tarifs
+              <CreditCard size={15} /> {t('parking.offers')}
             </Link>
             <Link to={'/stationnement-transport/depose-recuperation' as never} className="btn-outline-white">
-              <MapPin size={15} /> Dépose & Récupération
+              <MapPin size={15} /> {t('parking.dropOff')}
             </Link>
           </div>
         }
@@ -75,7 +77,7 @@ function StationnementFih() {
             className="flex items-center gap-1.5 rounded-lg border border-border px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-rdc-blue/40 hover:text-rdc-blue disabled:opacity-40"
           >
             <RefreshCw size={12} className={isFetching ? 'animate-spin' : ''} />
-            Actualiser
+            {t('common.retry')}
           </button>
         </div>
 
@@ -132,20 +134,20 @@ function StationnementFih() {
                     <div className="space-y-1.5 rounded-xl bg-muted/40 p-3 text-sm">
                       {lot.hourly_rate_usd != null && (
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">À l'heure</span>
-                          <span className="font-semibold">${lot.hourly_rate_usd} USD</span>
+                          <span className="text-muted-foreground">{t('parking.hourly')}</span>
+                          <span className="font-semibold">${lot.hourly_rate_usd} {t('common.usd')}</span>
                         </div>
                       )}
                       {lot.daily_rate_usd != null && (
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Par jour</span>
-                          <span className="font-semibold">${lot.daily_rate_usd} USD</span>
+                          <span className="text-muted-foreground">{t('parking.daily')}</span>
+                          <span className="font-semibold">${lot.daily_rate_usd} {t('common.usd')}</span>
                         </div>
                       )}
                       {lot.weekly_rate_usd != null && (
                         <div className="flex justify-between">
-                          <span className="text-muted-foreground">Par semaine</span>
-                          <span className="font-semibold">${lot.weekly_rate_usd} USD</span>
+                          <span className="text-muted-foreground">{t('parking.weekly')}</span>
+                          <span className="font-semibold">${lot.weekly_rate_usd} {t('common.usd')}</span>
                         </div>
                       )}
                     </div>
@@ -169,7 +171,7 @@ function StationnementFih() {
                       onClick={() => setSelectedLot(lot)}
                       className="mt-auto w-full bg-rdc-blue text-white hover:bg-rdc-blue/85"
                     >
-                      Réserver ma place
+                      {t('parking.reserve')}
                     </Button>
                   </div>
                 </div>
@@ -184,7 +186,7 @@ function StationnementFih() {
             <div className="accent-line" />
             <p className="eyebrow text-rdc-blue">Moyens de paiement</p>
           </div>
-          <h2 className="font-display mb-6 text-2xl font-bold text-rdc-anthracite">Mobile Money accepté</h2>
+          <h2 className="font-display mb-6 text-2xl font-bold text-rdc-anthracite">{t('stat.offres.mobileMoney')}</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {MOBILE_MONEY.map((m) => (
               <div key={m.name}
@@ -192,7 +194,7 @@ function StationnementFih() {
                 <span className={cn('flex h-10 w-10 shrink-0 rounded-full', m.dot)} />
                 <div>
                   <p className="font-semibold text-rdc-anthracite">{m.name}</p>
-                  <p className="text-xs text-rdc-green">✓ Accepté</p>
+                  <p className="text-xs text-rdc-green">✓ {t('stat.offres.accepted')}</p>
                 </div>
               </div>
             ))}
@@ -201,7 +203,7 @@ function StationnementFih() {
 
         {/* Info pratiques */}
         <div className="mt-10 rounded-2xl border border-border bg-muted/40 p-6">
-          <p className="mb-3 font-semibold text-rdc-anthracite">Informations pratiques</p>
+          <p className="mb-3 font-semibold text-rdc-anthracite">{t('stat.parking.infoTitle')}</p>
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="mt-0.5 text-rdc-blue">→</span>
@@ -218,7 +220,7 @@ function StationnementFih() {
           </ul>
           <Link to={'/stationnement-transport/offres' as never}
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:underline">
-            Voir tous les tarifs et abonnements <ArrowRight size={13} />
+            {t('parking.offers')} <ArrowRight size={13} />
           </Link>
         </div>
       </div>
