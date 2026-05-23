@@ -1,10 +1,10 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Users, School, Stethoscope, Hammer, Palette, Leaf, CheckCircle, ArrowRight } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
 
 export const Route = createFileRoute('/communaute/relations-communaute')({
-  component: RelationsCommunautePage,
+  component: RelationsCommunauteLayout,
   head: () => ({ meta: [{ title: "Relations communautaires — Aéroport International de N'djili · FIH" }] }),
 });
 
@@ -83,6 +83,14 @@ const ART_ARTISTS = [
   'Sculpteurs Mbongo',
   'Jeunes talents — Académie des Beaux-Arts de Kinshasa',
 ];
+
+function RelationsCommunauteLayout() {
+  const matches = useMatches();
+  const isLeaf = matches.at(-1)?.routeId === '/communaute/relations-communaute';
+  return isLeaf ? <RelationsCommunautePage /> : <Outlet />;
+}
+
+export { RelationsCommunauteLayout as RelationsCommunauteRoute };
 
 function RelationsCommunautePage() {
   const { t } = useTranslation();

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { Volume2, AlertTriangle, MapPin, CheckCircle, Send, ArrowRight } from 'lucide-react';
@@ -11,7 +11,7 @@ import type { Database } from '@/types/database';
 type CommuneEnum = Database['public']['Tables']['noise_complaints']['Row']['commune'];
 
 export const Route = createFileRoute('/communaute/environnement-sonore')({
-  component: EnvironnementSonorePage,
+  component: EnvironnementSonoreLayout,
   head: () => ({ meta: [{ title: "Environnement sonore — Aéroport International de N'djili · FIH" }] }),
 });
 
@@ -50,6 +50,12 @@ const MEASURES = [
 ];
 
 type FormStatus = 'idle' | 'loading' | 'success' | 'error';
+
+function EnvironnementSonoreLayout() {
+  const matches = useMatches();
+  const isLeaf = matches.at(-1)?.routeId === '/communaute/environnement-sonore';
+  return isLeaf ? <EnvironnementSonorePage /> : <Outlet />;
+}
 
 function EnvironnementSonorePage() {
   const { t } = useTranslation();
