@@ -1,37 +1,37 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { BarChart3, Store, Eye, Building, ChevronRight, ArrowRight, TrendingUp, Plane, LineChart, CreditCard, Globe } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
 
 export const Route = createFileRoute('/corporate/partenariats-commerciaux')({
-  component: PartenariatsPage,
+  component: PartenariatsLayout,
   head: () => ({ meta: [{ title: "Partenariats commerciaux — Aéroport International de N'djili · FIH" }] }),
 });
 
 const SUB_SECTIONS = [
   {
-    href: '/corporate/partenariats/apercu-fih',
+    href: '/corporate/partenariats-commerciaux/apercu-fih',
     Icon: BarChart3,
     label: 'Aperçu FIH',
-    desc: 'Statistiques trafic 2023, données commerciales et perspectives de croissance du marché congolais.',
+    desc: "Statistiques trafic 2023, données commerciales et perspectives de croissance du marché congolais.",
   },
   {
-    href: '/corporate/partenariats/concessions',
+    href: '/corporate/partenariats-commerciaux/concessions',
     Icon: Store,
     label: 'Concessions',
-    desc: 'Appels d\'offres et concessions disponibles pour les espaces commerciaux des terminaux.',
+    desc: "Appels d'offres et concessions disponibles pour les espaces commerciaux des terminaux.",
   },
   {
-    href: '/corporate/partenariats/visibilite',
+    href: '/corporate/partenariats-commerciaux/visibilite',
     Icon: Eye,
     label: 'Visibilité & Publicité',
-    desc: 'Espaces publicitaires, écrans numériques et solutions de branding dans les terminaux internationaux.',
+    desc: "Espaces publicitaires, écrans numériques et solutions de branding dans les terminaux internationaux.",
   },
   {
-    href: '/corporate/partenariats/immobilier',
+    href: '/corporate/partenariats-commerciaux/immobilier',
     Icon: Building,
     label: 'Immobilier aéroportuaire',
-    desc: 'Location d\'espaces bureaux, hangars, entrepôts et locaux commerciaux en zone aéroportuaire.',
+    desc: "Location d'espaces bureaux, hangars, entrepôts et locaux commerciaux en zone aéroportuaire.",
   },
 ] as const;
 
@@ -64,6 +64,12 @@ const OPPORTUNITIES = [
     desc: 'Surface commerciale actuelle en cours d\'extension à 9 000 m² avec l\'ouverture du nouveau terminal international en 2027.',
   },
 ];
+
+function PartenariatsLayout() {
+  const matches = useMatches();
+  const isLeaf = matches.at(-1)?.routeId === '/corporate/partenariats-commerciaux';
+  return isLeaf ? <PartenariatsPage /> : <Outlet />;
+}
 
 function PartenariatsPage() {
   const { t } = useTranslation();

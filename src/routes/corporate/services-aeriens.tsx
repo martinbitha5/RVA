@@ -1,10 +1,10 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, Outlet, useMatches } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { Plane, Package, Navigation, ChevronRight, ArrowRight } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
 
 export const Route = createFileRoute('/corporate/services-aeriens')({
-  component: ServicesAeriensPage,
+  component: ServicesAeriensLayout,
   head: () => ({ meta: [{ title: "Services aériens — Aéroport International de N'djili · FIH" }] }),
 });
 
@@ -65,6 +65,12 @@ const COMMERCIAL_AIRLINES = [
   { name: 'ASKY Airlines',      code: 'KP', alliance: 'Panabras' },
   { name: 'Air Moanda',         code: '8T', alliance: 'Domestique' },
 ];
+
+function ServicesAeriensLayout() {
+  const matches = useMatches();
+  const isLeaf = matches.at(-1)?.routeId === '/corporate/services-aeriens';
+  return isLeaf ? <ServicesAeriensPage /> : <Outlet />;
+}
 
 function ServicesAeriensPage() {
   const { t } = useTranslation();
