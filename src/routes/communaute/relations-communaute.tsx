@@ -90,8 +90,6 @@ function RelationsCommunauteLayout() {
   return isLeaf ? <RelationsCommunautePage /> : <Outlet />;
 }
 
-export { RelationsCommunauteLayout as RelationsCommunauteRoute };
-
 function RelationsCommunautePage() {
   const { t } = useTranslation();
   return (
