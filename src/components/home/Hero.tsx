@@ -152,8 +152,12 @@ export function Hero() {
 
   function goToBoard(q?: string) {
     setShowDropdown(false);
-    const to = (tab === 'departs' ? '/vols/departs' : '/vols/arrivees') as never;
-    void navigate({ to, search: q ? { q } : undefined });
+    const qs = q ?? '';
+    if (tab === 'departs') {
+      void navigate({ to: '/vols/departs' as never, search: { q: qs } as never });
+    } else {
+      void navigate({ to: '/vols/arrivees' as never, search: { q: qs } as never });
+    }
   }
 
   function handleSearch(e: React.FormEvent) {

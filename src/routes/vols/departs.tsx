@@ -122,6 +122,7 @@ function DepartsPage() {
                 </div>
                 <Link
                   to="/vols/arrivees"
+                  search={{ q: search }}
                   className="flex flex-1 items-center justify-center py-2.5 text-sm font-semibold text-white/50 transition-colors hover:bg-white/5 hover:text-white"
                 >
                   Arrivées
@@ -194,6 +195,7 @@ function DepartsPage() {
                 </div>
                 <Link
                   to="/vols/arrivees"
+                  search={{ q: search }}
                   className="flex flex-1 items-center justify-center py-2 text-xs font-semibold text-white/50 transition-colors hover:bg-white/5 hover:text-white"
                 >
                   Arrivées

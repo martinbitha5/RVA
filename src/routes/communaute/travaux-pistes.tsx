@@ -105,6 +105,7 @@ function TravauxPistesPage() {
               <div className="mt-2">
                 <Link
                   to="/vols/departs"
+                  search={{ q: '' }}
                   className="text-xs font-bold text-amber-800 underline underline-offset-2 hover:text-amber-900"
                 >
                   Vérifier l'état des vols →

@@ -212,7 +212,8 @@ function FlightDetailPage() {
             {t('common.error')}
           </p>
           <Link
-            to={'/vols/departs' as never}
+            to="/vols/departs"
+            search={{ q: '' }}
             className="mt-6 inline-flex items-center gap-2 bg-rdc-blue px-5 py-2.5 text-sm font-semibold text-white hover:bg-rdc-blue/85"
           >
             <ArrowLeft size={14} /> {t('common.back')}
@@ -255,6 +256,7 @@ function FlightDetailPage() {
           {/* Back link */}
           <Link
             to={isDeparture ? '/vols/departs' : '/vols/arrivees'}
+            search={{ q: '' }}
             className="mb-6 flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
           >
             <ArrowLeft size={14} />
