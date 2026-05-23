@@ -7,6 +7,9 @@ import { useFlightBoard } from '@/lib/queries';
 import { useRealtimeFlights } from '@/hooks/useRealtimeFlights';
 
 export const Route = createFileRoute('/vols/departs')({
+  validateSearch: (search: Record<string, unknown>) => ({
+    q: typeof search.q === 'string' ? search.q : '',
+  }),
   component: DepartsPage,
   head: () => ({
     meta: [
@@ -18,8 +21,12 @@ export const Route = createFileRoute('/vols/departs')({
 
 function DepartsPage() {
   const { t } = useTranslation();
-  const [search, setSearch] = useState('');
+  const { q } = Route.useSearch();
+  const [search, setSearch] = useState(q ?? '');
   const [stickyExpanded, setStickyExpanded] = useState(false);
+
+  // Sync search when URL param changes (navigation from home widget)
+  useEffect(() => { setSearch(q ?? ''); }, [q]);
   const [heroVisible, setHeroVisible] = useState(true);
   const heroRef = useRef<HTMLDivElement>(null);
 

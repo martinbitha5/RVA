@@ -47,7 +47,11 @@ const STATIC_HUB_AIRLINES: Airline[] = [
   },
 ];
 
-export function useUpcomingFlights(type: 'departure' | 'arrival', limit = 6) {
+export function useUpcomingFlights(
+  type: 'departure' | 'arrival',
+  limit = 6,
+  options: { enabled?: boolean } = {},
+) {
   return useQuery<FlightWithAirline[]>({
     queryKey: ['flights', type, limit],
     queryFn: async () => {
@@ -64,6 +68,7 @@ export function useUpcomingFlights(type: 'departure' | 'arrival', limit = 6) {
     },
     staleTime: 30_000,
     refetchInterval: 60_000,
+    enabled: options.enabled !== false,
   });
 }
 
