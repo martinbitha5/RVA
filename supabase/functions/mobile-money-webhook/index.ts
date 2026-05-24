@@ -92,7 +92,7 @@ async function sendConfirmationEmail(
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      from: 'noreply@fih.cd',
+      from: 'noreply@aindjili.com',
       to: [to],
       subject: `Confirmation de réservation FIH — ${reservationCode}`,
       html: `

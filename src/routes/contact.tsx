@@ -21,15 +21,15 @@ const CONTACT_ITEMS = [
   {
     Icon: Mail,
     label: 'Email général',
-    value: 'contact@fih.cd',
-    href: 'mailto:contact@fih.cd',
+    value: 'contact@aindjili.com',
+    href: 'mailto:contact@aindjili.com',
     sub: 'Réponse sous 48h ouvrées',
   },
   {
     Icon: Mail,
     label: 'Email RVA',
-    value: 'info@rva.cd',
-    href: 'mailto:info@rva.cd',
+    value: 'info@aindjili.com',
+    href: 'mailto:info@aindjili.com',
     sub: 'Direction Générale RVA',
   },
   {

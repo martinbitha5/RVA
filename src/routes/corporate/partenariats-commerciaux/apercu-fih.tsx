@@ -227,10 +227,10 @@ function ApercuFihPage() {
             </div>
             <div className="flex flex-shrink-0 gap-3">
               <a
-                href="mailto:partenariats@fih.cd"
+                href="mailto:partenariats@aindjili.com"
                 className="flex items-center gap-2 bg-rdc-yellow px-5 py-2.5 text-sm font-bold text-rdc-anthracite hover:bg-white transition-colors"
               >
-                partenariats@fih.cd <ArrowRight size={13} />
+                partenariats@aindjili.com <ArrowRight size={13} />
               </a>
             </div>
           </div>
