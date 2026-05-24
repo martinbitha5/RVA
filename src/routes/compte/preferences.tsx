@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Bell, Save, CheckCircle, MessageSquare, Mail, Globe, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/preferences')({
   component: PreferencesPage,
@@ -38,7 +38,7 @@ function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (
 }
 
 function PreferencesPage() {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -50,15 +50,12 @@ function PreferencesPage() {
   });
 
   useEffect(() => {
+    if (!user) return;
     void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-      setUser(userData.user);
-
       const { data: profile } = await supabase
         .from('profiles')
         .select('notification_sms, notification_email, preferred_language')
-        .eq('id', userData.user.id)
+        .eq('id', user.id)
         .single();
 
       if (profile) {
@@ -70,7 +67,7 @@ function PreferencesPage() {
       }
       setLoading(false);
     })();
-  }, []);
+  }, [user]);
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -80,7 +77,7 @@ function PreferencesPage() {
       const { error: updateError } = await supabase
         .from('profiles')
         .upsert({
-          id: user?.id,
+          id: user?.id ?? '',
           notification_sms: prefs.notification_sms,
           notification_email: prefs.notification_email,
           preferred_language: prefs.preferred_language,

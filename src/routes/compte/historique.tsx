@@ -2,6 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { History, Car, Download, Filter, CalendarDays, CreditCard } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/historique')({
   component: HistoriquePage,
@@ -49,25 +50,24 @@ function durationHours(start: string, end: string) {
 }
 
 function HistoriquePage() {
+  const { user } = useUser();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'paid' | 'pending' | 'failed'>('all');
 
   useEffect(() => {
+    if (!user) return;
     void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-
       const { data } = await supabase
         .from('parking_reservations')
         .select('*, parking_lots(name, code)')
-        .eq('user_id', userData.user.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       setTransactions((data as Transaction[] | null) ?? []);
       setLoading(false);
     })();
-  }, []);
+  }, [user]);
 
   const filtered = filter === 'all' ? transactions : transactions.filter(t => t.payment_status === filter);
   const totalPaid = transactions.filter(t => t.payment_status === 'paid').reduce((s, t) => s + t.total_amount_usd, 0);

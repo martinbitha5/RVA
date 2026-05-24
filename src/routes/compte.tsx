@@ -5,6 +5,7 @@ import {
   Shield, History, Award, LogOut,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { UserContext } from '@/contexts/UserContext';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 
 export const Route = createFileRoute('/compte')({
@@ -151,9 +152,11 @@ function CompteLayout() {
           </div>
         </aside>
 
-        {/* Main content */}
+        {/* Main content — user provided via context so child pages skip getUser() */}
         <main className="flex-1 min-w-0">
-          <Outlet />
+          <UserContext.Provider value={{ user }}>
+            <Outlet />
+          </UserContext.Provider>
         </main>
       </div>
     </div>

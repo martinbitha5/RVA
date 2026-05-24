@@ -2,11 +2,12 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import {
-  ArrowLeft, RefreshCw, Bell, CheckCircle,
+  ArrowLeft, RefreshCw, CheckCircle,
   AlertTriangle, MapPin, Luggage, ShieldCheck, Globe,
   DoorOpen, PlaneTakeoff, PlaneLanding, Banknote, Car,
 } from 'lucide-react';
 import { FlightStatusBadge } from '@/components/flights/FlightStatusBadge';
+import { FlightAlertButton } from '@/components/flights/FlightAlertButton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFlightById } from '@/lib/queries';
 import { cn } from '@/lib/utils';
@@ -307,12 +308,10 @@ function FlightDetailPage() {
                     )}
                   </div>
                 </div>
-                <Link
-                  to="/vols/alertes-whatsapp"
-                  className="flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:text-rdc-blue/80"
-                >
-                  <Bell size={13} /> {t('flights.smsAlerts')}
-                </Link>
+                <FlightAlertButton
+                  flightId={flight.id}
+                  flightNumber={flight.flight_number}
+                />
               </div>
 
               {/* Card body — flight fields */}

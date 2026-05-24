@@ -1,10 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Shield, Key, Eye, EyeOff, CheckCircle, AlertCircle, Smartphone, Clock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/securite')({
   component: SecuritePage,
@@ -12,8 +12,7 @@ export const Route = createFileRoute('/compte/securite')({
 });
 
 function SecuritePage() {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user } = useUser();
 
   // Password change state
   const [pwFields, setPwFields] = useState({ current: '', next: '', confirm: '' });
@@ -21,12 +20,6 @@ function SecuritePage() {
   const [pwSaving, setPwSaving] = useState(false);
   const [pwSuccess, setPwSuccess] = useState(false);
   const [pwError, setPwError] = useState<string | null>(null);
-
-  useEffect(() => {
-    void supabase.auth.getUser().then(({ data }) => {
-      if (data.user) { setUser(data.user); setLoading(false); }
-    });
-  }, []);
 
   async function handleChangePassword(e: React.FormEvent) {
     e.preventDefault();
@@ -62,9 +55,7 @@ function SecuritePage() {
     }
   }
 
-  if (loading) {
-    return <div className="h-96 animate-pulse rounded-2xl bg-muted" />;
-  }
+  if (!user) return <div className="h-96 animate-pulse rounded-2xl bg-muted" />;
 
   const lastSignIn = user?.last_sign_in_at
     ? new Date(user.last_sign_in_at).toLocaleDateString('fr-FR', {

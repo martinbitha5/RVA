@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Car, Calendar, Clock, CreditCard, ChevronRight, QrCode, Download, X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/reservations')({
   component: ReservationsPage,
@@ -88,25 +89,24 @@ function QrModal({ code, onClose }: { code: string; onClose: () => void }) {
 }
 
 function ReservationsPage() {
+  const { user } = useUser();
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [qrCode, setQrCode] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user) return;
     void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-
       const { data } = await supabase
         .from('parking_reservations')
         .select('*, parking_lots(name, code)')
-        .eq('user_id', userData.user.id)
+        .eq('user_id', user.id)
         .order('start_at', { ascending: false });
 
       setReservations((data as Reservation[] | null) ?? []);
       setLoading(false);
     })();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return (

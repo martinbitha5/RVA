@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Award, Star, Zap, CheckCircle, ChevronRight, Car, Plane } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/fidelite')({
   component: FidelitePage,
@@ -51,21 +51,18 @@ function nextLevel(l: Level): Level | null {
 }
 
 export default function FidelitePage() {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const { user } = useUser();
   const [points, setPoints] = useState(0);
   const [resaCount, setResaCount] = useState(0);
   const [flightCount, setFlightCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user) return;
     void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-      setUser(userData.user);
-
       const [resaRes, alertRes] = await Promise.all([
-        supabase.from('parking_reservations').select('id').eq('user_id', userData.user.id),
-        supabase.from('flight_alerts').select('id').eq('user_id', userData.user.id).eq('active', true),
+        supabase.from('parking_reservations').select('id').eq('user_id', user.id),
+        supabase.from('flight_alerts').select('id').eq('user_id', user.id).eq('active', true),
       ]);
       const rc = resaRes.data?.length ?? 0;
       const ac = alertRes.data?.length ?? 0;
@@ -74,7 +71,7 @@ export default function FidelitePage() {
       setPoints(rc * 100 + ac * 20);
       setLoading(false);
     })();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return <div className="h-96 animate-pulse rounded-2xl bg-muted" />;

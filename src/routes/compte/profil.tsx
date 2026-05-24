@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { User, Save, CheckCircle, Mail, Phone, Globe, Shield, CalendarDays, AlertCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/profil')({
   component: ProfilPage,
@@ -12,25 +12,15 @@ export const Route = createFileRoute('/compte/profil')({
 });
 
 function ProfilPage() {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { user } = useUser();
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fields, setFields] = useState({ full_name: '', phone: '', preferred_language: 'fr' });
-
-  useEffect(() => {
-    void supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) return;
-      setUser(data.user);
-      setFields({
-        full_name: (data.user.user_metadata?.['full_name'] as string | undefined) ?? '',
-        phone: (data.user.user_metadata?.['phone'] as string | undefined) ?? '',
-        preferred_language: 'fr',
-      });
-      setLoading(false);
-    });
-  }, []);
+  const [fields, setFields] = useState({
+    full_name: (user?.user_metadata?.['full_name'] as string | undefined) ?? '',
+    phone: (user?.user_metadata?.['phone'] as string | undefined) ?? '',
+    preferred_language: 'fr',
+  });
 
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -61,11 +51,9 @@ function ProfilPage() {
     }
   }
 
-  if (loading) {
-    return <div className="h-96 animate-pulse rounded-2xl bg-muted" />;
-  }
+  if (!user) return <div className="h-96 animate-pulse rounded-2xl bg-muted" />;
 
-  const displayName = fields.full_name || user?.email?.split('@')[0] || 'U';
+  const displayName = fields.full_name || user.email?.split('@')[0] || 'U';
   const initials = displayName.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2);
   const memberSince = user?.created_at
     ? new Date(user.created_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })

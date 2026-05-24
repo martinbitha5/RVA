@@ -5,7 +5,7 @@ import {
   CalendarDays, Clock, TrendingUp, Zap,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
-import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/')({
   component: Dashboard,
@@ -57,28 +57,25 @@ function fmt(iso: string) {
 }
 
 function Dashboard() {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const { user } = useUser();
   const [stats, setStats] = useState<Stats>({
     reservations: 0, volsSuivis: 0, nextResa: null, points: 0, level: 'Bronze',
   });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!user) return;
     void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-      setUser(userData.user);
-
       const [resaRes, alertsRes] = await Promise.all([
         supabase
           .from('parking_reservations')
           .select('*, parking_lots(name, code)')
-          .eq('user_id', userData.user.id)
+          .eq('user_id', user.id)
           .order('start_at', { ascending: true }),
         supabase
           .from('flight_alerts')
           .select('id')
-          .eq('user_id', userData.user.id)
+          .eq('user_id', user.id)
           .eq('active', true),
       ]);
 
@@ -92,7 +89,7 @@ function Dashboard() {
       setStats({ reservations: resas.length, volsSuivis: alertCount, nextResa, points, level });
       setLoading(false);
     })();
-  }, []);
+  }, [user]);
 
   const displayName =
     (user?.user_metadata?.['full_name'] as string | undefined)?.split(' ')[0] ??

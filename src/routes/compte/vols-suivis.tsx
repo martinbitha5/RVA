@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Plane, Bell, Trash2, ChevronRight, Clock, ArrowRight, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
+import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/vols-suivis')({
   component: VolsSuivisPage,
@@ -47,26 +48,25 @@ function fmtTime(iso: string) {
 }
 
 function VolsSuivisPage() {
+  const { user } = useUser();
   const [alerts, setAlerts] = useState<FlightAlert[]>([]);
   const [loading, setLoading] = useState(true);
   const [removingId, setRemovingId] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user) return;
     void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-
       const { data } = await supabase
         .from('flight_alerts')
         .select('*, flights(flight_number, type, destination_iata, origin_iata, scheduled_time, status, airlines(name, iata_code))')
-        .eq('user_id', userData.user.id)
+        .eq('user_id', user.id)
         .eq('active', true)
         .order('created_at' as never, { ascending: false });
 
       setAlerts((data as FlightAlert[] | null) ?? []);
       setLoading(false);
     })();
-  }, []);
+  }, [user]);
 
   async function handleRemove(id: string) {
     setRemovingId(id);
