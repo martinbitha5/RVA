@@ -2,17 +2,17 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { Bell, Phone, Plane, CheckCircle, Info } from 'lucide-react';
+import { Plane, CheckCircle, Info, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/lib/supabase';
 
-export const Route = createFileRoute('/vols/alertes-sms')({
-  component: AlertesSmsPage,
+export const Route = createFileRoute('/vols/alertes-whatsapp')({
+  component: AlertesWhatsappPage,
   head: () => ({
     meta: [
-      { title: "Alertes SMS vols — Aéroport N'djili · FIH" },
-      { name: 'description', content: 'Abonnez-vous aux alertes SMS pour votre vol à FIH. Recevez des notifications de statut, retard, changement de porte.' },
+      { title: "Alertes WhatsApp vols — Aéroport N'djili · FIH" },
+      { name: 'description', content: "Abonnez-vous aux alertes WhatsApp pour votre vol à FIH. Recevez des notifications de statut, retard, changement de porte directement sur WhatsApp." },
     ],
   }),
 });
@@ -24,7 +24,7 @@ const schema = z.object({
 
 type State = 'idle' | 'loading' | 'success' | 'error';
 
-function AlertesSmsPage() {
+function AlertesWhatsappPage() {
   const { t } = useTranslation();
   const [phone, setPhone]   = useState('');
   const [flight, setFlight] = useState('');
@@ -62,8 +62,8 @@ function AlertesSmsPage() {
       <div className="mx-auto max-w-2xl">
         {/* Header */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-rdc-blue/10">
-            <Bell size={24} className="text-rdc-blue" />
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366]/10">
+            <MessageCircle size={28} className="text-[#25D366]" />
           </div>
           <h1 className="font-display text-3xl font-bold text-rdc-anthracite">{t('flights.smsAlerts')}</h1>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{t('vols.sms.subtitle')}</p>
@@ -71,9 +71,9 @@ function AlertesSmsPage() {
 
         {/* Features */}
         <div className="mb-8 grid gap-3 sm:grid-cols-3">
-          {SMS_FEATURES.map((f) => (
+          {WA_FEATURES.map((f) => (
             <div key={f.key} className="rounded-xl border border-border bg-card p-4 text-center">
-              <f.icon size={18} className="mx-auto mb-2 text-rdc-blue" />
+              <f.icon size={18} className="mx-auto mb-2 text-[#25D366]" />
               <p className="text-xs font-medium text-foreground">{t(f.key)}</p>
             </div>
           ))}
@@ -81,21 +81,29 @@ function AlertesSmsPage() {
 
         {/* Form */}
         {state === 'success' ? (
-          <div className="rounded-2xl border border-rdc-green/20 bg-rdc-green/5 p-8 text-center">
-            <CheckCircle size={32} className="mx-auto mb-3 text-rdc-green" />
+          <div className="rounded-2xl border border-[#25D366]/20 bg-[#25D366]/5 p-8 text-center">
+            <CheckCircle size={32} className="mx-auto mb-3 text-[#25D366]" />
             <h2 className="font-display text-lg font-semibold text-rdc-anthracite">{t('vols.sms.successTitle')}</h2>
             <p className="mt-2 text-sm text-muted-foreground">{t('vols.sms.successDesc')}</p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="rounded-2xl border border-border bg-card p-6 md:p-8">
             <div className="space-y-5">
+              {/* WhatsApp badge */}
+              <div className="flex items-center gap-2.5 rounded-xl border border-[#25D366]/20 bg-[#25D366]/5 px-4 py-3">
+                <MessageCircle size={15} className="text-[#25D366] shrink-0" />
+                <p className="text-xs text-muted-foreground">
+                  Les alertes seront envoyées via <span className="font-semibold text-[#25D366]">WhatsApp Business</span> — assurez-vous que WhatsApp est installé sur ce numéro.
+                </p>
+              </div>
+
               {/* Phone */}
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-foreground">
                   {t('vols.sms.phoneLabel')} <span className="text-rdc-red">*</span>
                 </label>
                 <div className="relative">
-                  <Phone size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                  <MessageCircle size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#25D366]" />
                   <Input
                     type="tel"
                     value={phone}
@@ -136,9 +144,9 @@ function AlertesSmsPage() {
               <Button
                 type="submit"
                 disabled={state === 'loading'}
-                className="w-full bg-rdc-blue hover:bg-rdc-blue/85 text-white gap-2"
+                className="w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white gap-2"
               >
-                <Bell size={15} />
+                <MessageCircle size={15} />
                 {state === 'loading' ? t('common.loading') : t('vols.sms.cta')}
               </Button>
             </div>
@@ -155,8 +163,8 @@ function AlertesSmsPage() {
   );
 }
 
-const SMS_FEATURES = [
-  { key: 'vols.sms.featureStatus', icon: Bell },
+const WA_FEATURES = [
+  { key: 'vols.sms.featureStatus', icon: CheckCircle },
   { key: 'vols.sms.featureGate',   icon: Plane },
-  { key: 'vols.sms.featureDelay',  icon: CheckCircle },
+  { key: 'vols.sms.featureDelay',  icon: MessageCircle },
 ];

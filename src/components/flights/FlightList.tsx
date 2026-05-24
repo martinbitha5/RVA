@@ -232,7 +232,7 @@ export function FlightList({ data, type, isLoading, globalFilter, statusFilter, 
                       Détails <ArrowRight size={13} />
                     </Link>
                     <Link
-                      to="/vols/alertes-sms"
+                      to="/vols/alertes-whatsapp"
                       className="flex items-center gap-1 text-sm font-semibold text-rdc-blue hover:text-rdc-blue/80"
                     >
                       Alertes <ArrowRight size={13} />

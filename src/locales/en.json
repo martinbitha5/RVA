@@ -52,7 +52,7 @@
     "departures": "Departures",
     "arrivals": "Arrivals",
     "airlines": "Airlines",
-    "smsAlerts": "SMS Alerts",
+    "smsAlerts": "WhatsApp Alerts",
     "waitTimes": "Wait Times",
     "terminalMaps": "Terminal Maps",
     "flightNumber": "Flight No.",
@@ -472,7 +472,7 @@
       "departuresDesc": "Real-time departures board from FIH",
       "arrivalsDesc": "Live arrivals updates at FIH",
       "airlinesDesc": "The 17 airlines operating at N'djili",
-      "smsDesc": "Subscribe to flight SMS notifications",
+      "smsDesc": "Subscribe to flight WhatsApp notifications",
       "waitTimesDesc": "Estimated wait times at checkpoints",
       "mapsDesc": "Interactive terminal maps at FIH"
     },
@@ -495,17 +495,17 @@
       "todayFlights": "Today's flights"
     },
     "sms": {
-      "subtitle": "Receive real-time SMS alerts for your flight: status, gate changes, delays.",
-      "phoneLabel": "Your phone number",
-      "phoneHint": "Vodacom, Airtel, Orange numbers accepted",
+      "subtitle": "Receive real-time WhatsApp alerts for your flight: status, gate changes, delays.",
+      "phoneLabel": "Your WhatsApp number",
+      "phoneHint": "Vodacom, Airtel, Orange numbers accepted — WhatsApp required",
       "flightLabel": "Flight number (optional)",
-      "cta": "Subscribe to alerts",
+      "cta": "Subscribe to WhatsApp alerts",
       "featureStatus": "Status changes",
       "featureGate": "Gate changes",
       "featureDelay": "Delays & cancellations",
       "successTitle": "Subscription confirmed!",
-      "successDesc": "You will receive SMS alerts for your flights at FIH.",
-      "disclaimer": "SMS service provided by Africa's Talking. SMS charges may apply depending on your carrier. Unsubscribe at any time."
+      "successDesc": "You will receive WhatsApp alerts for your flights at FIH.",
+      "disclaimer": "Alerts sent via WhatsApp Business. WhatsApp must be installed on the number provided. Unsubscribe at any time by replying STOP."
     },
     "waitTimes": {
       "subtitle": "Estimated wait times at security, customs and immigration checkpoints",
@@ -551,7 +551,7 @@
       "pay": "Pay & Confirm",
       "successTitle": "Booking confirmed!",
       "successDesc": "Your QR code has been generated. Present it at the barrier on arrival.",
-      "qrNote": "Also sent by SMS and email if provided.",
+      "qrNote": "Also sent by WhatsApp and email if provided.",
       "copyCode": "Copy code",
       "copied": "Copied!"
     }

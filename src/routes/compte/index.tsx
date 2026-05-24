@@ -151,7 +151,7 @@ function Dashboard() {
             href: '/compte/vols-suivis',
           },
           {
-            label: 'Alertes SMS',
+            label: 'Alertes WhatsApp',
             value: stats.volsSuivis,
             Icon: Bell,
             color: 'text-amber-600',
@@ -263,7 +263,7 @@ function Dashboard() {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
           {[
             { label: 'Réserver un parking',    href: '/stationnement-transport/stationnement-fih', Icon: Car,     color: 'bg-rdc-blue/10 text-rdc-blue' },
-            { label: 'Suivre un vol',           href: '/vols/alertes-sms',                          Icon: Plane,   color: 'bg-rdc-green/10 text-rdc-green' },
+            { label: 'Suivre un vol',           href: '/vols/alertes-whatsapp',                     Icon: Plane,   color: 'bg-rdc-green/10 text-rdc-green' },
             { label: 'Mes préférences',         href: '/compte/preferences',                         Icon: Bell,    color: 'bg-amber-50 text-amber-600' },
             { label: 'Carte fidélité',          href: '/compte/fidelite',                            Icon: Award,   color: 'bg-rdc-yellow/10 text-amber-600' },
             { label: 'Historique',              href: '/compte/historique',                          Icon: TrendingUp, color: 'bg-muted text-muted-foreground' },

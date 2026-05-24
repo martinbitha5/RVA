@@ -52,7 +52,7 @@
     "departures": "Départs",
     "arrivals": "Arrivées",
     "airlines": "Compagnies aériennes",
-    "smsAlerts": "Alertes SMS",
+    "smsAlerts": "Alertes WhatsApp",
     "waitTimes": "Temps d'attente",
     "terminalMaps": "Plans des aérogares",
     "flightNumber": "N° de vol",
@@ -142,7 +142,7 @@
       "pay": "Payer & Confirmer",
       "successTitle": "Réservation confirmée !",
       "successDesc": "Votre QR code a été généré. Présentez-le à la barrière à votre arrivée.",
-      "qrNote": "Également envoyé par SMS et e-mail si fourni.",
+      "qrNote": "Également envoyé par WhatsApp et e-mail si fourni.",
       "copyCode": "Copier le code",
       "copied": "Copié !"
     }
@@ -497,7 +497,7 @@
       "departuresDesc": "Tableau en temps réel des départs depuis FIH",
       "arrivalsDesc": "Mises à jour live des arrivées à FIH",
       "airlinesDesc": "Les 17 compagnies qui opèrent à N'djili",
-      "smsDesc": "Abonnez-vous aux notifications de vol par SMS",
+      "smsDesc": "Abonnez-vous aux notifications de vol par WhatsApp",
       "waitTimesDesc": "Temps d'attente estimés aux contrôles",
       "mapsDesc": "Plans interactifs des terminaux FIH"
     },
@@ -520,17 +520,17 @@
       "todayFlights": "Vols du jour"
     },
     "sms": {
-      "subtitle": "Recevez des alertes SMS en temps réel pour votre vol : statut, changement de porte, retards.",
-      "phoneLabel": "Votre numéro de téléphone",
-      "phoneHint": "Numéros Vodacom, Airtel, Orange acceptés",
+      "subtitle": "Recevez des alertes WhatsApp en temps réel pour votre vol : statut, changement de porte, retards.",
+      "phoneLabel": "Votre numéro WhatsApp",
+      "phoneHint": "Numéros Vodacom, Airtel, Orange acceptés — WhatsApp requis",
       "flightLabel": "Numéro de vol (optionnel)",
-      "cta": "S'abonner aux alertes",
+      "cta": "S'abonner aux alertes WhatsApp",
       "featureStatus": "Changement de statut",
       "featureGate": "Changement de porte",
       "featureDelay": "Retards & annulations",
       "successTitle": "Inscription confirmée !",
-      "successDesc": "Vous recevrez des alertes SMS pour vos vols à FIH.",
-      "disclaimer": "Service SMS fourni par Africa's Talking. Des frais de SMS peuvent s'appliquer selon votre opérateur. Désabonnement possible à tout moment."
+      "successDesc": "Vous recevrez des alertes WhatsApp pour vos vols à FIH.",
+      "disclaimer": "Alertes envoyées via WhatsApp Business. WhatsApp doit être installé sur le numéro fourni. Désabonnement possible à tout moment en répondant STOP."
     },
     "waitTimes": {
       "subtitle": "Temps d'attente estimés aux postes de sécurité, douanes et immigration",

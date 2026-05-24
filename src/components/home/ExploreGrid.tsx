@@ -7,7 +7,7 @@ const TILES = [
   {
     category: 'Informations de vol',
     title: 'Vols',
-    description: 'Départs et arrivées en temps réel, compagnies, alertes SMS.',
+    description: 'Départs et arrivées en temps réel, compagnies, alertes WhatsApp.',
     href: '/vols',
     image: '/images/fih-hero-1.jpg',
     gradient: 'from-[#001E6E] via-[#003DA5]/60 to-transparent',

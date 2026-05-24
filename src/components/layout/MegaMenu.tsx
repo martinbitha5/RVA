@@ -73,7 +73,7 @@ function VolsMenu() {
       <NavItem href="/vols/departs" label={t('flights.departures')} description="Tableau en temps réel" />
       <NavItem href="/vols/arrivees" label={t('flights.arrivals')} description="Mises à jour live" />
       <NavItem href="/vols/compagnies-aeriennes" label={t('flights.airlines')} />
-      <NavItem href="/vols/alertes-sms" label={t('flights.smsAlerts')} description="Abonnez-vous aux notifications" />
+      <NavItem href="/vols/alertes-whatsapp" label={t('flights.smsAlerts')} description="Abonnez-vous aux notifications" />
       <NavItem href="/vols/temps-attente" label={t('flights.waitTimes')} />
       <NavItem href="/vols/plans-aerogares" label={t('flights.terminalMaps')} />
     </ul>

@@ -18,7 +18,7 @@ const SECTIONS = [
   },
   {
     title: '3. Finalités du traitement',
-    content: `Vos données sont utilisées pour :\n• Gestion de votre espace client (authentification, profil)\n• Traitement de vos réservations de stationnement\n• Envoi d'alertes SMS et notifications email sur les vols\n• Traitement des plaintes d'environnement sonore\n• Amélioration de nos services et de l'expérience utilisateur\n• Respect de nos obligations légales`,
+    content: `Vos données sont utilisées pour :\n• Gestion de votre espace client (authentification, profil)\n• Traitement de vos réservations de stationnement\n• Envoi d'alertes WhatsApp et notifications email sur les vols\n• Traitement des plaintes d'environnement sonore\n• Amélioration de nos services et de l'expérience utilisateur\n• Respect de nos obligations légales`,
   },
   {
     title: '4. Base légale',

@@ -93,7 +93,7 @@ function VolsSuivisPage() {
           </p>
         </div>
         <Link
-          to={'/vols/alertes-sms' as never}
+          to={'/vols/alertes-whatsapp' as never}
           className="shrink-0 flex items-center gap-1.5 rounded-xl bg-rdc-blue px-3 py-2 text-xs font-semibold text-white hover:bg-rdc-blue/85 transition-colors"
         >
           + Ajouter
@@ -107,10 +107,10 @@ function VolsSuivisPage() {
           </div>
           <p className="font-semibold text-rdc-anthracite mb-1">Aucun vol suivi</p>
           <p className="text-sm text-muted-foreground mb-5 max-w-xs mx-auto">
-            Abonnez-vous aux alertes SMS pour être notifié en temps réel des changements de statut.
+            Abonnez-vous aux alertes WhatsApp pour être notifié en temps réel des changements de statut.
           </p>
           <Link
-            to={'/vols/alertes-sms' as never}
+            to={'/vols/alertes-whatsapp' as never}
             className="inline-flex items-center gap-2 rounded-lg bg-rdc-blue px-4 py-2 text-sm font-medium text-white hover:bg-rdc-blue/85 transition-colors"
           >
             S'abonner aux alertes <ChevronRight size={14} />
@@ -211,7 +211,7 @@ function VolsSuivisPage() {
         <div className="rounded-xl bg-muted/50 border border-border p-4 flex items-start gap-3">
           <Bell size={14} className="text-rdc-blue mt-0.5 shrink-0" />
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Les alertes SMS sont envoyées via Africa's Talking sur vos numéros Vodacom, Airtel et Orange. Des frais SMS peuvent s'appliquer.
+            Les alertes sont envoyées via WhatsApp Business sur vos numéros Vodacom, Airtel et Orange. WhatsApp doit être installé.
           </p>
         </div>
       )}

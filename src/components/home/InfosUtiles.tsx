@@ -18,10 +18,10 @@ const CARDS = [
     accent: '#003DA5',
   },
   {
-    title: "Alertes SMS",
-    desc: "Recevez les mises à jour de votre vol directement sur votre téléphone mobile.",
+    title: "Alertes WhatsApp",
+    desc: "Recevez les mises à jour de votre vol directement sur WhatsApp, en temps réel.",
     link: "Inscrivez-vous gratuitement",
-    href: '/vols/alertes-sms',
+    href: '/vols/alertes-whatsapp',
     accent: '#009A44',
   },
   {

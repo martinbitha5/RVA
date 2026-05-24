@@ -22,7 +22,7 @@ const SECTIONS = [
   },
   {
     title: '4. Données personnelles',
-    content: `La collecte et le traitement des données personnelles sont effectués conformément à notre Politique de Confidentialité. En utilisant ce site et ses services (espace client, alertes SMS, réservations), vous consentez à la collecte et à l'utilisation de vos données dans les conditions décrites dans ladite politique.`,
+    content: `La collecte et le traitement des données personnelles sont effectués conformément à notre Politique de Confidentialité. En utilisant ce site et ses services (espace client, alertes WhatsApp, réservations), vous consentez à la collecte et à l'utilisation de vos données dans les conditions décrites dans ladite politique.`,
   },
   {
     title: '5. Espace client',

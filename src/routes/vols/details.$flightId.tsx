@@ -308,7 +308,7 @@ function FlightDetailPage() {
                   </div>
                 </div>
                 <Link
-                  to="/vols/alertes-sms"
+                  to="/vols/alertes-whatsapp"
                   className="flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:text-rdc-blue/80"
                 >
                   <Bell size={13} /> {t('flights.smsAlerts')}

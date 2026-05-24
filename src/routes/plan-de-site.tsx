@@ -15,7 +15,7 @@ const SECTIONS = [
       { label: 'Départs en temps réel', href: '/vols/departs' },
       { label: 'Arrivées en temps réel', href: '/vols/arrivees' },
       { label: 'Compagnies aériennes', href: '/vols/compagnies-aeriennes' },
-      { label: 'Alertes SMS', href: '/vols/alertes-sms' },
+      { label: 'Alertes WhatsApp', href: '/vols/alertes-whatsapp' },
       { label: 'Temps d\'attente', href: '/vols/temps-attente' },
       { label: 'Plans des aérogares', href: '/vols/plans-aerogares' },
     ],

@@ -147,7 +147,7 @@ function ProfilPage() {
                 onChange={e => setFields(f => ({ ...f, phone: e.target.value }))}
                 placeholder="+243 81 XXX XXXX"
               />
-              <p className="mt-1 text-xs text-muted-foreground">Numéros Vodacom, Airtel, Orange acceptés pour les alertes SMS</p>
+              <p className="mt-1 text-xs text-muted-foreground">Numéros Vodacom, Airtel, Orange acceptés pour les alertes WhatsApp</p>
             </div>
 
             {/* Language */}

@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   CheckCircle, ChevronRight, Car,
-  Calendar, QrCode, Copy, Smartphone, CreditCard,
+  Calendar, Copy, Smartphone, CreditCard,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
@@ -100,15 +100,17 @@ export function ParkingReservationModal({ lot, open, onClose }: Props) {
     if (!lot) return;
     setLoading(true);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const code = genCode();
       await supabase.from('parking_reservations').insert({
+        user_id: user?.id ?? null,
         parking_lot_id: lot.id,
         vehicle_plate: plate,
         start_at: new Date(startDate).toISOString(),
         end_at: new Date(endDate).toISOString(),
         total_amount_usd: total,
         payment_method: payMethod,
-        payment_status: 'pending',
+        payment_status: 'paid',
         reservation_code: code,
       } as never);
       setConfirmCode(code);
@@ -291,10 +293,14 @@ export function ParkingReservationModal({ lot, open, onClose }: Props) {
                 <p className="mt-1 text-sm text-muted-foreground">{t('parking.reservation.successDesc')}</p>
               </div>
 
-              {/* QR Code placeholder */}
+              {/* QR Code */}
               <div className="flex justify-center">
-                <div className="flex flex-col items-center gap-2 rounded-2xl border-2 border-dashed border-muted-foreground/30 p-6">
-                  <QrCode size={64} className="text-rdc-anthracite" />
+                <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-muted/30 p-5">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=FIH-RSVP-${confirmCode}&color=003DA5&bgcolor=F7F7F2`}
+                    alt={`QR Code ${confirmCode}`}
+                    className="w-44 h-44 rounded-xl"
+                  />
                   <p className="font-mono text-sm font-bold tracking-widest text-rdc-anthracite">
                     {confirmCode}
                   </p>

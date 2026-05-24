@@ -37,7 +37,7 @@ const SERVICES_DATA = [
   },
   {
     icon: Bell,
-    href: '/vols/alertes-sms',
+    href: '/vols/alertes-whatsapp',
     labelKey: 'flights.smsAlerts',
     descKey: 'vols.hub.smsDesc',
     accent: '#FFCE00',

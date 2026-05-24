@@ -77,7 +77,7 @@ export function NewsletterCTA() {
                 </div>
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-white/50 mb-2">
-                    Téléphone (alertes SMS)
+                    Téléphone (alertes WhatsApp)
                   </label>
                   <input
                     type="tel"

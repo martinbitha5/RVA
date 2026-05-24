@@ -124,7 +124,7 @@ function PreferencesPage() {
               <MessageSquare size={16} className="text-rdc-blue" />
             </div>
             <div className="flex-1">
-              <p className="font-medium text-sm text-rdc-anthracite">Alertes SMS</p>
+              <p className="font-medium text-sm text-rdc-anthracite">Alertes WhatsApp</p>
               <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
                 Retards, annulations, changements de porte · Vodacom, Airtel, Orange
               </p>

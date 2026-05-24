@@ -21,7 +21,7 @@ const CARDS = [
   },
   {
     title: 'Vols en temps réel',
-    desc: "Suivez vos départs et arrivées en direct. Compagnies, portes, statuts et alertes SMS intégrés.",
+    desc: "Suivez vos départs et arrivées en direct. Compagnies, portes, statuts et alertes WhatsApp intégrés.",
     link: 'Voir les vols',
     href: '/vols',
     image: '/images/fih-hero-1.jpg',

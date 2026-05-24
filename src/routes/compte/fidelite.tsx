@@ -20,7 +20,7 @@ const LEVELS: Record<Level, {
     border: 'border-amber-400/40',
     textColor: 'text-amber-700',
     minPts: 0, maxPts: 499,
-    perks: ['Réservation parking en ligne', 'Alertes SMS vols', 'Newsletter exclusive FIH'],
+    perks: ['Réservation parking en ligne', 'Alertes WhatsApp vols', 'Newsletter exclusive FIH'],
   },
   Silver: {
     gradient: 'from-slate-600 via-slate-400 to-slate-300',

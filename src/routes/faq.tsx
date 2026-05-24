@@ -23,11 +23,11 @@ const FAQ_SECTIONS: { category: string; items: FaqItem[] }[] = [
       },
       {
         q: 'Mon vol est en retard, que faire ?',
-        a: 'Consultez le statut de votre vol sur notre site ou contactez directement votre compagnie aérienne. Vous pouvez également vous inscrire aux alertes SMS pour recevoir des notifications automatiques sur les changements de statut.',
+        a: 'Consultez le statut de votre vol sur notre site ou contactez directement votre compagnie aérienne. Vous pouvez également vous inscrire aux alertes WhatsApp pour recevoir des notifications automatiques sur les changements de statut.',
       },
       {
-        q: 'Comment m\'abonner aux alertes SMS pour mon vol ?',
-        a: 'Créez un espace client sur notre site, puis accédez à la section "Alertes SMS" dans le menu Vols. Renseignez votre numéro de téléphone congolais (Vodacom, Airtel, Orange) et le numéro de vol souhaité.',
+        q: 'Comment m\'abonner aux alertes WhatsApp pour mon vol ?',
+        a: 'Créez un espace client sur notre site, puis accédez à la section "Alertes WhatsApp" dans le menu Vols. Renseignez votre numéro WhatsApp congolais (Vodacom, Airtel, Orange) et le numéro de vol souhaité.',
       },
       {
         q: 'Quelles compagnies aériennes opèrent à FIH ?',
