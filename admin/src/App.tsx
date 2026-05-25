@@ -832,9 +832,6 @@ function SlideList() {
       actions={<TopToolbar><CreateButton label="Ajouter un slide" /><ExportButton label="Exporter" /></TopToolbar>}>
       <Datagrid rowClick="edit" bulkActionButtons={false}>
         <SlidePreview />
-        <TextField source="title_fr" label="Titre (FR)" />
-        <TextField source="subtitle_fr" label="Sous-titre (FR)" />
-        <TextField source="cta_label_fr" label="Bouton" />
         <NumberField source="sort_order" label="Ordre" />
         <BooleanField source="active" label="Visible" />
         <EditButton label="" />
@@ -850,13 +847,6 @@ function SlideEdit() {
         <SupabaseImageInput source="image_url" label="Image du slide (recommandé : 1920×800px)" folder="slides" />
         <NumberInput source="sort_order" label="Ordre d'affichage (1 = premier)" defaultValue={0} />
         <BooleanInput source="active" label="Visible sur le site" />
-        <TextInput source="title_fr" label="Titre principal (FR)" fullWidth required />
-        <TextInput source="title_en" label="Titre principal (EN)" fullWidth />
-        <TextInput source="subtitle_fr" label="Sous-titre / Description (FR)" fullWidth multiline rows={2} />
-        <TextInput source="subtitle_en" label="Sous-titre (EN)" fullWidth multiline rows={2} />
-        <TextInput source="cta_label_fr" label="Texte du bouton (FR) — ex: Voir les vols" />
-        <TextInput source="cta_label_en" label="Texte du bouton (EN) — ex: View flights" />
-        <TextInput source="cta_url" label="Lien du bouton (URL) — ex: /vols/departs" fullWidth />
       </SimpleForm>
     </Edit>
   );
@@ -869,13 +859,6 @@ function SlideCreate() {
         <SupabaseImageInput source="image_url" label="Image du slide (recommandé : 1920×800px)" folder="slides" />
         <NumberInput source="sort_order" label="Ordre d'affichage (1 = premier)" defaultValue={0} />
         <BooleanInput source="active" label="Visible sur le site" defaultValue={true} />
-        <TextInput source="title_fr" label="Titre principal (FR)" fullWidth required />
-        <TextInput source="title_en" label="Titre principal (EN)" fullWidth />
-        <TextInput source="subtitle_fr" label="Sous-titre / Description (FR)" fullWidth multiline rows={2} />
-        <TextInput source="subtitle_en" label="Sous-titre (EN)" fullWidth multiline rows={2} />
-        <TextInput source="cta_label_fr" label="Texte du bouton (FR) — ex: Voir les vols" />
-        <TextInput source="cta_label_en" label="Texte du bouton (EN) — ex: View flights" />
-        <TextInput source="cta_url" label="Lien du bouton (URL) — ex: /vols/departs" fullWidth />
       </SimpleForm>
     </Create>
   );
