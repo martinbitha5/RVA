@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import {
   Car, Zap, Accessibility, CheckCircle, ArrowLeft,
   Calendar, Clock, Shield, Bus, Loader2, Lock, Tag,
-  Download, MapPin,
+  Download, MapPin, Phone, Mail, User,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useParkingAvailability } from '@/lib/queries';
 import { supabase } from '@/lib/supabase';
 import type { ParkingLot } from '@/types/database';
@@ -513,234 +512,276 @@ function ReservationPage() {
 
             {/* ────────── STEP 2: Billing + Payment ─────────────────── */}
             {step === 2 && selectedLot && (
-              <form onSubmit={e => { void handlePayment(e); }} className="space-y-5">
-                <div className="flex items-center gap-3 mb-2">
-                  <button
-                    type="button"
-                    onClick={() => { setStep(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-                    className="flex items-center gap-1 text-sm text-muted-foreground hover:text-rdc-blue transition-colors"
-                  >
-                    <ArrowLeft size={14} /> Changer de parking
-                  </button>
-                </div>
+              <form onSubmit={e => { void handlePayment(e); }} className="space-y-4">
+
+                {/* Back button */}
+                <button
+                  type="button"
+                  onClick={() => { setStep(1); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                  className="flex items-center gap-1.5 text-sm font-medium text-[#555] hover:text-[#003DA5] transition-colors"
+                >
+                  <ArrowLeft size={14} /> Changer de parking
+                </button>
 
                 {/* Auth status */}
                 {loggedIn === true && authEmail && (
-                  <div className="flex items-center gap-2.5 rounded-xl border border-rdc-green/20 bg-rdc-green/5 px-4 py-3 text-sm">
-                    <Lock size={14} className="text-rdc-green shrink-0" />
-                    <span className="text-muted-foreground">
-                      Connecté en tant que <span className="font-semibold text-rdc-anthracite">{authEmail}</span> — vos données sont sécurisées.
+                  <div className="flex items-center gap-2.5 border border-[#009A44]/20 bg-[#009A44]/5 px-4 py-3 text-sm">
+                    <Lock size={14} className="text-[#009A44] shrink-0" />
+                    <span className="text-[#555]">
+                      Connecté · <span className="font-semibold text-[#1A1A1A]">{authEmail}</span> — données sécurisées
                     </span>
                   </div>
                 )}
                 {loggedIn === false && (
-                  <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm">
+                  <div className="border border-amber-200 bg-amber-50 px-4 py-3 text-sm">
                     <p className="font-semibold text-amber-800 mb-1">Connexion requise pour réserver</p>
-                    <p className="text-amber-700 text-xs mb-3">Vous devez être connecté pour finaliser votre réservation et retrouver votre QR code dans votre espace client.</p>
+                    <p className="text-amber-700 text-xs mb-3">Connectez-vous pour finaliser et retrouver votre QR code dans votre espace client.</p>
                     <div className="flex gap-2">
-                      <Link to={'/login' as never} className="rounded-lg bg-rdc-blue px-3 py-1.5 text-xs font-semibold text-white hover:bg-rdc-blue/85">
+                      <Link to={'/login' as never} className="bg-[#003DA5] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#002580] transition-colors">
                         Se connecter
                       </Link>
-                      <Link to={'/inscription' as never} className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-rdc-anthracite hover:border-rdc-blue">
+                      <Link to={'/inscription' as never} className="border border-[#D8E0ED] px-3 py-1.5 text-xs font-semibold text-[#1A1A1A] hover:border-[#003DA5] transition-colors">
                         Créer un compte
                       </Link>
                     </div>
                   </div>
                 )}
 
-                {/* ── Section 1: Facturation ─────────────────────────── */}
-                <div className="rounded-2xl border border-border bg-white p-6">
-                  <h2 className="font-display text-lg font-bold text-rdc-anthracite mb-5">
-                    1. Vos renseignements
-                  </h2>
-
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label className={labelClass}>Prénom <span className="text-rdc-red">*</span></label>
-                      <Input
-                        required value={billing.firstName}
-                        onChange={e => setBilling(b => ({ ...b, firstName: e.target.value }))}
-                        placeholder="Jean"
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Nom <span className="text-rdc-red">*</span></label>
-                      <Input
-                        required value={billing.lastName}
-                        onChange={e => setBilling(b => ({ ...b, lastName: e.target.value }))}
-                        placeholder="Mukendi"
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Courriel <span className="text-rdc-red">*</span></label>
-                      <Input
-                        type="email" required value={billing.email}
-                        onChange={e => setBilling(b => ({ ...b, email: e.target.value }))}
-                        placeholder="jean@exemple.com"
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Confirmer le courriel <span className="text-rdc-red">*</span></label>
-                      <Input
-                        type="email" required value={billing.confirmEmail}
-                        onChange={e => setBilling(b => ({ ...b, confirmEmail: e.target.value }))}
-                        placeholder="jean@exemple.com"
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Téléphone / WhatsApp <span className="text-rdc-red">*</span></label>
-                      <Input
-                        type="tel" required value={billing.phone}
-                        onChange={e => setBilling(b => ({ ...b, phone: e.target.value }))}
-                        placeholder="+243 81 XXX XXXX"
-                      />
-                      <p className="mt-1 text-xs text-muted-foreground">Votre QR code sera envoyé sur ce numéro</p>
-                    </div>
-                    <div>
-                      <label className={labelClass}>Plaque d'immatriculation <span className="text-rdc-red">*</span></label>
-                      <Input
-                        required value={billing.plate}
-                        onChange={e => setBilling(b => ({ ...b, plate: e.target.value.toUpperCase() }))}
-                        placeholder="KIN·XXX·AB"
-                        className="font-mono uppercase"
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Numéro de vol <span className="normal-case font-normal text-muted-foreground">(Optionnel)</span></label>
-                      <Input
-                        value={billing.airline}
-                        onChange={e => setBilling(b => ({ ...b, airline: e.target.value.toUpperCase() }))}
-                        placeholder="SN491"
-                        className="font-mono"
-                      />
-                    </div>
-                    <div>
-                      <label className={labelClass}>Destination <span className="normal-case font-normal text-muted-foreground">(Optionnel)</span></label>
-                      <Input
-                        value={billing.destination}
-                        onChange={e => setBilling(b => ({ ...b, destination: e.target.value }))}
-                        placeholder="Bruxelles, Paris…"
-                      />
+                {/* ── Section 1: Coordonnées ─────────────────────────── */}
+                <div className="border border-[#D8E0ED] bg-white">
+                  <div className="flex items-center gap-3 border-b border-[#D8E0ED] px-6 py-4">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#003DA5] text-xs font-bold text-white">1</span>
+                    <h2 className="text-sm font-bold uppercase tracking-wide text-[#1A1A1A]">Vos coordonnées</h2>
+                  </div>
+                  <div className="p-6">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                          <User size={11} className="shrink-0" /> Prénom <span className="text-[#CE1126]">*</span>
+                        </label>
+                        <input
+                          required value={billing.firstName}
+                          onChange={e => setBilling(b => ({ ...b, firstName: e.target.value }))}
+                          placeholder="Jean"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                          <User size={11} className="shrink-0" /> Nom <span className="text-[#CE1126]">*</span>
+                        </label>
+                        <input
+                          required value={billing.lastName}
+                          onChange={e => setBilling(b => ({ ...b, lastName: e.target.value }))}
+                          placeholder="Mukendi"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                          <Mail size={11} className="shrink-0" /> Courriel <span className="text-[#CE1126]">*</span>
+                        </label>
+                        <input
+                          type="email" required value={billing.email}
+                          onChange={e => setBilling(b => ({ ...b, email: e.target.value }))}
+                          placeholder="jean@exemple.com"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                          <Mail size={11} className="shrink-0" /> Confirmer le courriel <span className="text-[#CE1126]">*</span>
+                        </label>
+                        <input
+                          type="email" required value={billing.confirmEmail}
+                          onChange={e => setBilling(b => ({ ...b, confirmEmail: e.target.value }))}
+                          placeholder="jean@exemple.com"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                          <Phone size={11} className="shrink-0" /> Téléphone / WhatsApp <span className="text-[#CE1126]">*</span>
+                        </label>
+                        <input
+                          type="tel" required value={billing.phone}
+                          onChange={e => setBilling(b => ({ ...b, phone: e.target.value }))}
+                          placeholder="+243 81 XXX XXXX"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                        />
+                        <p className="mt-1 text-xs text-[#888]">Votre QR code sera envoyé sur ce numéro</p>
+                      </div>
+                      <div>
+                        <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                          <Car size={11} className="shrink-0" /> Plaque d'immatriculation <span className="text-[#CE1126]">*</span>
+                        </label>
+                        <input
+                          required value={billing.plate}
+                          onChange={e => setBilling(b => ({ ...b, plate: e.target.value.toUpperCase() }))}
+                          placeholder="KIN·XXX·AB"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors font-mono uppercase"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1.5 block text-xs font-bold text-[#555]">
+                          Numéro de vol <span className="font-normal normal-case text-[#888]">(Optionnel)</span>
+                        </label>
+                        <input
+                          value={billing.airline}
+                          onChange={e => setBilling(b => ({ ...b, airline: e.target.value.toUpperCase() }))}
+                          placeholder="SN491"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="mb-1.5 block text-xs font-bold text-[#555]">
+                          Destination <span className="font-normal normal-case text-[#888]">(Optionnel)</span>
+                        </label>
+                        <input
+                          value={billing.destination}
+                          onChange={e => setBilling(b => ({ ...b, destination: e.target.value }))}
+                          placeholder="Bruxelles, Paris…"
+                          className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* ── Section 2: Paiement ────────────────────────────── */}
-                <div className="rounded-2xl border border-border bg-white p-6">
-                  <h2 className="font-display text-lg font-bold text-rdc-anthracite mb-5">
-                    2. Paiement Mobile Money
-                  </h2>
-
-                  {/* Method selector */}
-                  <div className="grid grid-cols-3 gap-3 mb-5">
-                    {PAY_METHODS.map((m) => (
-                      <button
-                        key={m.id}
-                        type="button"
-                        onClick={() => setPayMethod(m.id)}
-                        className={`flex flex-col items-center gap-2 rounded-xl border-2 p-3 text-center transition-all ${
-                          payMethod === m.id
-                            ? 'border-rdc-blue bg-rdc-blue/5'
-                            : 'border-border bg-white hover:border-rdc-blue/40'
-                        }`}
-                      >
-                        <span className={`h-8 w-8 rounded-full ${m.color}`} />
-                        <span className="text-xs font-semibold text-rdc-anthracite leading-tight">{m.name}</span>
-                        {payMethod === m.id && (
-                          <CheckCircle size={14} className="text-rdc-blue" />
-                        )}
-                      </button>
-                    ))}
+                {/* ── Section 2: Paiement Mobile Money ──────────────── */}
+                <div className="border border-[#D8E0ED] bg-white">
+                  <div className="flex items-center gap-3 border-b border-[#D8E0ED] px-6 py-4">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#003DA5] text-xs font-bold text-white">2</span>
+                    <h2 className="text-sm font-bold uppercase tracking-wide text-[#1A1A1A]">Paiement Mobile Money</h2>
                   </div>
+                  <div className="p-6">
 
-                  {/* Payment phone */}
-                  <div className="mb-4">
-                    <label className={labelClass}>
-                      Numéro {activePayMethod.name} <span className="text-rdc-red">*</span>
-                    </label>
-                    <input
-                      type="tel" required value={payPhone}
-                      onChange={e => setPayPhone(e.target.value)}
-                      placeholder="+243 8X XXX XXXX"
-                      className={inputClass}
-                    />
-                  </div>
+                    {/* Operator picker */}
+                    <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[#555]">Choisissez votre opérateur</p>
+                    <div className="mb-6 grid grid-cols-3 gap-3">
+                      {PAY_METHODS.map((m) => (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => setPayMethod(m.id)}
+                          className={`overflow-hidden border-2 text-left transition-all ${
+                            payMethod === m.id ? 'border-[#003DA5]' : 'border-[#D8E0ED] hover:border-[#003DA5]/40'
+                          }`}
+                        >
+                          <div className={`h-2 w-full ${m.color}`} />
+                          <div className="p-3">
+                            <span className={`mb-2.5 block h-7 w-7 rounded-full ${m.color}`} />
+                            <p className="text-xs font-bold leading-snug text-[#1A1A1A]">{m.name}</p>
+                            {payMethod === m.id && (
+                              <p className="mt-1.5 flex items-center gap-1 text-[10px] font-bold text-[#003DA5]">
+                                <CheckCircle size={10} /> Sélectionné
+                              </p>
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
 
-                  {/* USSD instructions */}
-                  <div className="rounded-xl border border-border bg-muted/40 p-4">
-                    <p className="text-xs font-semibold text-rdc-anthracite mb-2">Instructions de paiement</p>
-                    <p className="font-mono text-sm font-bold text-rdc-blue tracking-wider mb-1">{ussdCode}</p>
-                    <p className="text-xs text-muted-foreground">{activePayMethod.hint}</p>
-                    <p className="mt-2 text-xs text-muted-foreground">
-                      Montant à payer :{' '}
-                      <span className="font-bold text-rdc-anthracite">${selectedPrice?.online} USD</span>
-                      {' '}— Référence : votre code de réservation
-                    </p>
-                  </div>
+                    {/* Pay phone */}
+                    <div className="mb-5">
+                      <label className="mb-1.5 flex items-center gap-1.5 text-xs font-bold text-[#555]">
+                        <Phone size={11} className="shrink-0" /> Numéro {activePayMethod.name} <span className="text-[#CE1126]">*</span>
+                      </label>
+                      <input
+                        type="tel" required value={payPhone}
+                        onChange={e => setPayPhone(e.target.value)}
+                        placeholder="+243 8X XXX XXXX"
+                        className="w-full border border-[#C8D0DC] px-3 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#003DA5] bg-white transition-colors"
+                      />
+                    </div>
 
-                  {/* Sandbox notice */}
-                  <div className="mt-3 rounded-lg border border-rdc-blue/20 bg-rdc-blue/5 px-3 py-2 text-xs text-rdc-blue">
-                    En mode démonstration, le paiement est simulé automatiquement. Votre QR code sera généré immédiatement.
+                    {/* USSD terminal */}
+                    <div className="mb-4 bg-[#0f1117] p-4">
+                      <div className="mb-3 flex items-center gap-2">
+                        <div className="flex gap-1.5">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+                        </div>
+                        <span className="font-mono text-[10px] text-[#888]">USSD — {activePayMethod.name}</span>
+                      </div>
+                      <p className="font-mono text-base font-bold tracking-wider text-[#4ade80]">{ussdCode}</p>
+                      <p className="mt-1 text-[11px] text-[#999]">{activePayMethod.hint}</p>
+                      <div className="mt-3 border-t border-[#333] pt-3">
+                        <p className="text-[11px] text-[#aaa]">
+                          Montant : <span className="font-mono font-bold text-white">${selectedPrice?.online} USD</span>
+                          <span className="mx-2 text-[#444]">·</span>
+                          Référence : <span className="font-mono font-bold text-white">code de réservation</span>
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Demo notice */}
+                    <div className="border border-[#003DA5]/20 bg-[#003DA5]/5 px-3 py-2.5 text-xs text-[#003DA5]">
+                      <span className="font-bold">Mode démonstration</span> — Le paiement est simulé. Votre QR code est généré immédiatement.
+                    </div>
                   </div>
                 </div>
 
                 {/* ── Section 3: Conditions ──────────────────────────── */}
-                <div className="rounded-2xl border border-border bg-white p-6 space-y-3">
-                  <h2 className="font-display text-lg font-bold text-rdc-anthracite mb-1">
-                    3. Conditions
-                  </h2>
-                  <label className="flex cursor-pointer items-start gap-3">
-                    <input
-                      type="checkbox" checked={terms} onChange={e => setTerms(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 rounded border-border text-rdc-blue focus:ring-rdc-blue"
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      J'ai lu et j'accepte les{' '}
-                      <Link to={'/conditions-utilisation' as never} className="text-rdc-blue hover:underline font-medium" target="_blank">
-                        conditions d'utilisation
-                      </Link>
-                      {' '}et les{' '}
-                      <Link to={'/conditions-utilisation' as never} className="text-rdc-blue hover:underline font-medium" target="_blank">
-                        conditions générales de stationnement
-                      </Link>.
-                    </span>
-                  </label>
-                  <label className="flex cursor-pointer items-start gap-3">
-                    <input
-                      type="checkbox" checked={privacy} onChange={e => setPrivacy(e.target.checked)}
-                      className="mt-0.5 h-4 w-4 rounded border-border text-rdc-blue focus:ring-rdc-blue"
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      J'accepte la{' '}
-                      <Link to={'/politique-confidentialite' as never} className="text-rdc-blue hover:underline font-medium" target="_blank">
-                        politique de confidentialité
-                      </Link>
-                      {' '}de la RVA / Aéroport de N'djili.
-                    </span>
-                  </label>
+                <div className="border border-[#D8E0ED] bg-white">
+                  <div className="flex items-center gap-3 border-b border-[#D8E0ED] px-6 py-4">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#003DA5] text-xs font-bold text-white">3</span>
+                    <h2 className="text-sm font-bold uppercase tracking-wide text-[#1A1A1A]">Conditions</h2>
+                  </div>
+                  <div className="p-6 space-y-4">
+                    <label className="flex cursor-pointer items-start gap-3 group">
+                      <input
+                        type="checkbox" checked={terms} onChange={e => setTerms(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 accent-[#003DA5]"
+                      />
+                      <span className="text-sm text-[#555] transition-colors group-hover:text-[#1A1A1A]">
+                        J'ai lu et j'accepte les{' '}
+                        <Link to={'/conditions-utilisation' as never} className="font-medium text-[#003DA5] hover:underline" target="_blank">
+                          conditions d'utilisation
+                        </Link>
+                        {' '}et les{' '}
+                        <Link to={'/conditions-utilisation' as never} className="font-medium text-[#003DA5] hover:underline" target="_blank">
+                          conditions générales de stationnement
+                        </Link>.
+                      </span>
+                    </label>
+                    <label className="flex cursor-pointer items-start gap-3 group">
+                      <input
+                        type="checkbox" checked={privacy} onChange={e => setPrivacy(e.target.checked)}
+                        className="mt-0.5 h-4 w-4 accent-[#003DA5]"
+                      />
+                      <span className="text-sm text-[#555] transition-colors group-hover:text-[#1A1A1A]">
+                        J'accepte la{' '}
+                        <Link to={'/politique-confidentialite' as never} className="font-medium text-[#003DA5] hover:underline" target="_blank">
+                          politique de confidentialité
+                        </Link>
+                        {' '}de la RVA / Aéroport de N'djili.
+                      </span>
+                    </label>
+                  </div>
                 </div>
 
                 {/* Error */}
                 {error && (
-                  <div className="rounded-xl border border-rdc-red/20 bg-rdc-red/5 px-4 py-3 text-sm text-rdc-red">
+                  <div className="border border-[#CE1126]/20 bg-[#CE1126]/5 px-4 py-3 text-sm text-[#CE1126]">
                     {error}
                   </div>
                 )}
 
                 {/* Submit */}
-                <Button
+                <button
                   type="submit"
                   disabled={loading || !terms || !privacy}
-                  className="w-full bg-rdc-blue hover:bg-rdc-blue/85 text-white font-bold py-3 text-base disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 bg-[#003DA5] py-4 text-sm font-bold text-white transition-colors hover:bg-[#002580] disabled:opacity-40"
                 >
                   {loading ? (
-                    <span className="flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Traitement en cours…</span>
+                    <><Loader2 size={16} className="animate-spin" /> Traitement en cours…</>
                   ) : (
-                    'Réserver et payer maintenant'
+                    <><Lock size={14} /> Réserver et payer maintenant</>
                   )}
-                </Button>
-
-                <p className="text-center text-xs text-muted-foreground">
+                </button>
+                <p className="text-center text-xs text-[#888]">
                   Paiement sécurisé · Place garantie · Annulation gratuite 24h avant
                 </p>
               </form>
@@ -748,91 +789,132 @@ function ReservationPage() {
 
             {/* ────────── STEP 3: Confirmation ──────────────────────── */}
             {step === 3 && code && selectedLot && (
-              <div className="mx-auto max-w-xl">
-                {/* Success header */}
-                <div className="mb-8 text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-rdc-green/10">
-                    <CheckCircle size={36} className="text-rdc-green" />
+              <div className="mx-auto max-w-2xl">
+
+                {/* Success banner */}
+                <div className="bg-[#003DA5] px-8 py-8 text-center text-white">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/20">
+                    <CheckCircle size={30} className="text-white" />
                   </div>
-                  <h1 className="font-display text-3xl font-bold text-rdc-anthracite">Réservation confirmée !</h1>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    Votre QR code a été généré. Présentez-le à la barrière d'entrée du {selectedLot.code}.
+                  <h1 className="font-display text-2xl font-bold">Réservation confirmée</h1>
+                  <p className="mt-1 text-sm text-white/70">
+                    Votre billet de stationnement a été généré avec succès.
                   </p>
                 </div>
 
-                {/* Reservation code */}
-                <div className="mb-6 rounded-2xl border border-border bg-white p-6 text-center">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
-                    Code de réservation
+                {/* Ticket card */}
+                <div className="border border-[#D8E0ED] bg-white shadow-sm">
+
+                  {/* Ticket header */}
+                  <div className="flex items-center justify-between border-b border-[#D8E0ED] px-6 py-4">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#888]">Aéroport International de N'djili</p>
+                      <p className="text-sm font-bold text-[#003DA5]">FIH — Régie des Voies Aériennes</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-[#888]">Parking</p>
+                      <p className="font-display text-3xl font-black text-[#1A1A1A]">{selectedLot.code}</p>
+                    </div>
+                  </div>
+
+                  {/* Code badge */}
+                  <div className="border-b border-[#D8E0ED] px-6 py-5">
+                    <p className="mb-2 text-[10px] font-bold uppercase tracking-widest text-[#888]">Code de réservation</p>
+                    <div className="inline-flex items-center border border-[#D8E0ED] bg-[#F4F6FB] px-5 py-3">
+                      <span className="font-mono text-2xl font-black tracking-widest text-[#003DA5]">{code}</span>
+                    </div>
+                  </div>
+
+                  {/* Details grid */}
+                  <div className="grid grid-cols-2 gap-px bg-[#D8E0ED] border-b border-[#D8E0ED]">
+                    <div className="col-span-2 bg-white p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888] mb-0.5">Parking</p>
+                      <p className="text-sm font-semibold text-[#1A1A1A]">{selectedLot.code} — {selectedLot.name}</p>
+                    </div>
+                    <div className="bg-white p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888] mb-0.5">Entrée</p>
+                      <p className="text-sm font-semibold text-[#1A1A1A]">{fmtShort(start)}</p>
+                    </div>
+                    <div className="bg-white p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888] mb-0.5">Sortie</p>
+                      <p className="text-sm font-semibold text-[#1A1A1A]">{fmtShort(end)}</p>
+                    </div>
+                    <div className="bg-white p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888] mb-0.5">Durée</p>
+                      <p className="text-sm font-semibold text-[#1A1A1A]">{durationLabel(hours)}</p>
+                    </div>
+                    <div className="bg-white p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888] mb-0.5">Véhicule</p>
+                      <p className="font-mono text-sm font-bold text-[#1A1A1A]">{billing.plate.toUpperCase()}</p>
+                    </div>
+                    <div className="col-span-2 bg-white p-4">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888] mb-0.5">Titulaire</p>
+                      <p className="text-sm font-semibold text-[#1A1A1A]">{billing.firstName} {billing.lastName}</p>
+                    </div>
+                  </div>
+
+                  {/* Dashed divider */}
+                  <div className="border-t-2 border-dashed border-[#D8E0ED] mx-6" />
+
+                  {/* QR code */}
+                  <div className="flex flex-col items-center px-6 py-8">
+                    <p className="mb-4 text-[10px] font-bold uppercase tracking-widest text-[#888]">Présentez à la barrière d'entrée</p>
+                    <img
+                      src={qrUrl}
+                      alt={`QR Code ${code}`}
+                      className="h-44 w-44 mb-4"
+                    />
+                    <a
+                      href={qrUrl}
+                      download={`FIH-PARKING-${code}.png`}
+                      className="flex items-center gap-1.5 text-xs font-semibold text-[#003DA5] hover:underline"
+                    >
+                      <Download size={13} /> Télécharger le QR code
+                    </a>
+                  </div>
+
+                  {/* Ticket footer */}
+                  <div className="flex items-center justify-between border-t border-[#D8E0ED] bg-[#F4F6FB] px-6 py-4">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888]">Moyen de paiement</p>
+                      <p className="text-sm font-semibold text-[#1A1A1A]">{PAY_METHODS.find(m => m.id === payMethod)?.name ?? payMethod}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-[#888]">Total payé</p>
+                      <p className="font-display text-2xl font-black text-[#003DA5]">
+                        ${selectedPrice?.online} <span className="text-sm font-semibold text-[#888]">USD</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Info notes */}
+                <div className="mt-4 border border-[#D8E0ED] bg-[#F4F6FB] px-5 py-4 space-y-2 text-xs text-[#555]">
+                  <p className="flex items-start gap-2">
+                    <span className="mt-0.5 font-bold text-[#003DA5]">→</span>
+                    Présentez ce QR code (imprimé ou sur écran) à la barrière d'entrée du parking {selectedLot.code}.
                   </p>
-                  <p className="font-mono text-3xl font-bold tracking-widest text-rdc-blue">{code}</p>
+                  <p className="flex items-start gap-2">
+                    <span className="mt-0.5 font-bold text-[#003DA5]">→</span>
+                    Le parking {selectedLot.code} est surveillé 24h/24 par les agents de sécurité RVA.
+                  </p>
+                  <p className="flex items-start gap-2">
+                    <span className="mt-0.5 font-bold text-[#003DA5]">→</span>
+                    En cas de dépassement d'horaire, des frais supplémentaires seront facturés à la sortie.
+                  </p>
                 </div>
 
-                {/* QR code */}
-                <div className="mb-6 flex flex-col items-center gap-4 rounded-2xl border border-border bg-white p-8">
-                  <img
-                    src={qrUrl}
-                    alt={`QR Code ${code}`}
-                    className="h-52 w-52 rounded-xl"
-                  />
-                  <a
-                    href={qrUrl}
-                    download={`FIH-PARKING-${code}.png`}
-                    className="flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:underline"
-                  >
-                    <Download size={14} /> Télécharger le QR code
-                  </a>
-                </div>
-
-                {/* Summary */}
-                <div className="mb-6 rounded-2xl border border-border bg-white p-6 space-y-3 text-sm">
-                  <p className="font-semibold text-rdc-anthracite mb-3">Récapitulatif</p>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Parking</span>
-                    <span className="font-medium">{selectedLot.code} — {selectedLot.name}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Entrée</span>
-                    <span className="font-medium">{fmtShort(start)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Sortie</span>
-                    <span className="font-medium">{fmtShort(end)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Durée</span>
-                    <span className="font-medium">{durationLabel(hours)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Plaque</span>
-                    <span className="font-mono font-medium">{billing.plate.toUpperCase()}</span>
-                  </div>
-                  <div className="flex justify-between border-t border-border pt-3">
-                    <span className="font-semibold text-rdc-anthracite">Total payé</span>
-                    <span className="font-bold text-rdc-blue text-lg">
-                      ${selectedPrice?.online} USD
-                    </span>
-                  </div>
-                </div>
-
-                {/* Info note */}
-                <div className="mb-6 rounded-xl border border-border bg-muted/40 p-4 text-xs text-muted-foreground space-y-1.5">
-                  <p className="flex items-start gap-2"><span className="text-rdc-blue mt-0.5">→</span> Présentez ce QR code (imprimé ou sur écran) à la barrière d'entrée du parking {selectedLot.code}.</p>
-                  <p className="flex items-start gap-2"><span className="text-rdc-blue mt-0.5">→</span> Le parking {selectedLot.code} est surveillé 24h/24 par les agents de sécurité RVA.</p>
-                  <p className="flex items-start gap-2"><span className="text-rdc-blue mt-0.5">→</span> En cas de dépassement d'horaire, des frais supplémentaires seront facturés à la sortie.</p>
-                </div>
-
-                {/* CTA */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                {/* CTAs */}
+                <div className="mt-4 flex flex-col sm:flex-row gap-3">
                   <Link
                     to={'/compte/reservations' as never}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-rdc-blue px-5 py-3 text-sm font-bold text-white hover:bg-rdc-blue/85 transition-colors"
+                    className="flex flex-1 items-center justify-center gap-2 bg-[#003DA5] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#002580]"
                   >
                     Voir mes réservations
                   </Link>
                   <Link
                     to={'/stationnement-transport/formulaire' as never}
-                    className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-semibold text-rdc-anthracite hover:border-rdc-blue hover:text-rdc-blue transition-colors"
+                    className="flex flex-1 items-center justify-center gap-2 border border-[#D8E0ED] px-5 py-3.5 text-sm font-semibold text-[#1A1A1A] transition-colors hover:border-[#003DA5] hover:text-[#003DA5]"
                   >
                     Nouvelle réservation
                   </Link>
