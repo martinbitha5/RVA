@@ -3,13 +3,11 @@ import {
   List, Datagrid, TextField, DateField, BooleanField, NumberField, UrlField,
   Edit, SimpleForm, TextInput, DateTimeInput, BooleanInput, NumberInput, SelectInput,
   Create, Show, SimpleShowLayout,
-  useRecordContext, useNotify,
+  useRecordContext,
   DeleteWithConfirmButton,
   EditButton, ShowButton,
   TopToolbar, FilterButton, CreateButton, ExportButton,
-  Confirm,
 } from 'react-admin';
-import { useState } from 'react';
 import {
   Flight, LocalParking, People, Article,
   Work, NotificationsActive, AirlineStops,
@@ -243,7 +241,7 @@ function ReservationShow() {
 function ProfileList() {
   return (
     <List sort={{ field: 'created_at', order: 'DESC' }} perPage={25}
-      actions={<TopToolbar><FilterButton /><ExportButton label="Exporter" /></TopToolbar>}>
+      actions={<TopToolbar><ExportButton label="Exporter" /></TopToolbar>}>
       <Datagrid rowClick="show" bulkActionButtons={false}>
         <TextField source="full_name" label="Nom complet" />
         <TextField source="email" label="Email" />
@@ -254,6 +252,23 @@ function ProfileList() {
         <ShowButton label="" />
       </Datagrid>
     </List>
+  );
+}
+
+function ProfileShow() {
+  return (
+    <Show title="Profil utilisateur">
+      <SimpleShowLayout>
+        <TextField source="full_name" label="Nom complet" />
+        <TextField source="email" label="Email" />
+        <TextField source="phone" label="Téléphone" />
+        <TextField source="preferred_language" label="Langue préférée" />
+        <BooleanField source="notification_email" label="Notifications email" />
+        <BooleanField source="notification_sms" label="Notifications SMS" />
+        <DateField source="created_at" label="Inscrit le" showTime />
+        <DateField source="updated_at" label="Mis à jour le" showTime />
+      </SimpleShowLayout>
+    </Show>
   );
 }
 
@@ -719,8 +734,10 @@ function NoiseComplaintEdit() {
 
 function ParkingLotList() {
   return (
-    <List sort={{ field: 'code', order: 'ASC' }} actions={<ListActions />}>
+    <List sort={{ field: 'code', order: 'ASC' }}
+      actions={<TopToolbar><CreateButton label="Ajouter" /><ExportButton label="Exporter" /></TopToolbar>}>
       <Datagrid rowClick="edit" bulkActionButtons={false}>
+        <ThumbnailField source="image_url" />
         <TextField source="code" label="Code" />
         <TextField source="name" label="Nom" />
         <NumberField source="total_spots" label="Capacité" />
@@ -739,6 +756,7 @@ function ParkingLotEdit() {
   return (
     <Edit actions={<EditActions />} title="Modifier le parking">
       <SimpleForm>
+        <SupabaseImageInput source="image_url" label="Photo du parking" folder="parking" />
         <TextInput source="code" label="Code (P1, P2…)" required />
         <TextInput source="name" label="Nom du parking" fullWidth required />
         <TextInput source="description_fr" label="Description (FR)" fullWidth multiline rows={3} />
@@ -768,6 +786,7 @@ function ParkingLotCreate() {
   return (
     <Create title="Ajouter un parking">
       <SimpleForm>
+        <SupabaseImageInput source="image_url" label="Photo du parking" folder="parking" />
         <TextInput source="code" label="Code (P1, P2…)" required />
         <TextInput source="name" label="Nom du parking" fullWidth required />
         <TextInput source="description_fr" label="Description (FR)" fullWidth multiline rows={3} />
@@ -808,7 +827,7 @@ export default function App() {
     >
       <Resource name="flights"              list={FlightList}        edit={FlightEdit}        create={FlightCreate}        icon={Flight}              options={{ label: 'Vols' }} />
       <Resource name="parking_reservations" list={ReservationList}   show={ReservationShow}                                icon={LocalParking}        options={{ label: 'Réservations parking' }} />
-      <Resource name="profiles"             list={ProfileList}                                                              icon={People}              options={{ label: 'Utilisateurs' }} />
+      <Resource name="profiles"             list={ProfileList}       show={ProfileShow}                                    icon={People}              options={{ label: 'Utilisateurs' }} />
       <Resource name="news_articles"        list={NewsArticleList}   edit={NewsArticleEdit}   create={NewsArticleCreate}   icon={Article}             options={{ label: 'Actualités' }} />
       <Resource name="job_postings"         list={JobPostingList}    edit={JobPostingEdit}    create={JobPostingCreate}    icon={Work}                options={{ label: "Offres d'emploi" }} />
       <Resource name="flight_alerts"        list={FlightAlertList}                                                          icon={NotificationsActive} options={{ label: 'Alertes WhatsApp' }} />

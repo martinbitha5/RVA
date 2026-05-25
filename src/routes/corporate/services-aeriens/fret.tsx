@@ -212,10 +212,10 @@ function FretPage() {
               <p className="text-sm text-white/75 mt-1">Contactez notre service cargo pour un devis ou pour réserver votre espace fret.</p>
             </div>
             <a
-              href="mailto:cargo@aindjili.com"
+              href="mailto:cargo@fih-rva.com"
               className="flex items-center gap-2 bg-white px-6 py-3 text-sm font-bold text-amber-700 hover:bg-rdc-anthracite hover:text-white transition-colors whitespace-nowrap"
             >
-              cargo@aindjili.com <ArrowRight size={14} />
+              cargo@fih-rva.com <ArrowRight size={14} />
             </a>
           </div>
         </div>

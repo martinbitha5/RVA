@@ -54,7 +54,7 @@ export function Dashboard() {
           Tableau de bord — Aéroport FIH
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Bienvenue dans le backoffice RVA. Toutes les modifications sont immédiatement visibles sur le site public aindjili.com
+          Bienvenue dans le backoffice RVA. Toutes les modifications sont immédiatement visibles sur le site public fih-rva.com
         </Typography>
       </Box>
 
@@ -65,28 +65,28 @@ export function Dashboard() {
         Vue d'ensemble
       </Typography>
       <Grid container spacing={2} sx={{ mb: 4 }}>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Vols" count={flights} icon={<FlightIcon />} color="#003DA5" subtitle="En base de données" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Réservations parking" count={reservations} icon={<LocalParkingIcon />} color="#009A44" subtitle="Total cumulé" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Comptes clients" count={users} icon={<PeopleIcon />} color="#FF9800" subtitle="Inscrits" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Articles" count={news} icon={<ArticleIcon />} color="#9C27B0" subtitle="Actualités publiées" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Offres d'emploi" count={jobs} icon={<WorkIcon />} color="#F44336" subtitle="Postes ouverts" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Alertes WhatsApp" count={alerts} icon={<NotificationsActiveIcon />} color="#25D366" subtitle="Abonnements actifs" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Plaintes bruit" count={complaints} icon={<VolumeUpIcon />} color="#FF5722" subtitle="Reçues" />
         </Grid>
-        <Grid item xs={6} sm={4} md={3}>
+        <Grid size={{ xs: 6, sm: 4, md: 3 }}>
           <StatCard title="Concessions" count={concessions} icon={<StoreIcon />} color="#607D8B" subtitle="Boutiques & Restaurants" />
         </Grid>
       </Grid>
@@ -98,7 +98,7 @@ export function Dashboard() {
             ℹ️ Synchronisation automatique avec le site public
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.8 }}>
-            • <strong>Ajouter</strong> un vol, une boutique, une actualité → apparaît immédiatement sur aindjili.com<br />
+            • <strong>Ajouter</strong> un vol, une boutique, une actualité → apparaît immédiatement sur fih-rva.com<br />
             • <strong>Modifier</strong> un statut de vol → mis à jour en temps réel sur le tableau des départs/arrivées<br />
             • <strong>Supprimer</strong> une concession, une offre d'emploi → disparaît du site public instantanément<br />
             • <strong>Images</strong> → stockées dans Supabase Storage, accessibles publiquement sur le site

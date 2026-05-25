@@ -34,7 +34,7 @@ const SECTIONS = [
   },
   {
     title: '7. Vos droits',
-    content: `Conformément à la réglementation applicable, vous disposez des droits suivants :\n• Droit d'accès à vos données personnelles\n• Droit de rectification des données inexactes\n• Droit à l'effacement (« droit à l'oubli »)\n• Droit à la limitation du traitement\n• Droit à la portabilité de vos données\n• Droit d'opposition au traitement\n\nPour exercer ces droits, contactez-nous à privacy@aindjili.com`,
+    content: `Conformément à la réglementation applicable, vous disposez des droits suivants :\n• Droit d'accès à vos données personnelles\n• Droit de rectification des données inexactes\n• Droit à l'effacement (« droit à l'oubli »)\n• Droit à la limitation du traitement\n• Droit à la portabilité de vos données\n• Droit d'opposition au traitement\n\nPour exercer ces droits, contactez-nous à privacy@fih-rva.com`,
   },
   {
     title: '8. Sécurité',
@@ -79,7 +79,7 @@ function PolitiqueConfidentialitePage() {
 
       <div className="mt-10 rounded-xl border border-border bg-card p-5 text-sm text-muted-foreground">
         <p className="font-medium text-rdc-anthracite mb-1">Délégué à la Protection des Données</p>
-        <p>Email : <a href="mailto:privacy@aindjili.com" className="text-rdc-blue hover:underline">privacy@aindjili.com</a></p>
+        <p>Email : <a href="mailto:privacy@fih-rva.com" className="text-rdc-blue hover:underline">privacy@fih-rva.com</a></p>
         <p>Adresse : Direction Générale RVA, Boulevard Lumumba, Kinshasa, RDC</p>
       </div>
     </div>

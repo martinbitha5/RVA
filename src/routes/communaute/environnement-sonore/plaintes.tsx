@@ -182,9 +182,9 @@ function PlaintesPage() {
                   <Phone size={13} className="text-rdc-blue" />
                   +243 XX XXX XXXX
                 </a>
-                <a href="mailto:environnement@aindjili.com" className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-rdc-blue transition-colors">
+                <a href="mailto:environnement@fih-rva.com" className="flex items-center gap-2.5 text-sm text-muted-foreground hover:text-rdc-blue transition-colors">
                   <Mail size={13} className="text-rdc-blue" />
-                  environnement@aindjili.com
+                  environnement@fih-rva.com
                 </a>
               </div>
               <p className="mt-3 text-xs text-muted-foreground">

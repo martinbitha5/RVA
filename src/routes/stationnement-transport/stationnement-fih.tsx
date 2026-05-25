@@ -256,8 +256,8 @@ function StationnementFih() {
                     <p className="text-sm text-white/80 mt-0.5">{lot.name}</p>
                   </div>
                   <div className="p-5 space-y-4">
-                    {lot.description && (
-                      <p className="text-sm text-muted-foreground">{lot.description}</p>
+                    {lot.description_fr && (
+                      <p className="text-sm text-muted-foreground">{lot.description_fr}</p>
                     )}
                     <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
                       <span className="flex items-center gap-1"><Car size={12} /> Voitures</span>

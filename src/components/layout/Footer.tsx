@@ -188,7 +188,7 @@ export function Footer() {
               </div>
               <div className="flex items-center gap-2.5 text-sm text-white/70">
                 <Mail size={14} className="flex-shrink-0 text-rdc-yellow" />
-                <a href="mailto:contact@aindjili.com" className="hover:text-white transition-colors">
+                <a href="mailto:contact@fih-rva.com" className="hover:text-white transition-colors">
                   {t('footer.email')}
                 </a>
               </div>

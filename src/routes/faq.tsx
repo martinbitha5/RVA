@@ -98,7 +98,7 @@ const FAQ_SECTIONS: { category: string; items: FaqItem[] }[] = [
     category: 'Espace client',
     items: [
       {
-        q: 'Comment créer un compte sur aindjili.com ?',
+        q: 'Comment créer un compte sur fih-rva.com ?',
         a: 'Cliquez sur "Espace Client" dans le menu principal, puis "Créer un compte". Renseignez votre nom, email et mot de passe (minimum 8 caractères). Un email de confirmation vous sera envoyé.',
       },
       {

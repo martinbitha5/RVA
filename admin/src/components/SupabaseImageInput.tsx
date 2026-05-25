@@ -32,12 +32,6 @@ export function SupabaseImageInput({ source, label = 'Image', folder = 'general'
       const ext = file.name.split('.').pop()?.toLowerCase() ?? 'jpg';
       const filename = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
 
-      // Crée le bucket s'il n'existe pas encore
-      const { data: buckets } = await supabase.storage.listBuckets();
-      if (!buckets?.some(b => b.name === 'fih-media')) {
-        await supabase.storage.createBucket('fih-media', { public: true });
-      }
-
       const { error: uploadError } = await supabase.storage
         .from('fih-media')
         .upload(filename, file, { cacheControl: '3600', upsert: false });

@@ -563,7 +563,7 @@ function FlightDetailPage() {
                 Centre d'information FIH — Hall principal<br />
                 Ouvert 24h/24 · 7j/7<br />
                 Tél&nbsp;: <a href="tel:+243000000000" className="text-rdc-blue">+243 XX XXX XXXX</a><br />
-                Email&nbsp;: <a href="mailto:info@aindjili.com" className="text-rdc-blue">info@aindjili.com</a>
+                Email&nbsp;: <a href="mailto:info@fih-rva.com" className="text-rdc-blue">info@fih-rva.com</a>
               </p>
             </div>
 

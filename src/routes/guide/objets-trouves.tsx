@@ -58,8 +58,8 @@ function ObjetsTrouvesPage() {
               <a href="tel:+243810000000" className="flex items-center gap-2 text-rdc-blue hover:underline">
                 <Phone size={11} /> +243 81 XXX XXXX
               </a>
-              <a href="mailto:lostnfound@aindjili.com" className="flex items-center gap-2 text-rdc-blue hover:underline">
-                <Mail size={11} /> lostnfound@aindjili.com
+              <a href="mailto:lostnfound@fih-rva.com" className="flex items-center gap-2 text-rdc-blue hover:underline">
+                <Mail size={11} /> lostnfound@fih-rva.com
               </a>
             </div>
           </div>

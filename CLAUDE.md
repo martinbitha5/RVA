@@ -196,7 +196,7 @@ Routes i18n : `/fr/...`, `/en/...`, `/ln/...`
 - **Colonne 5 — Contact** :
   - Adresse : Boulevard Lumumba, Commune de Nsele, Kinshasa, RDC
   - Tél : +243 XX XXX XXXX
-  - Email : contact@aindjili.com / info@aindjili.com
+  - Email : contact@fih-rva.com / info@fih-rva.com
   - Standard : 24/7
 - **Réseaux sociaux** : Facebook, X (Twitter), Instagram, LinkedIn, YouTube
 - **Bas de page (légal)** :
@@ -719,7 +719,7 @@ VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
 VITE_FLIGHTAWARE_API_KEY=
 VITE_MAPLIBRE_KEY=
-VITE_PLAUSIBLE_DOMAIN=aindjili.com
+VITE_PLAUSIBLE_DOMAIN=fih-rva.com
 
 # Edge Functions
 SUPABASE_SERVICE_ROLE_KEY=
@@ -734,7 +734,7 @@ FLIGHTAWARE_API_KEY=
 ---
 
 ## 13. Domaine
-- `aindjili.com` (**domaine principal — déjà acquis**)
+- `fih-rva.com` (**domaine principal — déjà acquis**)
 
 ---
 

@@ -219,7 +219,7 @@ function CommunauteHub() {
                 </p>
                 <p className="text-xs text-white/40 leading-relaxed">
                   Prochain comité consultatif communautaire — Juin 2026.
-                  Contact : <span className="text-rdc-yellow">communaute@aindjili.com</span>
+                  Contact : <span className="text-rdc-yellow">communaute@fih-rva.com</span>
                 </p>
               </div>
             </div>

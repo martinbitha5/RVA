@@ -80,7 +80,7 @@ function ConditionsPage() {
       <div className="mt-10 rounded-xl border border-border bg-card p-5 text-sm text-muted-foreground">
         <p className="font-medium text-rdc-anthracite mb-1">Contact légal</p>
         <p>Pour toute question relative aux présentes CGU, contactez-nous :</p>
-        <p className="mt-1">Email : <a href="mailto:legal@aindjili.com" className="text-rdc-blue hover:underline">legal@aindjili.com</a></p>
+        <p className="mt-1">Email : <a href="mailto:legal@fih-rva.com" className="text-rdc-blue hover:underline">legal@fih-rva.com</a></p>
         <p>Adresse : Boulevard Lumumba, Commune de Nsele, Kinshasa, RDC</p>
       </div>
     </div>

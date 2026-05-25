@@ -145,8 +145,8 @@ function CompteLayout() {
             <p className="font-semibold text-rdc-anthracite mb-1">Besoin d'aide ?</p>
             <p className="text-muted-foreground leading-relaxed">
               Support 24h/24 ·{' '}
-              <a href="mailto:support@aindjili.com" className="text-rdc-blue hover:underline">
-                support@aindjili.com
+              <a href="mailto:support@fih-rva.com" className="text-rdc-blue hover:underline">
+                support@fih-rva.com
               </a>
             </p>
           </div>

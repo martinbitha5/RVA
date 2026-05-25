@@ -281,7 +281,7 @@ function FihArtPage() {
                   'Portfolio de 10 à 20 œuvres récentes (photos HD)',
                   'Note biographique et démarche artistique (max 500 mots)',
                   'Références et expositions précédentes si applicable',
-                  'Contact : culturel@aindjili.com — Objet : Candidature FIH Art',
+                  'Contact : culturel@fih-rva.com — Objet : Candidature FIH Art',
                 ].map(item => (
                   <div key={item} className="flex items-start gap-2.5">
                     <div className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-rdc-yellow" />

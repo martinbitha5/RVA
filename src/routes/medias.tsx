@@ -50,13 +50,13 @@ const MEDIA_CONTACTS = [
   {
     name: 'Service de presse RVA',
     role: 'Relations médias — Institutions & Corporate',
-    email: 'presse@aindjili.com',
+    email: 'presse@fih-rva.com',
     phone: '+243 XX XXX XXXX',
   },
   {
     name: 'Direction de la communication FIH',
     role: "Communication aéroportuaire & urgences médias",
-    email: 'communication@aindjili.com',
+    email: 'communication@fih-rva.com',
     phone: '+243 XX XXX XXXX',
   },
 ];
@@ -211,10 +211,10 @@ function MediasPage() {
               </p>
               <div className="space-y-2.5">
                 <a
-                  href="mailto:presse@aindjili.com"
+                  href="mailto:presse@fih-rva.com"
                   className="flex items-center gap-2 text-sm text-rdc-blue hover:text-rdc-blue/80 transition-colors"
                 >
-                  <Mail size={13} /> presse@aindjili.com
+                  <Mail size={13} /> presse@fih-rva.com
                 </a>
                 <a
                   href="tel:+243000000000"

@@ -87,7 +87,7 @@ function PartenariatsPage() {
         subtitle={t('corporate.partnershipsSubtitle')}
         cta={
           <a
-            href="mailto:partenariats@aindjili.com"
+            href="mailto:partenariats@fih-rva.com"
             className="inline-flex items-center gap-2 bg-rdc-yellow px-6 py-3 text-sm font-bold text-rdc-anthracite hover:bg-white transition-colors"
           >
             Nous contacter <ArrowRight size={14} />
@@ -182,10 +182,10 @@ function PartenariatsPage() {
               <p className="text-sm text-white/65 mt-1">Notre équipe commerciale vous répond sous 48h ouvrables.</p>
             </div>
             <a
-              href="mailto:partenariats@aindjili.com"
+              href="mailto:partenariats@fih-rva.com"
               className="flex items-center gap-2 bg-white px-6 py-3 text-sm font-bold text-rdc-blue hover:bg-rdc-yellow transition-colors whitespace-nowrap"
             >
-              partenariats@aindjili.com <ArrowRight size={14} />
+              partenariats@fih-rva.com <ArrowRight size={14} />
             </a>
           </div>
         </div>
