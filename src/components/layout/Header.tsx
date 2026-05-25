@@ -13,11 +13,20 @@ import { Input } from '@/components/ui/input';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
 
-/* ─── Logo desktop (grand FIH + texte, sans image RVA) ─────── */
+/* ─── Logo desktop ─────────────────────────────────────────── */
 function FihLogo({ light = false }: { light?: boolean }) {
   return (
     <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
-      className="flex items-center gap-2.5 shrink-0 group">
+      className="flex items-center gap-3 shrink-0 group">
+      {/* Logo RVA */}
+      <img
+        src="/rva-logo.png"
+        alt="RVA"
+        className={cn('h-9 w-auto object-contain transition-opacity group-hover:opacity-80', light ? 'brightness-0 invert' : '')}
+      />
+      {/* Séparateur */}
+      <div className={cn('h-8 w-px', light ? 'bg-white/20' : 'bg-[#D8E0ED]')} />
+      {/* FIH + texte */}
       <span className={cn(
         'font-display text-[32px] sm:text-[36px] font-black leading-none tracking-tight transition-colors',
         light ? 'text-rdc-yellow group-hover:text-white' : 'text-rdc-blue group-hover:text-rdc-blue/80',
@@ -33,11 +42,13 @@ function FihLogo({ light = false }: { light?: boolean }) {
   );
 }
 
-/* ─── Mobile logo (YUL-style: big "FIH" + descriptive text) ───── */
+/* ─── Mobile logo ───────────────────────────────────────────── */
 function FihLogoMobile() {
   return (
     <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
       className="flex items-center gap-2.5 shrink-0">
+      <img src="/rva-logo.png" alt="RVA" className="h-8 w-auto object-contain" />
+      <div className="h-7 w-px bg-[#D8E0ED]" />
       <span className="font-display text-[34px] font-black leading-none text-rdc-blue tracking-tight">
         FIH
       </span>
