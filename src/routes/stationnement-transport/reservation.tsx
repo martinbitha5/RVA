@@ -195,7 +195,7 @@ function ReservationPage() {
     return (
       <div className="container py-20 text-center">
         <p className="text-muted-foreground mb-4">Paramètres de réservation invalides.</p>
-        <Link to={'/stationnement-transport/stationnement-fih' as never}
+        <Link to={'/stationnement-transport/formulaire' as never}
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:underline">
           <ArrowLeft size={13} /> Retour au stationnement
         </Link>
@@ -386,7 +386,7 @@ function ReservationPage() {
               )}
             </div>
             <Link
-              to={'/stationnement-transport/stationnement-fih' as never}
+              to={'/stationnement-transport/formulaire' as never}
               className="flex items-center gap-1 text-xs font-semibold text-white/60 hover:text-white transition-colors"
             >
               <ArrowLeft size={12} /> Modifier les dates
@@ -831,7 +831,7 @@ function ReservationPage() {
                     Voir mes réservations
                   </Link>
                   <Link
-                    to={'/stationnement-transport/stationnement-fih' as never}
+                    to={'/stationnement-transport/formulaire' as never}
                     className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-border px-5 py-3 text-sm font-semibold text-rdc-anthracite hover:border-rdc-blue hover:text-rdc-blue transition-colors"
                   >
                     Nouvelle réservation

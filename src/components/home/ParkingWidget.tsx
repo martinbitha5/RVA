@@ -50,8 +50,8 @@ export function ParkingWidget() {
     const end   = new Date(`${exitDate}T${exitTime}`);
 
     if (end <= start || (end.getTime() - start.getTime()) / 3_600_000 < 4) {
-      // Données invalides → redirige vers le formulaire complet
-      void navigate({ to: '/stationnement-transport/formulaire' as never });
+      // Données invalides → redirige vers le formulaire complet avec raison
+      void navigate({ to: '/stationnement-transport/formulaire' as never, search: { reason: 'min4h' } as never });
       return;
     }
 

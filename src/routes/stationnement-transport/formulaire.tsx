@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { X, ArrowRight } from 'lucide-react';
 
 export const Route = createFileRoute('/stationnement-transport/formulaire')({
+  validateSearch: (search: Record<string, unknown>) => ({
+    reason: search.reason != null ? String(search.reason) : undefined,
+  }),
   component: FormulaireStationnement,
   head: () => ({
     meta: [
@@ -27,6 +30,7 @@ const WHY_ITEMS = [
 
 function FormulaireStationnement() {
   const navigate = useNavigate();
+  const { reason } = Route.useSearch();
 
   const [startDate, setStartDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -34,7 +38,9 @@ function FormulaireStationnement() {
   const [endTime,   setEndTime]   = useState('');
   const [promo,     setPromo]     = useState('');
   const [caa,       setCaa]       = useState('');
-  const [error,     setError]     = useState('');
+  const [error,     setError]     = useState(
+    reason === 'min4h' ? '1 — Vous devez réserver pour un séjour minimum de 4 heures' : ''
+  );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

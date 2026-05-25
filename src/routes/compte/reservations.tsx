@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+﻿import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Car, Calendar, Clock, CreditCard, ChevronRight, QrCode, Download, X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -6,7 +6,7 @@ import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/reservations')({
   component: ReservationsPage,
-  head: () => ({ meta: [{ title: 'Mes réservations — Espace Client FIH' }] }),
+  head: () => ({ meta: [{ title: 'Mes rÃ©servations â€” Espace Client FIH' }] }),
 });
 
 interface Reservation {
@@ -22,9 +22,9 @@ interface Reservation {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string }> = {
-  paid:    { label: 'Confirmée', color: 'bg-rdc-green/10 text-rdc-green' },
+  paid:    { label: 'ConfirmÃ©e', color: 'bg-rdc-green/10 text-rdc-green' },
   pending: { label: 'En attente', color: 'bg-amber-50 text-amber-700' },
-  failed:  { label: 'Échouée',   color: 'bg-rdc-red/10 text-rdc-red' },
+  failed:  { label: 'Ã‰chouÃ©e',   color: 'bg-rdc-red/10 text-rdc-red' },
 };
 
 const METHOD_LABELS: Record<string, string> = {
@@ -62,7 +62,7 @@ function QrModal({ code, onClose }: { code: string; onClose: () => void }) {
           <div className="h-10 w-10 rounded-xl bg-rdc-blue/10 flex items-center justify-center mx-auto mb-2">
             <QrCode size={18} className="text-rdc-blue" />
           </div>
-          <h3 className="font-display font-bold text-lg text-rdc-anthracite">QR Code de réservation</h3>
+          <h3 className="font-display font-bold text-lg text-rdc-anthracite">QR Code de rÃ©servation</h3>
           <p className="text-xs text-muted-foreground mt-0.5 font-mono">{code}</p>
         </div>
 
@@ -71,7 +71,7 @@ function QrModal({ code, onClose }: { code: string; onClose: () => void }) {
         </div>
 
         <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
-          Présentez ce QR code à l'entrée du parking pour accéder à votre place réservée.
+          PrÃ©sentez ce QR code Ã  l'entrÃ©e du parking pour accÃ©der Ã  votre place rÃ©servÃ©e.
         </p>
 
         <a
@@ -81,7 +81,7 @@ function QrModal({ code, onClose }: { code: string; onClose: () => void }) {
           rel="noreferrer"
           className="flex items-center justify-center gap-2 rounded-xl bg-rdc-blue px-4 py-2.5 text-sm font-semibold text-white hover:bg-rdc-blue/85 transition-colors"
         >
-          <Download size={14} /> Télécharger le QR
+          <Download size={14} /> TÃ©lÃ©charger le QR
         </a>
       </div>
     </div>
@@ -125,27 +125,27 @@ function ReservationsPage() {
 
       <div className="space-y-5">
         <div>
-          <h1 className="font-display font-bold text-2xl text-rdc-anthracite">Mes réservations</h1>
-          <p className="text-sm text-muted-foreground mt-1">Stationnement FIH · {reservations.length} réservation{reservations.length > 1 ? 's' : ''}</p>
+          <h1 className="font-display font-bold text-2xl text-rdc-anthracite">Mes rÃ©servations</h1>
+          <p className="text-sm text-muted-foreground mt-1">Stationnement FIH Â· {reservations.length} rÃ©servation{reservations.length > 1 ? 's' : ''}</p>
         </div>
 
         {reservations.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border p-12 text-center">
             <Car size={36} className="mx-auto mb-4 text-muted-foreground/40" />
-            <p className="font-medium text-rdc-anthracite mb-1">Aucune réservation</p>
-            <p className="text-sm text-muted-foreground mb-5">Réservez votre place de parking en ligne, paiement Mobile Money.</p>
-            <Link to={'/stationnement-transport/stationnement-fih' as never}
+            <p className="font-medium text-rdc-anthracite mb-1">Aucune rÃ©servation</p>
+            <p className="text-sm text-muted-foreground mb-5">RÃ©servez votre place de parking en ligne, paiement Mobile Money.</p>
+            <Link to={'/stationnement-transport/formulaire' as never}
               className="inline-flex items-center gap-2 rounded-lg bg-rdc-blue px-4 py-2 text-sm font-medium text-white hover:bg-rdc-blue/85 transition-colors">
-              Réserver un stationnement <ChevronRight size={14} />
+              RÃ©server un stationnement <ChevronRight size={14} />
             </Link>
           </div>
         ) : (
           <>
-            {/* ── Upcoming ──────────────────────────────────────────────── */}
+            {/* â”€â”€ Upcoming â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             {upcoming.length > 0 && (
               <div>
                 <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
-                  À venir · {upcoming.length}
+                  Ã€ venir Â· {upcoming.length}
                 </h2>
                 <div className="space-y-3">
                   {upcoming.map(r => <ResaCard key={r.id} r={r} onQr={() => setQrCode(r.reservation_code)} />)}
@@ -153,11 +153,11 @@ function ReservationsPage() {
               </div>
             )}
 
-            {/* ── Past ──────────────────────────────────────────────────── */}
+            {/* â”€â”€ Past â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             {past.length > 0 && (
               <div>
                 <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2.5">
-                  Passées · {past.length}
+                  PassÃ©es Â· {past.length}
                 </h2>
                 <div className="space-y-3">
                   {past.map(r => <ResaCard key={r.id} r={r} onQr={() => setQrCode(r.reservation_code)} />)}
@@ -167,9 +167,9 @@ function ReservationsPage() {
           </>
         )}
 
-        <Link to={'/stationnement-transport/stationnement-fih' as never}
+        <Link to={'/stationnement-transport/formulaire' as never}
           className="flex items-center justify-center gap-2 rounded-xl border border-rdc-blue/30 px-4 py-3 text-sm font-medium text-rdc-blue hover:bg-rdc-blue/5 transition-colors">
-          + Nouvelle réservation
+          + Nouvelle rÃ©servation
         </Link>
       </div>
     </>

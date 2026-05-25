@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+﻿import { createFileRoute, Link } from '@tanstack/react-router';
 import { CheckCircle2, Smartphone, ArrowRight, Tag, Clock, Calendar } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PageHero } from '@/components/ui/page-hero';
@@ -7,20 +7,20 @@ import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/stationnement-transport/offres')({
   component: OffresPage,
-  head: () => ({ meta: [{ title: "Tarifs & Offres Stationnement — FIH" }] }),
+  head: () => ({ meta: [{ title: "Tarifs & Offres Stationnement â€” FIH" }] }),
 });
 
 const MOBILE_MONEY = [
-  { name: 'Airtel Money',   dot: 'bg-red-600',    desc: 'Réseau Airtel RDC' },
-  { name: 'M-Pesa Vodacom', dot: 'bg-green-600',  desc: 'Réseau Vodacom RDC' },
-  { name: 'Orange Money',   dot: 'bg-orange-500', desc: 'Réseau Orange RDC' },
+  { name: 'Airtel Money',   dot: 'bg-red-600',    desc: 'RÃ©seau Airtel RDC' },
+  { name: 'M-Pesa Vodacom', dot: 'bg-green-600',  desc: 'RÃ©seau Vodacom RDC' },
+  { name: 'Orange Money',   dot: 'bg-orange-500', desc: 'RÃ©seau Orange RDC' },
 ];
 
 const AVANTAGES = [
-  { icon: Tag,      title: 'Tarifs fixes garantis', desc: 'Pas de surprise — les tarifs RVA sont affichés et réglementés.' },
-  { icon: Clock,    title: 'Parking sécurisé 24h/24', desc: 'Agents de sécurité RVA présents en permanence sur les parkings.' },
-  { icon: Calendar, title: 'Abonnements disponibles', desc: 'Réductions pour séjours longue durée — contactez le bureau RVA.' },
-  { icon: Smartphone, title: 'Paiement Mobile Money', desc: 'Airtel Money, M-Pesa et Orange Money acceptés aux caisses.' },
+  { icon: Tag,      title: 'Tarifs fixes garantis', desc: 'Pas de surprise â€” les tarifs RVA sont affichÃ©s et rÃ©glementÃ©s.' },
+  { icon: Clock,    title: 'Parking sÃ©curisÃ© 24h/24', desc: 'Agents de sÃ©curitÃ© RVA prÃ©sents en permanence sur les parkings.' },
+  { icon: Calendar, title: 'Abonnements disponibles', desc: 'RÃ©ductions pour sÃ©jours longue durÃ©e â€” contactez le bureau RVA.' },
+  { icon: Smartphone, title: 'Paiement Mobile Money', desc: 'Airtel Money, M-Pesa et Orange Money acceptÃ©s aux caisses.' },
 ];
 
 function OffresPage() {
@@ -72,9 +72,9 @@ function OffresPage() {
           </div>
           <div className="mb-6 flex items-end justify-between">
             <h2 className="font-display text-2xl font-bold text-rdc-anthracite">Grille tarifaire RVA</h2>
-            <Link to={'/stationnement-transport/stationnement-fih' as never}
+            <Link to={'/stationnement-transport/formulaire' as never}
               className="hidden items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:underline sm:inline-flex">
-              Voir la disponibilité <ArrowRight size={13} />
+              Voir la disponibilitÃ© <ArrowRight size={13} />
             </Link>
           </div>
 
@@ -102,17 +102,17 @@ function OffresPage() {
                         <p className="text-xs text-muted-foreground">{lot.code}</p>
                       </td>
                       <td className="px-5 py-4 font-mono font-semibold text-rdc-anthracite">
-                        {lot.hourly_rate_usd != null ? `$${lot.hourly_rate_usd}` : '—'}
+                        {lot.hourly_rate_usd != null ? `$${lot.hourly_rate_usd}` : 'â€”'}
                       </td>
                       <td className="px-5 py-4 font-mono font-semibold text-rdc-anthracite">
-                        {lot.daily_rate_usd != null ? `$${lot.daily_rate_usd}` : '—'}
+                        {lot.daily_rate_usd != null ? `$${lot.daily_rate_usd}` : 'â€”'}
                       </td>
                       <td className="px-5 py-4 font-mono font-semibold text-rdc-anthracite">
-                        {lot.weekly_rate_usd != null ? `$${lot.weekly_rate_usd}` : '—'}
+                        {lot.weekly_rate_usd != null ? `$${lot.weekly_rate_usd}` : 'â€”'}
                       </td>
-                      <td className="px-5 py-4 text-muted-foreground">{lot.total_spots ?? '—'}</td>
+                      <td className="px-5 py-4 text-muted-foreground">{lot.total_spots ?? 'â€”'}</td>
                       <td className="px-5 py-4">
-                        <Link to={'/stationnement-transport/stationnement-fih' as never}
+                        <Link to={'/stationnement-transport/formulaire' as never}
                           className="inline-flex items-center gap-1 rounded-lg bg-rdc-blue px-3 py-1.5 text-xs font-semibold text-white hover:bg-rdc-blue/85 transition-colors">
                           {t('parking.reserve')} <ArrowRight size={11} />
                         </Link>
@@ -124,7 +124,7 @@ function OffresPage() {
             </div>
           )}
           <p className="mt-3 text-xs text-muted-foreground">
-            * Tarifs en USD. Équivalent CDF disponible aux caisses selon le taux du jour Banque Centrale du Congo.
+            * Tarifs en USD. Ã‰quivalent CDF disponible aux caisses selon le taux du jour Banque Centrale du Congo.
           </p>
         </section>
 
@@ -158,10 +158,10 @@ function OffresPage() {
             <Smartphone size={16} className="text-rdc-blue" /> {t('stat.offres.conditions')}
           </h3>
           <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition1')}</li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition2')}</li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition3')}</li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>{t('stat.offres.condition4')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">â†’</span>{t('stat.offres.condition1')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">â†’</span>{t('stat.offres.condition2')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">â†’</span>{t('stat.offres.condition3')}</li>
+            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">â†’</span>{t('stat.offres.condition4')}</li>
           </ul>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+﻿import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { ParkingCircle, Map, Smartphone, Car, Syringe, Wifi, Clock, Phone } from 'lucide-react';
 
@@ -6,7 +6,7 @@ const CARDS = [
   {
     icon: ParkingCircle,
     labelKey: 'home.quickAccess.parking',
-    href: '/stationnement-transport/stationnement-fih',
+    href: '/stationnement-transport/formulaire',
     bg: '#003DA5',
     accent: '#FFCE00',
   },

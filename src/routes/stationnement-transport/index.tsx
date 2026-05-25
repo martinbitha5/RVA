@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+﻿import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   Car, Bus, Bike, MapPin,
   AlertTriangle, ArrowRight, CreditCard,
@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next';
 export const Route = createFileRoute('/stationnement-transport/')({
   component: StationnementHub,
   head: () => ({
-    meta: [{ title: "Stationnement & Transport — Aéroport N'djili · FIH" }],
+    meta: [{ title: "Stationnement & Transport â€” AÃ©roport N'djili Â· FIH" }],
   }),
 });
 
 const PARKING = [
-  { code: 'P1', name: 'Parking Court Séjour', rate: '$2/h', spots: 320 },
-  { code: 'P2', name: 'Parking Long Séjour', rate: '$15/jour', spots: 480 },
+  { code: 'P1', name: 'Parking Court SÃ©jour', rate: '$2/h', spots: 320 },
+  { code: 'P2', name: 'Parking Long SÃ©jour', rate: '$15/jour', spots: 480 },
   { code: 'P3', name: 'Parking PMR', rate: 'Gratuit', spots: 24 },
 ] as const;
 
@@ -81,7 +81,7 @@ function StationnementHub() {
           >
             <AlertTriangle size={16} className="text-amber-600 shrink-0" />
             <p className="text-sm font-semibold text-amber-800 flex-1">
-              {t('stat.hub.worksAlert')} — {t('stat.hub.worksAlertDesc')}
+              {t('stat.hub.worksAlert')} â€” {t('stat.hub.worksAlertDesc')}
             </p>
             <ArrowRight size={14} className="text-amber-600 group-hover:translate-x-1 transition-transform" />
           </Link>
@@ -98,7 +98,7 @@ function StationnementHub() {
           <div className="flex items-end justify-between mb-10">
             <h2 className="display-sub text-rdc-anthracite">Nos parkings officiels</h2>
             <Link
-              to={'/stationnement-transport/stationnement-fih' as never}
+              to={'/stationnement-transport/formulaire' as never}
               className="hidden sm:inline-flex items-center gap-2 text-sm font-bold text-rdc-anthracite hover:text-rdc-blue transition-colors group"
             >
               {t('common.learnMore')}
@@ -110,7 +110,7 @@ function StationnementHub() {
             {PARKING.map((p) => (
               <Link
                 key={p.code}
-                to={'/stationnement-transport/stationnement-fih' as never}
+                to={'/stationnement-transport/formulaire' as never}
                 className="group bg-white px-8 py-10 flex flex-col gap-4 hover:bg-rdc-blue/3 transition-colors relative overflow-hidden"
               >
                 <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-rdc-blue transition-all duration-500" />
@@ -189,7 +189,7 @@ function StationnementHub() {
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <div className="accent-line" />
-                <p className="eyebrow text-rdc-yellow">Accès principal</p>
+                <p className="eyebrow text-rdc-yellow">AccÃ¨s principal</p>
               </div>
               <h2 className="font-display font-bold text-white text-2xl lg:text-3xl">
                 {t('parking.boulevard')}
