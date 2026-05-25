@@ -294,9 +294,6 @@ function ReservationPage() {
 
   // ── UI helpers ──────────────────────────────────────────────────────────────
 
-  const labelClass = 'mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground';
-  const inputClass = 'w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm focus:border-rdc-blue focus:outline-none focus:ring-1 focus:ring-rdc-blue';
-
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
