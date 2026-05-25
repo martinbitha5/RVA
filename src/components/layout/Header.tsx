@@ -20,7 +20,7 @@ function FihLogo({ light = false }: { light?: boolean }) {
       className="flex items-center gap-3 shrink-0 group">
       {/* Logo RVA */}
       <img
-        src="/rva-logo.png"
+        src="/images/rva-logo.png"
         alt="RVA"
         className={cn('h-9 w-auto object-contain transition-opacity group-hover:opacity-80', light ? 'brightness-0 invert' : '')}
       />
@@ -47,7 +47,7 @@ function FihLogoMobile() {
   return (
     <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
       className="flex items-center gap-2.5 shrink-0">
-      <img src="/rva-logo.png" alt="RVA" className="h-8 w-auto object-contain" />
+      <img src="/images/rva-logo.png" alt="RVA" className="h-8 w-auto object-contain" />
       <div className="h-7 w-px bg-[#D8E0ED]" />
       <span className="font-display text-[34px] font-black leading-none text-rdc-blue tracking-tight">
         FIH

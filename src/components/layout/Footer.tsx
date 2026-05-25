@@ -98,11 +98,17 @@ export function Footer() {
 
           {/* Column 1 — FIH */}
           <div className="col-span-2 md:col-span-1">
-            {/* Logo — grand FIH sans image */}
+            {/* Logo RVA + FIH */}
             <Link
               to="/"
-              className="mb-5 flex items-center gap-2.5 transition-opacity hover:opacity-80"
+              className="mb-5 flex items-center gap-3 transition-opacity hover:opacity-80"
             >
+              <img
+                src="/images/rva-logo.png"
+                alt="RVA"
+                className="h-9 w-auto object-contain brightness-0 invert"
+              />
+              <div className="h-8 w-px bg-white/20" />
               <span className="font-display text-[36px] font-black leading-none tracking-tight text-rdc-yellow">
                 FIH
               </span>
