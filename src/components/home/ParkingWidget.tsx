@@ -102,14 +102,10 @@ export function ParkingWidget() {
             </div>
           </div>
 
-          {/* Alerte minimum 4h */}
-          {error ? (
+          {/* Erreur validation */}
+          {error && (
             <div className="mb-4 rounded border border-[#CE1126]/30 bg-[#CE1126]/5 px-3 py-2 text-sm text-[#CE1126]">
               {error}
-            </div>
-          ) : (
-            <div className="mb-4 rounded border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
-              Séjour minimum de 4 heures requis pour la réservation en ligne.
             </div>
           )}
 

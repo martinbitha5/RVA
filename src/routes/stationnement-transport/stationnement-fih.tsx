@@ -121,14 +121,10 @@ function StationnementFih() {
               onSubmit={handleSearch}
               className="rounded-b-2xl rounded-tr-2xl border border-border bg-white p-6 shadow-md"
             >
-              {/* Alert: 4h minimum */}
-              {formError ? (
+              {/* Erreur validation */}
+              {formError && (
                 <div className="mb-4 rounded-lg border border-rdc-red/30 bg-rdc-red/5 px-4 py-2.5 text-sm text-rdc-red">
                   {formError}
-                </div>
-              ) : (
-                <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-700">
-                  1 — Vous devez réserver pour un séjour minimum de 4 heures
                 </div>
               )}
 
