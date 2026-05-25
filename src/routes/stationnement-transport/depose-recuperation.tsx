@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
   PlaneTakeoff, PlaneLanding, Clock, MapPin,
@@ -11,8 +11,8 @@ export const Route = createFileRoute('/stationnement-transport/depose-recuperati
   component: DeposeRecuperationPage,
   head: () => ({
     meta: [
-      { title: "DÃ©pose & RÃ©cupÃ©ration â€” AÃ©roport N'djili Â· FIH" },
-      { name: 'description', content: "Zones de dÃ©pose-minute et de rÃ©cupÃ©ration des passagers Ã  l'AÃ©roport International de N'djili (FIH). Instructions Ã©tape par Ã©tape." },
+      { title: "Dépose & Récupération — Aéroport N'djili · FIH" },
+      { name: 'description', content: "Zones de dépose-minute et de récupération des passagers à l'Aéroport International de N'djili (FIH). Instructions étape par étape." },
     ],
   }),
 });
@@ -54,7 +54,7 @@ function DeposeRecuperationPage() {
         ]}
       />
 
-      {/* â”€â”€ Stats rapides â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Stats rapides ─────────────────────────────────────── */}
       <div className="border-b border-border bg-white">
         <div className="container">
           <div className="grid grid-cols-3 divide-x divide-border">
@@ -74,7 +74,7 @@ function DeposeRecuperationPage() {
 
       <div className="container py-14 md:py-20 space-y-20">
 
-        {/* â”€â”€ Section 1 : DÃ©pose-minute â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Section 1 : Dépose-minute ─────────────────────── */}
         <section>
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
 
@@ -82,7 +82,7 @@ function DeposeRecuperationPage() {
             <div className="relative overflow-hidden rounded-2xl shadow-lg">
               <img
                 src="/images/fih-checkin.jpg"
-                alt="Zone de dÃ©pose devant le Terminal International"
+                alt="Zone de dépose devant le Terminal International"
                 className="h-72 w-full object-cover lg:h-[420px]"
               />
               {/* Badge */}
@@ -90,7 +90,7 @@ function DeposeRecuperationPage() {
                 <PlaneTakeoff size={15} />
                 {t('stat.dropoff.deposTitle')}
               </div>
-              {/* Info superposÃ©e */}
+              {/* Info superposée */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-5 pb-5 pt-10">
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-1.5 text-sm text-white">
@@ -118,7 +118,7 @@ function DeposeRecuperationPage() {
                 {t('stat.dropoff.deposIntro')}
               </p>
 
-              {/* Ã‰tapes */}
+              {/* Étapes */}
               <div className="space-y-5">
                 {deposSteps.map((s) => (
                   <div key={s.step} className="flex gap-4">
@@ -142,11 +142,11 @@ function DeposeRecuperationPage() {
           </div>
         </section>
 
-        {/* â”€â”€ Section 2 : RÃ©cupÃ©ration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Section 2 : Récupération ──────────────────────── */}
         <section>
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
 
-            {/* Contenu â€” Ã  gauche sur lg */}
+            {/* Contenu — à gauche sur lg */}
             <div className="lg:order-1">
               <div className="mb-4 flex items-center gap-3">
                 <div className="accent-line" />
@@ -159,7 +159,7 @@ function DeposeRecuperationPage() {
                 {t('stat.dropoff.pickupIntro')}
               </p>
 
-              {/* Ã‰tapes */}
+              {/* Étapes */}
               <div className="space-y-5">
                 {pickupSteps.map((s) => (
                   <div key={s.step} className="flex gap-4">
@@ -181,11 +181,11 @@ function DeposeRecuperationPage() {
               </div>
             </div>
 
-            {/* Image â€” Ã  droite sur lg */}
+            {/* Image — à droite sur lg */}
             <div className="relative overflow-hidden rounded-2xl shadow-lg lg:order-2">
               <img
                 src="/images/fih-bagages.jpg"
-                alt="Hall ArrivÃ©es et rÃ©cupÃ©ration des bagages"
+                alt="Hall Arrivées et récupération des bagages"
                 className="h-72 w-full object-cover lg:h-[420px]"
               />
               {/* Badge */}
@@ -193,7 +193,7 @@ function DeposeRecuperationPage() {
                 <PlaneLanding size={15} />
                 {t('stat.dropoff.pickupTitle')}
               </div>
-              {/* Info superposÃ©e */}
+              {/* Info superposée */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-5 pb-5 pt-10">
                 <div className="flex flex-wrap gap-4">
                   <div className="flex items-center gap-1.5 text-sm text-white">
@@ -210,7 +210,7 @@ function DeposeRecuperationPage() {
           </div>
         </section>
 
-        {/* â”€â”€ Section 3 : RÃ¨gles importantes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Section 3 : Règles importantes ───────────────── */}
         <section>
           <div className="mb-3 flex items-center gap-3">
             <div className="accent-line" />
@@ -229,7 +229,7 @@ function DeposeRecuperationPage() {
           </div>
         </section>
 
-        {/* â”€â”€ Section 4 : CTA Parking â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Section 4 : CTA Parking ───────────────────────── */}
         <section className="overflow-hidden rounded-2xl bg-rdc-anthracite">
           <div className="grid lg:grid-cols-2">
             {/* Texte */}
@@ -260,24 +260,24 @@ function DeposeRecuperationPage() {
               </div>
             </div>
 
-            {/* Image dÃ©corative */}
+            {/* Image décorative */}
             <div className="hidden lg:block">
               <img
                 src="/images/fih-bus-cobus.jpg"
-                alt="Transport aÃ©roport"
+                alt="Transport aéroport"
                 className="h-full w-full object-cover opacity-40"
               />
             </div>
           </div>
         </section>
 
-        {/* â”€â”€ Section 5 : Liens connexes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+        {/* ── Section 5 : Liens connexes ────────────────────── */}
         <section>
           <div className="grid gap-4 sm:grid-cols-3">
             {[
-              { to: '/stationnement-transport/taxis', icon: Navigation, label: t('parking.taxis'), desc: 'Taxis officiels agrÃ©Ã©s RVA' },
-              { to: '/stationnement-transport/mobilite-reduite', icon: CheckCircle2, label: t('parking.pmr'), desc: 'Assistance personnes Ã  mobilitÃ© rÃ©duite' },
-              { to: '/vols/arrivees', icon: PlaneLanding, label: t('flights.arrivals'), desc: 'Tableau des arrivÃ©es en temps rÃ©el' },
+              { to: '/stationnement-transport/taxis', icon: Navigation, label: t('parking.taxis'), desc: 'Taxis officiels agréés RVA' },
+              { to: '/stationnement-transport/mobilite-reduite', icon: CheckCircle2, label: t('parking.pmr'), desc: 'Assistance personnes à mobilité réduite' },
+              { to: '/vols/arrivees', icon: PlaneLanding, label: t('flights.arrivals'), desc: 'Tableau des arrivées en temps réel' },
             ].map((link) => (
               <Link
                 key={link.to}

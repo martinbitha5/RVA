@@ -1,4 +1,4 @@
-﻿import { Link } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { ParkingCircle, Map, Smartphone, Car, Syringe, Wifi, Clock, Phone } from 'lucide-react';
 

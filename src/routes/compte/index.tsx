@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import {
   Plane, Car, Bell, Award, ChevronRight,
@@ -9,7 +9,7 @@ import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/')({
   component: Dashboard,
-  head: () => ({ meta: [{ title: 'Tableau de bord â€” Espace Client FIH' }] }),
+  head: () => ({ meta: [{ title: 'Tableau de bord — Espace Client FIH' }] }),
 });
 
 interface Reservation {
@@ -46,7 +46,7 @@ function getLevel(points: number): 'Bronze' | 'Silver' | 'Gold' {
 function greeting() {
   const h = new Date().getHours();
   if (h < 12) return 'Bon matin';
-  if (h < 18) return 'Bon aprÃ¨s-midi';
+  if (h < 18) return 'Bon après-midi';
   return 'Bonsoir';
 }
 
@@ -115,12 +115,12 @@ function Dashboard() {
   return (
     <div className="space-y-5">
 
-      {/* â”€â”€ Welcome banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Welcome banner ─────────────────────────────────────────────── */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-rdc-blue to-rdc-blue/80 p-6 text-white shadow-lg">
         <div className="relative z-10">
           <p className="text-sm text-white/70 mb-1">{greeting()},</p>
-          <h1 className="font-display font-bold text-2xl md:text-3xl mb-1 capitalize">{displayName} ðŸ‘‹</h1>
-          <p className="text-sm text-white/70">Bienvenue dans votre espace client FIH Â· AÃ©roport de N'djili</p>
+          <h1 className="font-display font-bold text-2xl md:text-3xl mb-1 capitalize">{displayName} 👋</h1>
+          <p className="text-sm text-white/70">Bienvenue dans votre espace client FIH · Aéroport de N'djili</p>
         </div>
         {/* Decorative circles */}
         <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-white/5" />
@@ -128,11 +128,11 @@ function Dashboard() {
         <div className="absolute right-16 -bottom-6 h-20 w-20 rounded-full bg-rdc-yellow/20" />
       </div>
 
-      {/* â”€â”€ 4 Stat cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── 4 Stat cards ───────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
           {
-            label: 'RÃ©servations',
+            label: 'Réservations',
             value: stats.reservations,
             Icon: Car,
             color: 'text-rdc-blue',
@@ -156,7 +156,7 @@ function Dashboard() {
             href: '/compte/preferences',
           },
           {
-            label: 'Points fidÃ©litÃ©',
+            label: 'Points fidélité',
             value: stats.points,
             Icon: Award,
             color: 'text-rdc-yellow',
@@ -178,7 +178,7 @@ function Dashboard() {
         ))}
       </div>
 
-      {/* â”€â”€ FidÃ©litÃ© progress â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Fidélité progress ───────────────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-5">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
@@ -187,7 +187,7 @@ function Dashboard() {
             </div>
             <div>
               <p className="font-semibold text-sm text-rdc-anthracite">Membre {stats.level}</p>
-              <p className="text-xs text-muted-foreground">{stats.points} points accumulÃ©s</p>
+              <p className="text-xs text-muted-foreground">{stats.points} points accumulés</p>
             </div>
           </div>
           <Link to={'/compte/fidelite' as never} className="text-xs text-rdc-blue hover:underline flex items-center gap-1">
@@ -202,17 +202,17 @@ function Dashboard() {
         </div>
         {lvl.next && (
           <p className="text-xs text-muted-foreground mt-1.5">
-            <span className="font-medium text-rdc-anthracite">{nextPts} points</span> avant le niveau supÃ©rieur
+            <span className="font-medium text-rdc-anthracite">{nextPts} points</span> avant le niveau supérieur
           </p>
         )}
       </div>
 
-      {/* â”€â”€ Next reservation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Next reservation ────────────────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <CalendarDays size={16} className="text-rdc-blue" />
-            <h2 className="font-semibold text-sm text-rdc-anthracite">Prochaine rÃ©servation</h2>
+            <h2 className="font-semibold text-sm text-rdc-anthracite">Prochaine réservation</h2>
           </div>
           <Link to={'/compte/reservations' as never} className="text-xs text-rdc-blue hover:underline flex items-center gap-1">
             Tout voir <ChevronRight size={12} />
@@ -229,7 +229,7 @@ function Dashboard() {
                 </p>
               </div>
               <span className="rounded-full bg-rdc-green/10 px-2.5 py-0.5 text-xs font-semibold text-rdc-green shrink-0">
-                ConfirmÃ©e
+                Confirmée
               </span>
             </div>
             <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
@@ -240,18 +240,18 @@ function Dashboard() {
         ) : (
           <div className="rounded-xl border border-dashed border-border p-6 text-center">
             <Car size={28} className="mx-auto mb-2 text-muted-foreground/40" />
-            <p className="text-sm text-muted-foreground">Aucune rÃ©servation Ã  venir</p>
+            <p className="text-sm text-muted-foreground">Aucune réservation à venir</p>
             <Link
               to={'/stationnement-transport/formulaire' as never}
               className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-rdc-blue px-3 py-1.5 text-xs font-medium text-white hover:bg-rdc-blue/85 transition-colors"
             >
-              RÃ©server un parking <ChevronRight size={12} />
+              Réserver un parking <ChevronRight size={12} />
             </Link>
           </div>
         )}
       </div>
 
-      {/* â”€â”€ Quick actions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Quick actions ───────────────────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-5">
         <div className="flex items-center gap-2 mb-4">
           <Zap size={16} className="text-rdc-yellow" />
@@ -259,12 +259,12 @@ function Dashboard() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
           {[
-            { label: 'RÃ©server un parking',    href: '/stationnement-transport/formulaire', Icon: Car,     color: 'bg-rdc-blue/10 text-rdc-blue' },
+            { label: 'Réserver un parking',    href: '/stationnement-transport/formulaire', Icon: Car,     color: 'bg-rdc-blue/10 text-rdc-blue' },
             { label: 'Suivre un vol',           href: '/vols/alertes-whatsapp',                     Icon: Plane,   color: 'bg-rdc-green/10 text-rdc-green' },
-            { label: 'Mes prÃ©fÃ©rences',         href: '/compte/preferences',                         Icon: Bell,    color: 'bg-amber-50 text-amber-600' },
-            { label: 'Carte fidÃ©litÃ©',          href: '/compte/fidelite',                            Icon: Award,   color: 'bg-rdc-yellow/10 text-amber-600' },
+            { label: 'Mes préférences',         href: '/compte/preferences',                         Icon: Bell,    color: 'bg-amber-50 text-amber-600' },
+            { label: 'Carte fidélité',          href: '/compte/fidelite',                            Icon: Award,   color: 'bg-rdc-yellow/10 text-amber-600' },
             { label: 'Historique',              href: '/compte/historique',                          Icon: TrendingUp, color: 'bg-muted text-muted-foreground' },
-            { label: 'SÃ©curitÃ©',                href: '/compte/securite',                            Icon: TrendingUp, color: 'bg-muted text-muted-foreground' },
+            { label: 'Sécurité',                href: '/compte/securite',                            Icon: TrendingUp, color: 'bg-muted text-muted-foreground' },
           ].map(({ label, href, Icon, color }) => (
             <Link
               key={href}

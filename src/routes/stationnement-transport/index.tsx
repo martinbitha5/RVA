@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   Car, Bus, Bike, MapPin,
   AlertTriangle, ArrowRight, CreditCard,
@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next';
 export const Route = createFileRoute('/stationnement-transport/')({
   component: StationnementHub,
   head: () => ({
-    meta: [{ title: "Stationnement & Transport â€” AÃ©roport N'djili Â· FIH" }],
+    meta: [{ title: "Stationnement & Transport — Aéroport N'djili · FIH" }],
   }),
 });
 
 const PARKING = [
-  { code: 'P1', name: 'Parking Court SÃ©jour', rate: '$2/h', spots: 320 },
-  { code: 'P2', name: 'Parking Long SÃ©jour', rate: '$15/jour', spots: 480 },
+  { code: 'P1', name: 'Parking Court Séjour', rate: '$2/h', spots: 320 },
+  { code: 'P2', name: 'Parking Long Séjour', rate: '$15/jour', spots: 480 },
   { code: 'P3', name: 'Parking PMR', rate: 'Gratuit', spots: 24 },
 ] as const;
 
@@ -81,7 +81,7 @@ function StationnementHub() {
           >
             <AlertTriangle size={16} className="text-amber-600 shrink-0" />
             <p className="text-sm font-semibold text-amber-800 flex-1">
-              {t('stat.hub.worksAlert')} â€” {t('stat.hub.worksAlertDesc')}
+              {t('stat.hub.worksAlert')} — {t('stat.hub.worksAlertDesc')}
             </p>
             <ArrowRight size={14} className="text-amber-600 group-hover:translate-x-1 transition-transform" />
           </Link>
@@ -189,7 +189,7 @@ function StationnementHub() {
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <div className="accent-line" />
-                <p className="eyebrow text-rdc-yellow">AccÃ¨s principal</p>
+                <p className="eyebrow text-rdc-yellow">Accès principal</p>
               </div>
               <h2 className="font-display font-bold text-white text-2xl lg:text-3xl">
                 {t('parking.boulevard')}

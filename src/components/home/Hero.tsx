@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
 import {
   ArrowRight, Plane, ChevronLeft, ChevronRight,
@@ -10,18 +10,18 @@ import { useUpcomingFlights, useHeroSlides } from '@/lib/queries';
 import { FlightStatusBadge } from '@/components/flights/FlightStatusBadge';
 import type { FlightWithAirline, FlightStatus } from '@/types/database';
 
-/* â”€â”€â”€ Slides statiques (fallback si la DB est vide) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Slides statiques (fallback si la DB est vide) ──────────────────── */
 const STATIC_SLIDES = [
   {
     image_url: '/images/fih-hero-1.jpg',
-    title_fr: 'Votre porte d\'entrÃ©e vers le Congo',
-    subtitle_fr: 'Ethiopian Airlines A350 Â· Star Alliance Â· Kinshasa FIH',
+    title_fr: 'Votre porte d\'entrée vers le Congo',
+    subtitle_fr: 'Ethiopian Airlines A350 · Star Alliance · Kinshasa FIH',
     cta_label_fr: null, cta_url: null,
   },
   {
     image_url: '/images/fih-hero-2.jpg',
-    title_fr: 'AÃ©roport International de N\'djili',
-    subtitle_fr: 'OpÃ©rations au sol Â· Terminal International Â· FIH',
+    title_fr: 'Aéroport International de N\'djili',
+    subtitle_fr: 'Opérations au sol · Terminal International · FIH',
     cta_label_fr: null, cta_url: null,
   },
 ];
@@ -31,21 +31,21 @@ const SUGGESTIONS = ['SN491', 'Lubumbashi', 'Goma', 'Paris CDG', 'Brussels'];
 const QUICK_LINKS = [
   { label: 'Stationnement', Icon: ParkingCircle, href: '/stationnement-transport/formulaire' },
   { label: 'Salons VIP',    Icon: Crown,         href: '/boutiques-restaurants/salons' },
-  { label: 'DÃ©pose-minute', Icon: Car,           href: '/stationnement-transport/depose-recuperation' },
+  { label: 'Dépose-minute', Icon: Car,           href: '/stationnement-transport/depose-recuperation' },
 ] as const;
 
 const SLIDE_DURATION = 7000;
 
-/* â”€â”€â”€ Search helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Search helpers ─────────────────────────────────────────────────── */
 const CITIES: Record<string, string> = {
   ADD: 'Addis-Abeba',   BZV: 'Brazzaville',   LBV: 'Libreville',
   DLA: 'Douala',        LOS: 'Lagos',          ABJ: 'Abidjan',
   ACC: 'Accra',         DSS: 'Dakar',          NBO: 'Nairobi',
   JNB: 'Johannesburg',  CPT: 'Le Cap',         LUN: 'Lusaka',
   HRE: 'Harare',        DAR: 'Dar es Salaam',  EBB: 'Entebbe',
-  KGL: 'Kigali',        MRU: 'ÃŽle Maurice',    TNR: 'Antananarivo',
+  KGL: 'Kigali',        MRU: 'Île Maurice',    TNR: 'Antananarivo',
   LAD: 'Luanda',        MPM: 'Maputo',
-  DXB: 'DubaÃ¯',         DOH: 'Doha',           AUH: 'Abu Dhabi',
+  DXB: 'Dubaï',         DOH: 'Doha',           AUH: 'Abu Dhabi',
   IST: 'Istanbul',      CAI: 'Le Caire',
   BRU: 'Bruxelles',     CDG: 'Paris',          AMS: 'Amsterdam',
   LHR: 'Londres',       FCO: 'Rome',
@@ -87,11 +87,11 @@ function filterFlights(
 }
 
 function formatHHMM(iso: string | null | undefined) {
-  if (!iso) return 'â€”';
-  try { return format(new Date(iso), 'HH:mm'); } catch { return 'â€”'; }
+  if (!iso) return '—';
+  try { return format(new Date(iso), 'HH:mm'); } catch { return '—'; }
 }
 
-/* â”€â”€â”€ Component â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Component ──────────────────────────────────────────────────────── */
 export function Hero() {
   const navigate = useNavigate();
 
@@ -186,7 +186,7 @@ export function Hero() {
       onMouseLeave={() => setPaused(false)}
     >
 
-      {/* â”€â”€ Photo slides crossfade â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Photo slides crossfade ───────────────────────────────── */}
       <AnimatePresence mode="sync">
         <motion.div
           key={current}
@@ -211,7 +211,7 @@ export function Hero() {
         </motion.div>
       </AnimatePresence>
 
-      {/* â”€â”€ Diagonal runway stripe â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Diagonal runway stripe ──────────────────────────────── */}
       <div
         className="absolute inset-0 z-[1] pointer-events-none opacity-8"
         style={{
@@ -220,12 +220,12 @@ export function Hero() {
         }}
       />
 
-      {/* â”€â”€ Main content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 flex flex-1 flex-col justify-end lg:justify-center">
         <div className="container pb-20 md:pb-24 lg:py-32">
           <div className="flex justify-center lg:justify-end">
 
-            {/* â”€â”€ Flight search panel â”€â”€ */}
+            {/* ── Flight search panel ── */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -244,7 +244,7 @@ export function Hero() {
                   </h2>
                 </div>
 
-                {/* Tabs DÃ©parts / ArrivÃ©es */}
+                {/* Tabs Départs / Arrivées */}
                 <div className="flex mb-3 sm:mb-4 border border-white/10">
                   {(['departs', 'arrivees'] as const).map(t2 => (
                     <button
@@ -256,7 +256,7 @@ export function Hero() {
                           : 'bg-transparent text-white/50 hover:text-white'
                       }`}
                     >
-                      {t2 === 'departs' ? 'DÃ©parts' : 'ArrivÃ©es'}
+                      {t2 === 'departs' ? 'Départs' : 'Arrivées'}
                     </button>
                   ))}
                 </div>
@@ -270,7 +270,7 @@ export function Hero() {
                         value={query}
                         onChange={e => setQuery(e.target.value)}
                         onFocus={() => query.length >= 2 && setShowDropdown(true)}
-                        placeholder="NÂ° vol, ville ou compagnieâ€¦"
+                        placeholder="N° vol, ville ou compagnie…"
                         className="flex-1 bg-transparent px-3 py-2.5 sm:py-3 text-sm text-white placeholder:text-white/25 outline-none"
                       />
                       {query && (
@@ -293,7 +293,7 @@ export function Hero() {
                     </div>
                   </form>
 
-                  {/* â”€â”€ Live results dropdown â”€â”€ */}
+                  {/* ── Live results dropdown ── */}
                   <AnimatePresence>
                     {showDropdown && (
                       <motion.div
@@ -307,23 +307,23 @@ export function Hero() {
                           /* Loading state */
                           <div className="flex flex-col items-center gap-2 py-8">
                             <div className="h-5 w-5 animate-spin rounded-full border-2 border-white/20 border-t-rdc-yellow" />
-                            <p className="text-xs text-white/40">Recherche en coursâ€¦</p>
+                            <p className="text-xs text-white/40">Recherche en cours…</p>
                           </div>
                         ) : results.length === 0 ? (
                           /* No results */
                           <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
                             <Plane size={22} className="text-white/20" />
                             <p className="text-sm text-white/50">
-                              Aucun vol trouvÃ© pour &laquo;{query}&raquo;
+                              Aucun vol trouvé pour &laquo;{query}&raquo;
                             </p>
                             <p className="text-xs text-white/25">
-                              Essayez un numÃ©ro de vol, une compagnie ou une ville
+                              Essayez un numéro de vol, une compagnie ou une ville
                             </p>
                             <button
                               onClick={() => goToBoard(query)}
                               className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-rdc-yellow hover:text-white transition-colors"
                             >
-                              Voir tous les {tab === 'departs' ? 'dÃ©parts' : 'arrivÃ©es'}
+                              Voir tous les {tab === 'departs' ? 'départs' : 'arrivées'}
                               <ArrowRight size={11} />
                             </button>
                           </div>
@@ -333,7 +333,7 @@ export function Hero() {
                             {results.map(f => {
                               const iata    = f.airlines?.iata_code ?? '';
                               const cityIata = tab === 'departs' ? f.destination_iata : f.origin_iata;
-                              const cityName = cityIata ? (CITIES[cityIata] ?? cityIata) : 'â€”';
+                              const cityName = cityIata ? (CITIES[cityIata] ?? cityIata) : '—';
                               const hhmm    = formatHHMM(f.scheduled_time);
                               return (
                                 <button
@@ -355,14 +355,14 @@ export function Hero() {
                                       {f.flight_number}
                                       {f.airlines?.name && (
                                         <span className="ml-1 font-normal text-white/55">
-                                          Â· {f.airlines.name}
+                                          · {f.airlines.name}
                                         </span>
                                       )}
                                     </p>
                                     <p className="truncate text-xs text-white/40">
-                                      {tab === 'departs' ? 'â†’' : 'â†'}{' '}
+                                      {tab === 'departs' ? '→' : '←'}{' '}
                                       {cityName}{cityIata && cityIata !== cityName ? ` (${cityIata})` : ''}
-                                      {' Â· '}{hhmm}
+                                      {' · '}{hhmm}
                                     </p>
                                   </div>
 
@@ -382,7 +382,7 @@ export function Hero() {
                               onClick={() => goToBoard(query)}
                               className="flex w-full items-center justify-between border-t border-white/15 px-4 py-3 text-left text-sm font-semibold text-rdc-yellow transition-colors hover:bg-white/5 hover:text-white"
                             >
-                              <span>Voir tous les rÃ©sultats pour &laquo;{query}&raquo;</span>
+                              <span>Voir tous les résultats pour &laquo;{query}&raquo;</span>
                               <ArrowRight size={13} className="flex-shrink-0" />
                             </button>
                           </>
@@ -392,7 +392,7 @@ export function Hero() {
                   </AnimatePresence>
                 </div>
 
-                {/* Suggested chips â€” masquÃ©s sur mobile */}
+                {/* Suggested chips — masqués sur mobile */}
                 <div className="hidden sm:flex flex-wrap gap-1.5 mb-3 mt-1">
                   {SUGGESTIONS.map(s => (
                     <button
@@ -411,7 +411,7 @@ export function Hero() {
                   to={(tab === 'departs' ? '/vols/departs' : '/vols/arrivees') as never}
                   className="flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors mb-3 sm:mb-4"
                 >
-                  {tab === 'departs' ? 'Voir tous les dÃ©parts' : 'Voir toutes les arrivÃ©es'}
+                  {tab === 'departs' ? 'Voir tous les départs' : 'Voir toutes les arrivées'}
                   <ArrowRight size={13} />
                 </Link>
 
@@ -437,7 +437,7 @@ export function Hero() {
         </div>
       </div>
 
-      {/* â”€â”€ Slide controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Slide controls ───────────────────────────────────────── */}
       <div className="absolute bottom-14 left-0 right-0 z-20 flex items-center justify-between px-8 md:px-16 pointer-events-none">
 
         {/* Caption */}
@@ -461,7 +461,7 @@ export function Hero() {
         <div className="flex items-center gap-4 pointer-events-auto">
           <button
             onClick={prev}
-            aria-label="Photo prÃ©cÃ©dente"
+            aria-label="Photo précédente"
             className="flex h-9 w-9 items-center justify-center border border-white/20 text-white/50 hover:border-white/60 hover:text-white transition-all"
           >
             <ChevronLeft size={16} />
@@ -505,17 +505,17 @@ export function Hero() {
         </div>
       </div>
 
-      {/* â”€â”€ Scroll indicator â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Scroll indicator ────────────────────────────────────────── */}
       <div className="relative z-10 flex justify-center pb-7">
         <div className="flex flex-col items-center gap-2 opacity-20">
           <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-white">
-            DÃ©couvrir
+            Découvrir
           </span>
           <div className="h-8 w-px bg-gradient-to-b from-white to-transparent" />
         </div>
       </div>
 
-      {/* â”€â”€ Bottom RDC flag bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Bottom RDC flag bar ──────────────────────────────────────── */}
       <div className="absolute bottom-0 left-0 right-0 z-20 h-0.5 bg-gradient-rdc" />
     </section>
   );

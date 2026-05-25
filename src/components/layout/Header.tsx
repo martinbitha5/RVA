@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
@@ -6,17 +6,17 @@ import {
   ParkingCircle, UtensilsCrossed, MapPin, Building2, Users,
   ShoppingBag, Info,
 } from 'lucide-react';
-// Plane is used in NAV_ITEMS â€” logo uses the RVA image instead
+// Plane is used in NAV_ITEMS — logo uses the RVA image instead
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '@/lib/utils';
 
-/* â”€â”€â”€ Logo desktop (grand FIH + texte, sans image RVA) â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Logo desktop (grand FIH + texte, sans image RVA) ─────── */
 function FihLogo({ light = false }: { light?: boolean }) {
   return (
-    <Link to="/" aria-label="AÃ©roport International de N'djili â€” Accueil"
+    <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
       className="flex items-center gap-2.5 shrink-0 group">
       <span className={cn(
         'font-display text-[32px] sm:text-[36px] font-black leading-none tracking-tight transition-colors',
@@ -25,7 +25,7 @@ function FihLogo({ light = false }: { light?: boolean }) {
         FIH
       </span>
       <div className="leading-[1.2] text-[11px]">
-        <p className={cn('font-normal', light ? 'text-white/60' : 'text-rdc-anthracite/50')}>AÃ©roport</p>
+        <p className={cn('font-normal', light ? 'text-white/60' : 'text-rdc-anthracite/50')}>Aéroport</p>
         <p className={cn('font-normal', light ? 'text-white/60' : 'text-rdc-anthracite/50')}>International</p>
         <p className={cn('font-bold',   light ? 'text-white'    : 'text-rdc-anthracite')}>de N&apos;djili</p>
       </div>
@@ -33,16 +33,16 @@ function FihLogo({ light = false }: { light?: boolean }) {
   );
 }
 
-/* â”€â”€â”€ Mobile logo (YUL-style: big "FIH" + descriptive text) â”€â”€â”€â”€â”€ */
+/* ─── Mobile logo (YUL-style: big "FIH" + descriptive text) ───── */
 function FihLogoMobile() {
   return (
-    <Link to="/" aria-label="AÃ©roport International de N'djili â€” Accueil"
+    <Link to="/" aria-label="Aéroport International de N'djili — Accueil"
       className="flex items-center gap-2.5 shrink-0">
       <span className="font-display text-[34px] font-black leading-none text-rdc-blue tracking-tight">
         FIH
       </span>
       <div className="leading-[1.15] text-[11px] text-rdc-anthracite">
-        <p className="font-normal">AÃ©roport</p>
+        <p className="font-normal">Aéroport</p>
         <p className="font-normal">International</p>
         <p className="font-bold">de N&apos;djili</p>
       </div>
@@ -50,18 +50,18 @@ function FihLogoMobile() {
   );
 }
 
-/* â”€â”€â”€ Nav data â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Nav data ──────────────────────────────────────────────── */
 const NAV_ITEMS = [
   {
     key: 'flights',
     Icon: Plane,
     links: [
-      { href: '/vols/departs',              label: 'DÃ©parts' },
-      { href: '/vols/arrivees',             label: 'ArrivÃ©es' },
-      { href: '/vols/compagnies-aeriennes', label: 'Compagnies aÃ©riennes' },
+      { href: '/vols/departs',              label: 'Départs' },
+      { href: '/vols/arrivees',             label: 'Arrivées' },
+      { href: '/vols/compagnies-aeriennes', label: 'Compagnies aériennes' },
       { href: '/vols/alertes-whatsapp',      label: 'Alertes WhatsApp' },
       { href: '/vols/temps-attente',        label: 'Temps d\'attente' },
-      { href: '/vols/plans-aerogares',      label: 'Plans des aÃ©rogares' },
+      { href: '/vols/plans-aerogares',      label: 'Plans des aérogares' },
     ],
   },
   {
@@ -70,7 +70,7 @@ const NAV_ITEMS = [
     links: [
       { href: '/stationnement-transport/formulaire', label: 'Stationnement FIH' },
       { href: '/stationnement-transport/offres',            label: 'Offres & Tarifs' },
-      { href: '/stationnement-transport/taxis',             label: 'Taxis agrÃ©Ã©s' },
+      { href: '/stationnement-transport/taxis',             label: 'Taxis agréés' },
       { href: '/stationnement-transport/transcom-bus',      label: 'Transco / Bus' },
       { href: '/stationnement-transport/location-voitures', label: 'Location voitures' },
     ],
@@ -79,7 +79,7 @@ const NAV_ITEMS = [
     key: 'shops',
     Icon: UtensilsCrossed,
     links: [
-      { href: '/boutiques-restaurants/repertoire',    label: 'RÃ©pertoire' },
+      { href: '/boutiques-restaurants/repertoire',    label: 'Répertoire' },
       { href: '/boutiques-restaurants/restaurants',   label: 'Restaurants' },
       { href: '/boutiques-restaurants/boutiques',     label: 'Boutiques' },
       { href: '/boutiques-restaurants/echange-devises', label: 'Bureaux de change' },
@@ -92,22 +92,22 @@ const NAV_ITEMS = [
     Icon: MapPin,
     links: [
       { href: '/guide/quitter-kinshasa',    label: 'Quitter Kinshasa' },
-      { href: '/guide/atterrir-kinshasa',   label: 'Atterrir Ã  Kinshasa' },
+      { href: '/guide/atterrir-kinshasa',   label: 'Atterrir à Kinshasa' },
       { href: '/guide/douanes-immigration', label: 'Douanes & Immigration' },
-      { href: '/guide/securite-bagages',    label: 'SÃ©curitÃ© & Bagages' },
-      { href: '/guide/sante',               label: 'SantÃ© & Vaccinations' },
-      { href: '/guide/wifi-connectivite',   label: 'Wi-Fi & ConnectivitÃ©' },
+      { href: '/guide/securite-bagages',    label: 'Sécurité & Bagages' },
+      { href: '/guide/sante',               label: 'Santé & Vaccinations' },
+      { href: '/guide/wifi-connectivite',   label: 'Wi-Fi & Connectivité' },
     ],
   },
   {
     key: 'corporate',
     Icon: Building2,
     links: [
-      { href: '/corporate/a-propos',                label: 'Ã€ propos de la RVA' },
+      { href: '/corporate/a-propos',                label: 'À propos de la RVA' },
       { href: '/corporate/gouvernance',             label: 'Gouvernance' },
       { href: '/corporate/projets-avenir',          label: 'Projets d\'avenir' },
       { href: '/corporate/historique',              label: 'Historique' },
-      { href: '/corporate/carriere',                label: 'CarriÃ¨res' },
+      { href: '/corporate/carriere',                label: 'Carrières' },
       { href: '/corporate/partenariats-commerciaux', label: 'Partenariats' },
     ],
   },
@@ -115,7 +115,7 @@ const NAV_ITEMS = [
     key: 'community',
     Icon: Users,
     links: [
-      { href: '/communaute/environnement-durabilite', label: 'Environnement & DurabilitÃ©' },
+      { href: '/communaute/environnement-durabilite', label: 'Environnement & Durabilité' },
       { href: '/communaute/environnement-sonore',     label: 'Environnement sonore' },
       { href: '/communaute/travaux-pistes',           label: 'Travaux sur pistes' },
       { href: '/communaute/relations-communaute',     label: 'Relations communautaires' },
@@ -132,7 +132,7 @@ const NAV_LABEL_KEYS: Record<string, string> = {
   community: 'nav.community',
 };
 
-/** Correspondance href â†’ clÃ© i18n pour les liens des dropdowns */
+/** Correspondance href → clé i18n pour les liens des dropdowns */
 const NAV_LINK_KEYS: Record<string, string> = {
   '/vols/departs':                                  'flights.departures',
   '/vols/arrivees':                                 'flights.arrivals',
@@ -140,7 +140,7 @@ const NAV_LINK_KEYS: Record<string, string> = {
   '/vols/alertes-whatsapp':                         'flights.smsAlerts',
   '/vols/temps-attente':                            'flights.waitTimes',
   '/vols/plans-aerogares':                          'flights.terminalMaps',
-  '/stationnement-transport/formulaire':     'parking.parkingFih',
+  '/stationnement-transport/stationnement-fih':     'parking.parkingFih',
   '/stationnement-transport/offres':                'parking.offers',
   '/stationnement-transport/taxis':                 'parking.taxis',
   '/stationnement-transport/transcom-bus':          'parking.bus',
@@ -169,7 +169,7 @@ const NAV_LINK_KEYS: Record<string, string> = {
   '/communaute/relations-communaute':               'community.communityRelations',
 };
 
-/* â”€â”€â”€ Desktop dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Desktop dropdown ──────────────────────────────────────── */
 function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrolled: boolean }) {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
@@ -211,7 +211,7 @@ function NavDropdown({ item, scrolled }: { item: typeof NAV_ITEMS[number]; scrol
   );
 }
 
-/* â”€â”€â”€ Search Dialog â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Search Dialog ─────────────────────────────────────────── */
 function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
   const { t } = useTranslation();
   return (
@@ -239,7 +239,7 @@ function SearchDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (v:
   );
 }
 
-/* â”€â”€â”€ Mobile accordion nav item â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Mobile accordion nav item ─────────────────────────────── */
 function MobileNavItem({ item, onClose }: { item: typeof NAV_ITEMS[number]; onClose: () => void }) {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
@@ -267,7 +267,7 @@ function MobileNavItem({ item, onClose }: { item: typeof NAV_ITEMS[number]; onCl
   );
 }
 
-/* â”€â”€â”€ Main Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Main Header ───────────────────────────────────────────── */
 export function Header() {
   const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -294,7 +294,7 @@ export function Header() {
           ? 'bg-white shadow-[0_1px_0_rgba(0,0,0,0.06)]'
           : 'bg-white md:bg-gradient-to-b md:from-black/60 md:to-transparent',
       )}>
-        {/* â”€â”€â”€ Mobile compact icon bar (scrolled state only) â”€â”€â”€ */}
+        {/* ─── Mobile compact icon bar (scrolled state only) ─── */}
         <div className={cn(
           'md:hidden transition-opacity duration-200',
           scrolled ? 'block' : 'hidden',
@@ -327,7 +327,7 @@ export function Header() {
           </nav>
         </div>
 
-        {/* â”€â”€â”€ Mobile top-of-page header (style YUL : menu | FIH logo | recherche) â”€â”€â”€ */}
+        {/* ─── Mobile top-of-page header (style YUL : menu | FIH logo | recherche) ─── */}
         <div className={cn(
           'md:hidden',
           scrolled ? 'hidden' : 'block',
@@ -351,7 +351,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* â”€â”€â”€ Desktop / tablet header (â‰¥md) â”€â”€â”€ */}
+        {/* ─── Desktop / tablet header (≥md) ─── */}
         <div className="container hidden md:block">
           <div className="flex h-[70px] items-center justify-between gap-6">
 

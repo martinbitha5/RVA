@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { Award, Star, Zap, CheckCircle, ChevronRight, Car, Plane } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -6,7 +6,7 @@ import { useUser } from '@/contexts/UserContext';
 
 export const Route = createFileRoute('/compte/fidelite')({
   component: FidelitePage,
-  head: () => ({ meta: [{ title: 'FidÃ©litÃ© FIH â€” Espace Client' }] }),
+  head: () => ({ meta: [{ title: 'Fidélité FIH — Espace Client' }] }),
 });
 
 type Level = 'Bronze' | 'Silver' | 'Gold';
@@ -20,21 +20,21 @@ const LEVELS: Record<Level, {
     border: 'border-amber-400/40',
     textColor: 'text-amber-700',
     minPts: 0, maxPts: 499,
-    perks: ['RÃ©servation parking en ligne', 'Alertes WhatsApp vols', 'Newsletter exclusive FIH'],
+    perks: ['Réservation parking en ligne', 'Alertes WhatsApp vols', 'Newsletter exclusive FIH'],
   },
   Silver: {
     gradient: 'from-slate-600 via-slate-400 to-slate-300',
     border: 'border-slate-400/40',
     textColor: 'text-slate-600',
     minPts: 500, maxPts: 1499,
-    perks: ['Tous les avantages Bronze', 'Tarif prÃ©fÃ©rentiel parking (âˆ’10%)', 'AccÃ¨s file prioritaire enregistrement', 'Support dÃ©diÃ©'],
+    perks: ['Tous les avantages Bronze', 'Tarif préférentiel parking (−10%)', 'Accès file prioritaire enregistrement', 'Support dédié'],
   },
   Gold: {
     gradient: 'from-rdc-yellow via-amber-400 to-yellow-300',
     border: 'border-yellow-400/40',
     textColor: 'text-amber-600',
     minPts: 1500, maxPts: null,
-    perks: ['Tous les avantages Silver', 'AccÃ¨s Pearl Lounge offert (1Ã—/mois)', 'Parking gratuit 1 jour/trimestre', 'Conciergerie VIP', 'Invitation Ã©vÃ©nements RVA'],
+    perks: ['Tous les avantages Silver', 'Accès Pearl Lounge offert (1×/mois)', 'Parking gratuit 1 jour/trimestre', 'Conciergerie VIP', 'Invitation événements RVA'],
   },
 };
 
@@ -87,16 +87,16 @@ export default function FidelitePage() {
   const memberId = user?.id.slice(0, 8).toUpperCase() ?? '--------';
   const memberSince = user?.created_at
     ? new Date(user.created_at).toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
-    : 'â€”';
+    : '—';
 
   return (
     <div className="space-y-5 max-w-xl">
       <div>
-        <h1 className="font-display font-bold text-2xl text-rdc-anthracite">FidÃ©litÃ© FIH</h1>
+        <h1 className="font-display font-bold text-2xl text-rdc-anthracite">Fidélité FIH</h1>
         <p className="text-sm text-muted-foreground mt-1">Votre carte membre et vos avantages exclusifs</p>
       </div>
 
-      {/* â”€â”€ Member Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Member Card ─────────────────────────────────────────────────── */}
       <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${lvl.gradient} p-6 text-white shadow-xl aspect-[1.6/1]`}>
         {/* Decorative circles */}
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10" />
@@ -106,8 +106,8 @@ export default function FidelitePage() {
         <div className="relative z-10 flex flex-col justify-between h-full">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-white/70">AÃ©roport de N'djili</p>
-              <p className="font-display font-bold text-xl mt-0.5">FIH FidÃ©litÃ©</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-white/70">Aéroport de N'djili</p>
+              <p className="font-display font-bold text-xl mt-0.5">FIH Fidélité</p>
             </div>
             <div className="flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 backdrop-blur-sm">
               <Award size={13} />
@@ -122,7 +122,7 @@ export default function FidelitePage() {
             <div className="flex items-end justify-between">
               <div>
                 <p className="text-sm font-semibold capitalize">{displayName}</p>
-                <p className="text-xs text-white/60">ID Â· {memberId}</p>
+                <p className="text-xs text-white/60">ID · {memberId}</p>
               </div>
               <p className="text-xs text-white/60">Membre depuis {memberSince}</p>
             </div>
@@ -130,7 +130,7 @@ export default function FidelitePage() {
         </div>
       </div>
 
-      {/* â”€â”€ Points progress â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Points progress ─────────────────────────────────────────────── */}
       {nl && (
         <div className="rounded-2xl border border-border bg-card p-5">
           <div className="flex items-center justify-between mb-3">
@@ -151,7 +151,7 @@ export default function FidelitePage() {
         </div>
       )}
 
-      {/* â”€â”€ How to earn points â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── How to earn points ──────────────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-5">
         <div className="flex items-center gap-2 mb-4">
           <Zap size={15} className="text-rdc-yellow" />
@@ -162,8 +162,8 @@ export default function FidelitePage() {
             <div className="flex items-center gap-3">
               <Car size={15} className="text-rdc-blue" />
               <div>
-                <p className="text-sm font-medium text-rdc-anthracite">RÃ©servation parking</p>
-                <p className="text-xs text-muted-foreground">{resaCount} rÃ©servation{resaCount > 1 ? 's' : ''} effectuÃ©e{resaCount > 1 ? 's' : ''}</p>
+                <p className="text-sm font-medium text-rdc-anthracite">Réservation parking</p>
+                <p className="text-xs text-muted-foreground">{resaCount} réservation{resaCount > 1 ? 's' : ''} effectuée{resaCount > 1 ? 's' : ''}</p>
               </div>
             </div>
             <span className="font-bold text-rdc-blue text-sm">+100 pts</span>
@@ -182,8 +182,8 @@ export default function FidelitePage() {
             <div className="flex items-center gap-3">
               <Star size={15} className="text-amber-500" />
               <div>
-                <p className="text-sm font-medium text-rdc-anthracite">Ã‰valuation du service</p>
-                <p className="text-xs text-muted-foreground">BientÃ´t disponible</p>
+                <p className="text-sm font-medium text-rdc-anthracite">Évaluation du service</p>
+                <p className="text-xs text-muted-foreground">Bientôt disponible</p>
               </div>
             </div>
             <span className="font-bold text-amber-500 text-sm">+50 pts</span>
@@ -191,11 +191,11 @@ export default function FidelitePage() {
         </div>
       </div>
 
-      {/* â”€â”€ Current level perks â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── Current level perks ─────────────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-5">
         <div className="flex items-center gap-2 mb-4">
           <Award size={15} className={lvl.textColor} />
-          <h2 className="font-semibold text-sm text-rdc-anthracite">Vos avantages â€” niveau {level}</h2>
+          <h2 className="font-semibold text-sm text-rdc-anthracite">Vos avantages — niveau {level}</h2>
         </div>
         <ul className="space-y-2.5">
           {lvl.perks.map(perk => (
@@ -207,7 +207,7 @@ export default function FidelitePage() {
         </ul>
       </div>
 
-      {/* â”€â”€ All levels â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── All levels ──────────────────────────────────────────────────── */}
       <div className="rounded-2xl border border-border bg-card p-5">
         <h2 className="font-semibold text-sm text-rdc-anthracite mb-4">Tous les niveaux</h2>
         <div className="grid grid-cols-3 gap-2.5">
@@ -234,7 +234,7 @@ export default function FidelitePage() {
         to={'/stationnement-transport/formulaire' as never}
         className="flex items-center justify-center gap-2 rounded-xl bg-rdc-blue px-4 py-3 text-sm font-semibold text-white hover:bg-rdc-blue/85 transition-colors"
       >
-        RÃ©server pour gagner des points <ChevronRight size={15} />
+        Réserver pour gagner des points <ChevronRight size={15} />
       </Link>
     </div>
   );

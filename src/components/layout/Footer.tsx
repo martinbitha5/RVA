@@ -1,4 +1,4 @@
-﻿import { Link } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
   MapPin,
@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
-/* â”€â”€â”€ Column helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Column helpers ────────────────────────────────────────── */
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
     <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-white/50">
@@ -53,7 +53,7 @@ function FooterLink({
   );
 }
 
-/* â”€â”€â”€ Social icons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Social icons ──────────────────────────────────────────── */
 const SOCIAL_LINKS = [
   {
     label: 'Facebook',
@@ -82,7 +82,7 @@ const SOCIAL_LINKS = [
   },
 ];
 
-/* â”€â”€â”€ Footer â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Footer ────────────────────────────────────────────────── */
 export function Footer() {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
@@ -96,9 +96,9 @@ export function Footer() {
       <div className="container py-12 lg:py-16">
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5">
 
-          {/* Column 1 â€” FIH */}
+          {/* Column 1 — FIH */}
           <div className="col-span-2 md:col-span-1">
-            {/* Logo â€” grand FIH sans image */}
+            {/* Logo — grand FIH sans image */}
             <Link
               to="/"
               className="mb-5 flex items-center gap-2.5 transition-opacity hover:opacity-80"
@@ -107,7 +107,7 @@ export function Footer() {
                 FIH
               </span>
               <div className="leading-[1.2] text-[11px]">
-                <p className="font-normal text-white/60">AÃ©roport</p>
+                <p className="font-normal text-white/60">Aéroport</p>
                 <p className="font-normal text-white/60">International</p>
                 <p className="font-bold text-white">de N&apos;djili</p>
               </div>
@@ -124,7 +124,7 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Column 2 â€” Services */}
+          {/* Column 2 — Services */}
           <div>
             <FooterHeading>{t('footer.servicesColumn')}</FooterHeading>
             <nav aria-label="Navigation Services">
@@ -138,7 +138,7 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Column 3 â€” Corporate */}
+          {/* Column 3 — Corporate */}
           <div>
             <FooterHeading>{t('footer.corporateColumn')}</FooterHeading>
             <nav aria-label="Navigation Corporate">
@@ -146,14 +146,14 @@ export function Footer() {
               <FooterLink href="/corporate/partenariats-commerciaux/apercu-fih">{t('corporate.partnerships')}</FooterLink>
               <FooterLink href="/corporate/services-aeriens/fret">{t('corporate.cargo')}</FooterLink>
               <FooterLink href="/corporate/surete-securite">{t('corporate.safetyAndSecurity')}</FooterLink>
-              <FooterLink href="/medias">MÃ©dias</FooterLink>
+              <FooterLink href="/medias">Médias</FooterLink>
             </nav>
           </div>
 
-          {/* Column 4 â€” CommunautÃ© */}
+          {/* Column 4 — Communauté */}
           <div>
             <FooterHeading>{t('footer.communityColumn')}</FooterHeading>
-            <nav aria-label="Navigation CommunautÃ©">
+            <nav aria-label="Navigation Communauté">
               <FooterLink href="/communaute/environnement-durabilite">
                 {t('community.environmentSustainability')}
               </FooterLink>
@@ -172,7 +172,7 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Column 5 â€” Contact */}
+          {/* Column 5 — Contact */}
           <div>
             <FooterHeading>{t('footer.contactColumn')}</FooterHeading>
             <address className="not-italic space-y-3">
@@ -229,7 +229,7 @@ export function Footer() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           {/* Legal links */}
           <nav
-            aria-label="Liens lÃ©gaux"
+            aria-label="Liens légaux"
             className="flex flex-wrap gap-x-4 gap-y-1.5"
           >
             {[

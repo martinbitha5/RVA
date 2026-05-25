@@ -1,4 +1,4 @@
-﻿import { Link } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import {
   NavigationMenu,
@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 
-/* â”€â”€â”€ Nav link helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Nav link helper ──────────────────────────────────────── */
 interface NavLinkProps {
   href: string;
   label: string;
@@ -64,14 +64,14 @@ function ColumnHeader({
   );
 }
 
-/* â”€â”€â”€ Section menus â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Section menus ────────────────────────────────────────── */
 function VolsMenu() {
   const { t } = useTranslation();
   return (
     <ul className="grid w-64 gap-0.5 p-3">
       <ColumnHeader>{t('nav.flights')}</ColumnHeader>
-      <NavItem href="/vols/departs" label={t('flights.departures')} description="Tableau en temps rÃ©el" />
-      <NavItem href="/vols/arrivees" label={t('flights.arrivals')} description="Mises Ã  jour live" />
+      <NavItem href="/vols/departs" label={t('flights.departures')} description="Tableau en temps réel" />
+      <NavItem href="/vols/arrivees" label={t('flights.arrivals')} description="Mises à jour live" />
       <NavItem href="/vols/compagnies-aeriennes" label={t('flights.airlines')} />
       <NavItem href="/vols/alertes-whatsapp" label={t('flights.smsAlerts')} description="Abonnez-vous aux notifications" />
       <NavItem href="/vols/temps-attente" label={t('flights.waitTimes')} />
@@ -112,11 +112,11 @@ function BoutiquesMenu() {
   return (
     <ul className="grid w-56 gap-0.5 p-3">
       <ColumnHeader>{t('nav.shopsRestaurants')}</ColumnHeader>
-      <NavItem href="/boutiques-restaurants/repertoire" label={t('shops.directory')} description="Tous les commerces par catÃ©gorie" />
+      <NavItem href="/boutiques-restaurants/repertoire" label={t('shops.directory')} description="Tous les commerces par catégorie" />
       <NavItem href="/boutiques-restaurants/restaurants" label={t('shops.restaurants')} />
       <NavItem href="/boutiques-restaurants/boutiques" label={t('shops.shops')} />
       <NavItem href="/boutiques-restaurants/bars-cafes" label={t('shops.barsCafes')} />
-      <NavItem href="/boutiques-restaurants/echange-devises" label={t('shops.currencyExchange')} description="USD Â· EUR Â· CDF" />
+      <NavItem href="/boutiques-restaurants/echange-devises" label={t('shops.currencyExchange')} description="USD · EUR · CDF" />
       <NavItem href="/boutiques-restaurants/hors-taxes" label={t('shops.dutyFree')} />
       <NavItem href="/boutiques-restaurants/salons" label={t('shops.lounges')} />
     </ul>
@@ -128,7 +128,7 @@ function GuideMenu() {
   return (
     <div className="grid w-[480px] grid-cols-2 gap-0 p-4">
       <div>
-        <ColumnHeader>DÃ©part</ColumnHeader>
+        <ColumnHeader>Départ</ColumnHeader>
         <ul className="space-y-0.5">
           <NavItem href="/guide/quitter-kinshasa" label={t('guide.leavingKinshasa')} />
           <NavItem href="/guide/securite-bagages" label={t('guide.luggageSecurity')} />
@@ -137,11 +137,11 @@ function GuideMenu() {
         </ul>
       </div>
       <div>
-        <ColumnHeader>ArrivÃ©e & Services</ColumnHeader>
+        <ColumnHeader>Arrivée & Services</ColumnHeader>
         <ul className="space-y-0.5">
           <NavItem href="/guide/atterrir-kinshasa" label={t('guide.arrivingKinshasa')} />
           <NavItem href="/guide/douanes-immigration" label={t('guide.customsImmigration')} />
-          <NavItem href="/guide/sante" label={t('guide.health')} description="FiÃ¨vre jaune obligatoire" />
+          <NavItem href="/guide/sante" label={t('guide.health')} description="Fièvre jaune obligatoire" />
           <NavItem href="/guide/wifi-connectivite" label={t('guide.wifiConnectivity')} />
           <NavItem href="/guide/services-bancaires" label={t('guide.bankingServices')} />
           <NavItem href="/guide/objets-trouves" label={t('guide.lostFound')} />
@@ -165,13 +165,13 @@ function CorporateMenu() {
         </ul>
       </div>
       <div>
-        <ColumnHeader>CarriÃ¨res</ColumnHeader>
+        <ColumnHeader>Carrières</ColumnHeader>
         <ul className="space-y-0.5">
           <NavItem href="/corporate/carriere/offres-emploi" label={t('corporate.jobOffers')} />
           <NavItem href="/corporate/carriere/communaute-fih" label={t('corporate.community')} />
           <NavItem href="/corporate/carriere/se-developper" label={t('corporate.development')} />
         </ul>
-        <ColumnHeader className="mt-3">Services aÃ©riens</ColumnHeader>
+        <ColumnHeader className="mt-3">Services aériens</ColumnHeader>
         <ul className="space-y-0.5">
           <NavItem href="/corporate/services-aeriens/fret" label={t('corporate.cargo')} />
           <NavItem href="/corporate/services-aeriens/aviation-commerciale" label={t('corporate.commercialAviation')} />
@@ -184,7 +184,7 @@ function CorporateMenu() {
           <NavItem href="/corporate/partenariats-commerciaux/concessions" label={t('corporate.concessions')} />
           <NavItem href="/corporate/partenariats-commerciaux/immobilier" label={t('corporate.realEstate')} />
         </ul>
-        <ColumnHeader className="mt-3">SÃ»retÃ©</ColumnHeader>
+        <ColumnHeader className="mt-3">Sûreté</ColumnHeader>
         <ul className="space-y-0.5">
           <NavItem href="/corporate/surete-securite" label={t('corporate.safetyAndSecurity')} />
         </ul>
@@ -211,7 +211,7 @@ function CommunauteMenu() {
         <ul className="space-y-0.5">
           <NavItem href="/communaute/relations-communaute" label={t('community.communityRelations')} />
           <NavItem href="/communaute/relations-communaute/consultations" label={t('community.consultations')} />
-          <NavItem href="/communaute/relations-communaute/initiatives" label={t('community.initiatives')} description="Nsele Â· Masina Â· Kimbanseke" />
+          <NavItem href="/communaute/relations-communaute/initiatives" label={t('community.initiatives')} description="Nsele · Masina · Kimbanseke" />
           <NavItem href="/communaute/relations-communaute/fih-art" label={t('community.fihArt')} />
         </ul>
       </div>
@@ -219,7 +219,7 @@ function CommunauteMenu() {
   );
 }
 
-/* â”€â”€â”€ Main MegaMenu â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Main MegaMenu ────────────────────────────────────────── */
 export function MegaMenu() {
   const { t } = useTranslation();
 
@@ -276,7 +276,7 @@ export function MegaMenu() {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        {/* COMMUNAUTÃ‰ */}
+        {/* COMMUNAUTÉ */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className="text-sm font-medium">
             {t('nav.community')}
