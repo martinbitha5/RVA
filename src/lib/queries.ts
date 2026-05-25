@@ -204,6 +204,36 @@ export function useFlightById(id: string) {
   });
 }
 
+export interface HeroSlide {
+  id: string;
+  image_url: string;
+  title_fr: string;
+  title_en: string | null;
+  subtitle_fr: string | null;
+  subtitle_en: string | null;
+  cta_label_fr: string | null;
+  cta_label_en: string | null;
+  cta_url: string | null;
+  sort_order: number;
+  active: boolean;
+}
+
+export function useHeroSlides() {
+  return useQuery<HeroSlide[]>({
+    queryKey: ['hero-slides'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('hero_slides')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order');
+      if (error) throw error;
+      return data ?? [];
+    },
+    staleTime: 5 * 60_000,
+  });
+}
+
 export function useParkingAvailability() {
   return useQuery<ParkingLot[]>({
     queryKey: ['parking-lots'],

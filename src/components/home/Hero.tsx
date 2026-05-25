@@ -6,25 +6,25 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
-import { useUpcomingFlights } from '@/lib/queries';
+import { useUpcomingFlights, useHeroSlides } from '@/lib/queries';
 import { FlightStatusBadge } from '@/components/flights/FlightStatusBadge';
 import type { FlightWithAirline, FlightStatus } from '@/types/database';
 
-/* ─── Slides ─────────────────────────────────────────────────────────── */
-const SLIDES = [
+/* ─── Slides statiques (fallback si la DB est vide) ──────────────────── */
+const STATIC_SLIDES = [
   {
-    src: '/images/fih-hero-1.jpg',
-    alt: 'Tarmac FIH — Ethiopian Airlines Star Alliance A350, MG Airlines A320',
-    caption: 'Ethiopian Airlines A350 · Star Alliance · Kinshasa FIH',
-    position: 'object-bottom',
+    image_url: '/images/fih-hero-1.jpg',
+    title_fr: 'Votre porte d\'entrée vers le Congo',
+    subtitle_fr: 'Ethiopian Airlines A350 · Star Alliance · Kinshasa FIH',
+    cta_label_fr: null, cta_url: null,
   },
   {
-    src: '/images/fih-hero-2.jpg',
-    alt: 'Tarmac FIH — flotte internationale au sol, terminal RVA',
-    caption: 'Opérations au sol · Terminal International · FIH',
-    position: 'object-bottom',
+    image_url: '/images/fih-hero-2.jpg',
+    title_fr: 'Aéroport International de N\'djili',
+    subtitle_fr: 'Opérations au sol · Terminal International · FIH',
+    cta_label_fr: null, cta_url: null,
   },
-] as const;
+];
 
 const SUGGESTIONS = ['SN491', 'Lubumbashi', 'Goma', 'Paris CDG', 'Brussels'];
 
@@ -95,6 +95,10 @@ function formatHHMM(iso: string | null | undefined) {
 export function Hero() {
   const navigate = useNavigate();
 
+  // Slides depuis Supabase (fallback statique si vide)
+  const { data: dbSlides = [] } = useHeroSlides();
+  const slides = dbSlides.length > 0 ? dbSlides : STATIC_SLIDES;
+
   // Slideshow
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -139,16 +143,16 @@ export function Hero() {
 
   // Auto-advance slideshow
   useEffect(() => {
-    if (paused) return;
+    if (paused || slides.length <= 1) return;
     const timer = setInterval(
-      () => setCurrent(prev => (prev + 1) % SLIDES.length),
+      () => setCurrent(prev => (prev + 1) % slides.length),
       SLIDE_DURATION,
     );
     return () => clearInterval(timer);
-  }, [paused]);
+  }, [paused, slides.length]);
 
-  const prev = () => setCurrent(i => (i - 1 + SLIDES.length) % SLIDES.length);
-  const next = () => setCurrent(i => (i + 1) % SLIDES.length);
+  const prev = () => setCurrent(i => (i - 1 + slides.length) % slides.length);
+  const next = () => setCurrent(i => (i + 1) % slides.length);
 
   function goToBoard(q?: string) {
     setShowDropdown(false);
@@ -193,9 +197,9 @@ export function Hero() {
           className="absolute inset-0"
         >
           <img
-            src={SLIDES[current].src}
-            alt={SLIDES[current].alt}
-            className={`h-full w-full object-cover ${SLIDES[current].position}`}
+            src={slides[current]?.image_url}
+            alt={slides[current]?.title_fr ?? ''}
+            className="h-full w-full object-cover object-bottom"
             loading={current === 0 ? 'eager' : 'lazy'}
             onError={(e) => {
               const el = e.currentTarget.parentElement as HTMLElement;
@@ -448,7 +452,7 @@ export function Hero() {
           >
             <div className="h-px w-8 bg-rdc-yellow/50" />
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/35">
-              {SLIDES[current].caption}
+              {slides[current]?.subtitle_fr ?? slides[current]?.title_fr ?? ''}
             </p>
           </motion.div>
         </AnimatePresence>
@@ -464,7 +468,7 @@ export function Hero() {
           </button>
 
           <div className="flex items-center gap-2">
-            {SLIDES.map((_, i) => (
+            {slides.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrent(i)}

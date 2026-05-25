@@ -11,7 +11,7 @@ import {
 import {
   Flight, LocalParking, People, Article,
   Work, NotificationsActive, AirlineStops,
-  Store, VolumeUp, MeetingRoom,
+  Store, VolumeUp, MeetingRoom, Slideshow,
 } from '@mui/icons-material';
 import { Box, Chip } from '@mui/material';
 import { dataProvider }          from './dataProvider';
@@ -91,6 +91,7 @@ function CustomMenu() {
       <MenuItemLink to="/lounges"              primaryText="🛋️  Salons VIP"                leftIcon={<MeetingRoom />} />
       <MenuItemLink to="/noise_complaints"     primaryText="🔊  Plaintes bruit"            leftIcon={<VolumeUp />} />
       <MenuItemLink to="/parking_lots"         primaryText="🅿️  Gestion parkings"          leftIcon={<LocalParking />} />
+      <MenuItemLink to="/hero_slides"          primaryText="🖼️  Slides / Hero"              leftIcon={<Slideshow />} />
     </Menu>
   );
 }
@@ -811,6 +812,76 @@ function ParkingLotCreate() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// 🖼️  SLIDES HERO (carrousel page d'accueil)
+// ══════════════════════════════════════════════════════════════════════════════
+
+function SlidePreview() {
+  const record = useRecordContext();
+  const url = record?.image_url as string | undefined;
+  if (!url) return <Box sx={{ width: 120, height: 68, bgcolor: '#f5f5f5', borderRadius: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, color: '#999' }}>Pas d'image</Box>;
+  return (
+    <Box sx={{ position: 'relative', display: 'inline-block' }}>
+      <img src={url} alt="" style={{ width: 120, height: 68, objectFit: 'cover', borderRadius: 6, border: '2px solid #eee', display: 'block' }} />
+    </Box>
+  );
+}
+
+function SlideList() {
+  return (
+    <List sort={{ field: 'sort_order', order: 'ASC' }}
+      actions={<TopToolbar><CreateButton label="Ajouter un slide" /><ExportButton label="Exporter" /></TopToolbar>}>
+      <Datagrid rowClick="edit" bulkActionButtons={false}>
+        <SlidePreview />
+        <TextField source="title_fr" label="Titre (FR)" />
+        <TextField source="subtitle_fr" label="Sous-titre (FR)" />
+        <TextField source="cta_label_fr" label="Bouton" />
+        <NumberField source="sort_order" label="Ordre" />
+        <BooleanField source="active" label="Visible" />
+        <EditButton label="" />
+      </Datagrid>
+    </List>
+  );
+}
+
+function SlideEdit() {
+  return (
+    <Edit actions={<EditActions />} title="Modifier le slide">
+      <SimpleForm>
+        <SupabaseImageInput source="image_url" label="Image du slide (recommandé : 1920×800px)" folder="slides" />
+        <NumberInput source="sort_order" label="Ordre d'affichage (1 = premier)" defaultValue={0} />
+        <BooleanInput source="active" label="Visible sur le site" />
+        <TextInput source="title_fr" label="Titre principal (FR)" fullWidth required />
+        <TextInput source="title_en" label="Titre principal (EN)" fullWidth />
+        <TextInput source="subtitle_fr" label="Sous-titre / Description (FR)" fullWidth multiline rows={2} />
+        <TextInput source="subtitle_en" label="Sous-titre (EN)" fullWidth multiline rows={2} />
+        <TextInput source="cta_label_fr" label="Texte du bouton (FR) — ex: Voir les vols" />
+        <TextInput source="cta_label_en" label="Texte du bouton (EN) — ex: View flights" />
+        <TextInput source="cta_url" label="Lien du bouton (URL) — ex: /vols/departs" fullWidth />
+      </SimpleForm>
+    </Edit>
+  );
+}
+
+function SlideCreate() {
+  return (
+    <Create title="Ajouter un slide">
+      <SimpleForm>
+        <SupabaseImageInput source="image_url" label="Image du slide (recommandé : 1920×800px)" folder="slides" />
+        <NumberInput source="sort_order" label="Ordre d'affichage (1 = premier)" defaultValue={0} />
+        <BooleanInput source="active" label="Visible sur le site" defaultValue={true} />
+        <TextInput source="title_fr" label="Titre principal (FR)" fullWidth required />
+        <TextInput source="title_en" label="Titre principal (EN)" fullWidth />
+        <TextInput source="subtitle_fr" label="Sous-titre / Description (FR)" fullWidth multiline rows={2} />
+        <TextInput source="subtitle_en" label="Sous-titre (EN)" fullWidth multiline rows={2} />
+        <TextInput source="cta_label_fr" label="Texte du bouton (FR) — ex: Voir les vols" />
+        <TextInput source="cta_label_en" label="Texte du bouton (EN) — ex: View flights" />
+        <TextInput source="cta_url" label="Lien du bouton (URL) — ex: /vols/departs" fullWidth />
+      </SimpleForm>
+    </Create>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // APPLICATION PRINCIPALE
 // ══════════════════════════════════════════════════════════════════════════════
 
@@ -836,6 +907,7 @@ export default function App() {
       <Resource name="lounges"              list={LoungeList}        edit={LoungeEdit}        create={LoungeCreate}        icon={MeetingRoom}         options={{ label: 'Salons VIP' }} />
       <Resource name="noise_complaints"     list={NoiseComplaintList} edit={NoiseComplaintEdit}                            icon={VolumeUp}            options={{ label: 'Plaintes bruit' }} />
       <Resource name="parking_lots"         list={ParkingLotList}    edit={ParkingLotEdit}    create={ParkingLotCreate}    icon={LocalParking}        options={{ label: 'Parkings' }} />
+      <Resource name="hero_slides"          list={SlideList}         edit={SlideEdit}         create={SlideCreate}         icon={Slideshow}           options={{ label: 'Slides / Hero' }} />
     </Admin>
   );
 }
