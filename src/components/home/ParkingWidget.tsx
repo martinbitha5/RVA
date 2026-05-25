@@ -41,26 +41,23 @@ export function ParkingWidget() {
     setError('');
 
     if (!entryDate || !entryTime || !exitDate || !exitTime) {
-      setError('Veuillez remplir toutes les dates et heures.');
+      // Champs vides → redirige vers le formulaire complet
+      void navigate({ to: '/stationnement-transport/formulaire' as never });
       return;
     }
 
     const start = new Date(`${entryDate}T${entryTime}`);
     const end   = new Date(`${exitDate}T${exitTime}`);
 
-    if (end <= start) {
-      setError('La date de sortie doit être après la date d\'entrée.');
+    if (end <= start || (end.getTime() - start.getTime()) / 3_600_000 < 4) {
+      // Données invalides → redirige vers le formulaire complet
+      void navigate({ to: '/stationnement-transport/formulaire' as never });
       return;
     }
 
-    const diffH = (end.getTime() - start.getTime()) / 3_600_000;
-    if (diffH < 4) {
-      setError('La réservation minimum est de 4 heures.');
-      return;
-    }
-
+    // Données valides → redirige directement vers la sélection de forfaits
     void navigate({
-      to: '/stationnement-transport/reservation' as never,
+      to: '/stationnement-transport/stationnement-fih' as never,
       search: {
         start: start.toISOString(),
         end:   end.toISOString(),

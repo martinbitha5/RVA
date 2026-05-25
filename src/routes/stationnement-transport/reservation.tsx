@@ -18,6 +18,7 @@ export const Route = createFileRoute('/stationnement-transport/reservation')({
     start: String(search.start ?? ''),
     end: String(search.end ?? ''),
     promo: search.promo != null ? String(search.promo) : undefined,
+    lotId: search.lotId != null ? String(search.lotId) : undefined,
   }),
   component: ReservationPage,
   head: () => ({
@@ -153,14 +154,15 @@ type Step = 1 | 2 | 3;
 const STEP_LABELS = ['Choisir les dates', 'Choisir le produit', 'Vos renseignements', 'Confirmation'];
 
 function ReservationPage() {
-  const { start, end, promo } = Route.useSearch();
+  const { start, end, promo, lotId } = Route.useSearch();
   const { data: dbLots = [] } = useParkingAvailability();
   const lots = dbLots.length > 0 ? dbLots : STATIC_LOTS;
 
   const hours = start && end ? calcHours(start, end) : 0;
 
-  const [step, setStep] = useState<Step>(1);
-  const [selectedLot, setSelectedLot] = useState<ParkingLot | null>(null);
+  const preselected = lotId ? (lots.find(l => l.id === lotId) ?? null) : null;
+  const [step, setStep] = useState<Step>(preselected ? 2 : 1);
+  const [selectedLot, setSelectedLot] = useState<ParkingLot | null>(preselected);
   const [billing, setBilling] = useState({
     firstName: '', lastName: '', email: '', confirmEmail: '',
     phone: '', plate: '', airline: '', destination: '',
