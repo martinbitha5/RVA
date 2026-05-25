@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useRef, useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2, Loader2, Image, Check, ArrowLeft } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { supabase } from '@/lib/supabase';
