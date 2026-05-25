@@ -1,321 +1,261 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
-import {
-  Car, Zap, Accessibility, CreditCard, ArrowRight,
-  MapPin, Calendar, Clock, CheckCircle, ShieldCheck, Tag,
-} from 'lucide-react';
-import { PageHero } from '@/components/ui/page-hero';
-import { useParkingAvailability } from '@/lib/queries';
-import { useTranslation } from 'react-i18next';
+import { X, ArrowRight } from 'lucide-react';
 
 export const Route = createFileRoute('/stationnement-transport/stationnement-fih')({
   component: StationnementFih,
-  head: () => ({ meta: [
-    { title: "Stationnement FIH — Aéroport N'djili" },
-    { name: 'description', content: 'Réservez votre place de stationnement officiel RVA à FIH. Tarifs USD, Mobile Money accepté. Moins cher en ligne.' },
-  ]}),
+  head: () => ({
+    meta: [
+      { title: "Stationnement FIH — Aéroport N'djili" },
+      { name: 'description', content: "Réservez votre place de stationnement officiel RVA à FIH. Tarifs USD, Mobile Money accepté. Moins cher en ligne." },
+    ],
+  }),
 });
 
-const MOBILE_MONEY = [
-  { name: 'Airtel Money',   dot: 'bg-red-600',    desc: 'Paiement instantané' },
-  { name: 'M-Pesa Vodacom', dot: 'bg-green-600',  desc: 'Paiement instantané' },
-  { name: 'Orange Money',   dot: 'bg-orange-500', desc: 'Paiement instantané' },
-];
-
-const WHY_ONLINE = [
-  { icon: Tag,          label: 'Moins cher en ligne',     desc: 'Jusqu\'à 15% de rabais vs tarif guichet' },
-  { icon: CheckCircle,  label: 'Prix taxes incluses',      desc: 'Aucune surprise au moment de payer' },
-  { icon: Clock,        label: 'Processus simple et rapide', desc: 'Réservation en moins de 3 minutes' },
-  { icon: ShieldCheck,  label: 'Place garantie',            desc: 'Votre place est sécurisée à l\'avance' },
-];
-
-// Generate 30-minute time slot options
 const TIME_OPTIONS = Array.from({ length: 48 }, (_, i) => {
-  const h = Math.floor(i / 2).toString().padStart(2, '0');
+  const h = Math.floor(i / 2);
   const m = i % 2 === 0 ? '00' : '30';
   return `${h}:${m}`;
 });
 
-function todayStr() {
-  return new Date().toISOString().split('T')[0];
-}
-function tomorrowStr() {
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  return d.toISOString().split('T')[0];
-}
+const WHY_ITEMS = [
+  { emoji: '💰', label: 'Moins cher en ligne' },
+  { emoji: '🏷️', label: 'Prix incluant les taxes' },
+  { emoji: '⚡', label: 'Processus simple et rapide' },
+  { emoji: '🅿️', label: 'Place garantie' },
+];
 
 function StationnementFih() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
-  const { data: lots = [] } = useParkingAvailability();
 
-  const [startDate, setStartDate] = useState(todayStr());
-  const [startTime, setStartTime] = useState('08:00');
-  const [endDate, setEndDate]     = useState(tomorrowStr());
-  const [endTime, setEndTime]     = useState('08:00');
-  const [promoCode, setPromoCode] = useState('');
-  const [formError, setFormError] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endDate,   setEndDate]   = useState('');
+  const [endTime,   setEndTime]   = useState('');
+  const [promo,     setPromo]     = useState('');
+  const [caa,       setCaa]       = useState('');
+  const [error,     setError]     = useState('');
 
-  function handleSearch(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    const start = new Date(`${startDate}T${startTime}`);
-    const end   = new Date(`${endDate}T${endTime}`);
+    setError('');
+
+    if (!startDate || !startTime || !endDate || !endTime) {
+      setError('Veuillez remplir toutes les dates et heures.');
+      return;
+    }
+
+    const start = new Date(`${startDate}T${startTime.padStart(5, '0')}`);
+    const end   = new Date(`${endDate}T${endTime.padStart(5, '0')}`);
 
     if (end <= start) {
-      setFormError('La date de sortie doit être après la date d\'entrée.');
+      setError('La date de sortie doit être après la date d\'entrée.');
       return;
     }
     const diffH = (end.getTime() - start.getTime()) / 3_600_000;
     if (diffH < 4) {
-      setFormError('La réservation minimum est de 4 heures.');
+      setError('1 — Vous devez réserver pour un séjour minimum de 4 heures');
       return;
     }
-    setFormError('');
+
     void navigate({
       to: '/stationnement-transport/reservation' as never,
       search: {
         start: start.toISOString(),
-        end: end.toISOString(),
-        promo: promoCode || undefined,
+        end:   end.toISOString(),
+        promo: promo.trim() || undefined,
       } as never,
     });
   }
 
+  const inputCls =
+    'w-full border border-[#d0d5dd] bg-white px-4 py-3 text-sm text-[#1a1a1a] focus:border-[#003DA5] focus:outline-none focus:ring-2 focus:ring-[#003DA5]/20';
+  const labelCls = 'mb-1 block text-sm font-medium text-[#333]';
+
   return (
     <main id="main-content">
-      <PageHero
-        eyebrow={t('nav.parkingTransport')}
-        title={t('parking.parkingFih')}
-        subtitle="Réservez et payez en ligne pour une place garantie au meilleur prix."
-        image="/images/fih-bus-cobus.jpg"
-        breadcrumbs={[
-          { label: 'Accueil', href: '/' },
-          { label: t('nav.parkingTransport'), href: '/stationnement-transport' },
-          { label: t('parking.parkingFih') },
-        ]}
-        cta={
-          <div className="flex flex-wrap gap-3">
-            <Link to={'/stationnement-transport/offres' as never} className="btn-outline-white">
-              <CreditCard size={15} /> {t('parking.offers')}
-            </Link>
-            <Link to={'/stationnement-transport/depose-recuperation' as never} className="btn-outline-white">
-              <MapPin size={15} /> {t('parking.dropOff')}
-            </Link>
-          </div>
-        }
-      />
 
-      {/* ── Booking form card ───────────────────────────────────────── */}
-      <div className="bg-muted/40 border-b border-border">
-        <div className="container py-8">
-          <div className="mx-auto max-w-3xl">
-            {/* STATIONNEMENT tab (like YUL) */}
-            <div className="mb-0">
-              <span className="inline-block rounded-t-lg bg-rdc-blue px-5 py-2 text-xs font-bold uppercase tracking-wider text-white">
-                Stationnement
-              </span>
-            </div>
+      {/* ── Error banner (YUL style) ─────────────────────────────────── */}
+      {error && (
+        <div className="flex items-center justify-between gap-3 bg-[#fde8e8] px-4 py-3 text-sm text-[#c0392b]">
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={() => setError('')}
+            className="shrink-0 opacity-60 hover:opacity-100 transition-opacity"
+            aria-label="Fermer"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
 
-            <form
-              onSubmit={handleSearch}
-              className="rounded-b-2xl rounded-tr-2xl border border-border bg-white p-6 shadow-md"
-            >
-              {/* Erreur validation */}
-              {formError && (
-                <div className="mb-4 rounded-lg border border-rdc-red/30 bg-rdc-red/5 px-4 py-2.5 text-sm text-rdc-red">
-                  {formError}
-                </div>
-              )}
+      {/* ── Hero image + STATIONNEMENT tab ──────────────────────────── */}
+      <div className="relative">
+        <img
+          src="/images/fih-hero-1.jpg"
+          alt="Aéroport International de N'djili"
+          className="h-52 sm:h-64 md:h-72 w-full object-cover object-center"
+        />
+        {/* Dark overlay at bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* STATIONNEMENT tab */}
+        <div className="absolute bottom-0 left-0">
+          <span className="inline-block bg-[#2d2d2d] px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-white">
+            Stationnement
+          </span>
+        </div>
+      </div>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {/* Start date */}
-                <div>
-                  <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    <Calendar size={12} /> Date d'entrée
-                  </label>
+      {/* ── Booking form ─────────────────────────────────────────────── */}
+      <div className="bg-white shadow-sm">
+        <div className="mx-auto max-w-2xl px-4 py-8">
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            {/* Row 1: Dates */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className={labelCls}>Date d'entrée</label>
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base">📅</span>
                   <input
                     type="date"
                     value={startDate}
-                    min={todayStr()}
                     onChange={e => setStartDate(e.target.value)}
-                    required
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm focus:border-rdc-blue focus:outline-none focus:ring-1 focus:ring-rdc-blue"
+                    className={`${inputCls} pl-9`}
                   />
                 </div>
-
-                {/* Start time */}
-                <div>
-                  <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    <Clock size={12} /> Heure d'entrée
-                  </label>
+              </div>
+              <div>
+                <label className={labelCls}>Heure d'entrée</label>
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base">🕐</span>
                   <select
                     value={startTime}
                     onChange={e => setStartTime(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm focus:border-rdc-blue focus:outline-none focus:ring-1 focus:ring-rdc-blue"
+                    className={`${inputCls} pl-9 appearance-none`}
                   >
+                    <option value="">-- Heure --</option>
                     {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
+              </div>
+            </div>
 
-                {/* End date */}
-                <div>
-                  <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    <Calendar size={12} /> Date de sortie
-                  </label>
+            {/* Row 2: Exit */}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label className={labelCls}>Date de sortie</label>
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base">📅</span>
                   <input
                     type="date"
                     value={endDate}
-                    min={startDate}
                     onChange={e => setEndDate(e.target.value)}
-                    required
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm focus:border-rdc-blue focus:outline-none focus:ring-1 focus:ring-rdc-blue"
+                    className={`${inputCls} pl-9`}
                   />
                 </div>
-
-                {/* End time */}
-                <div>
-                  <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    <Clock size={12} /> Heure de sortie
-                  </label>
+              </div>
+              <div>
+                <label className={labelCls}>Heure de sortie</label>
+                <div className="relative">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base">🕐</span>
                   <select
                     value={endTime}
                     onChange={e => setEndTime(e.target.value)}
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm focus:border-rdc-blue focus:outline-none focus:ring-1 focus:ring-rdc-blue"
+                    className={`${inputCls} pl-9 appearance-none`}
                   >
+                    <option value="">-- Heure --</option>
                     {TIME_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
-
-                {/* Promo code */}
-                <div>
-                  <label className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                    Code promotionnel <span className="normal-case font-normal">(Optionnel)</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={promoCode}
-                    onChange={e => setPromoCode(e.target.value.toUpperCase())}
-                    placeholder="Code promotionnel"
-                    className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm focus:border-rdc-blue focus:outline-none focus:ring-1 focus:ring-rdc-blue"
-                  />
-                </div>
               </div>
+            </div>
 
-              <button
-                type="submit"
-                className="mt-5 w-full rounded-lg bg-rdc-blue py-3 text-sm font-bold text-white transition-colors hover:bg-rdc-blue/85 active:scale-[0.99]"
-              >
-                Obtenir une soumission
-              </button>
-            </form>
-          </div>
+            {/* Code promo */}
+            <div>
+              <label className={labelCls}>Code promotionnel <span className="font-normal text-[#888]">(Optionnel)</span></label>
+              <input
+                type="text"
+                value={promo}
+                onChange={e => setPromo(e.target.value.toUpperCase())}
+                placeholder="Code promotionnel"
+                className={inputCls}
+              />
+            </div>
+
+            {/* Numéro CAA */}
+            <div>
+              <label className={labelCls}>Numéro CAA <span className="font-normal text-[#888]">(Optionnel)</span></label>
+              <input
+                type="text"
+                value={caa}
+                onChange={e => setCaa(e.target.value)}
+                placeholder="Numéro CAA"
+                className={inputCls}
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="flex w-full items-center justify-center gap-2 bg-[#003DA5] py-3.5 text-sm font-bold text-white hover:bg-[#002a7a] transition-colors"
+            >
+              Obtenir une soumission
+              <ArrowRight size={15} />
+            </button>
+          </form>
         </div>
       </div>
 
-      {/* ── Why book online ─────────────────────────────────────────── */}
-      <section className="container py-12">
-        <h2 className="mb-8 text-center font-display text-2xl font-bold text-rdc-anthracite">
-          Pourquoi réserver en ligne ?
-        </h2>
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
-          {WHY_ONLINE.map(({ icon: Icon, label, desc }) => (
-            <div key={label} className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-white p-5 text-center shadow-sm">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-rdc-blue/10">
-                <Icon size={20} className="text-rdc-blue" />
-              </div>
-              <p className="text-sm font-semibold text-rdc-anthracite leading-tight">{label}</p>
-              <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Parking lots overview ────────────────────────────────────── */}
-      {lots.length > 0 && (
-        <section className="bg-muted/30 border-t border-border">
-          <div className="container py-12">
-            <div className="mb-8 flex items-center justify-between">
-              <div>
-                <p className="eyebrow text-rdc-blue mb-2">Nos parkings officiels</p>
-                <h2 className="font-display text-2xl font-bold text-rdc-anthracite">
-                  Des stationnements pour tous les besoins
-                </h2>
-              </div>
-            </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {lots.map((lot) => (
-                <div key={lot.id} className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
-                  {/* Color band */}
-                  <div className="bg-rdc-blue px-5 py-5">
-                    <p className="font-display text-2xl font-bold text-white">{lot.code}</p>
-                    <p className="text-sm text-white/80 mt-0.5">{lot.name}</p>
-                  </div>
-                  <div className="p-5 space-y-4">
-                    {lot.description_fr && (
-                      <p className="text-sm text-muted-foreground">{lot.description_fr}</p>
-                    )}
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
-                      <span className="flex items-center gap-1"><Car size={12} /> Voitures</span>
-                      {lot.ev_charging && <span className="flex items-center gap-1 text-amber-600"><Zap size={12} /> Électrique</span>}
-                      {(lot.pmr_spots ?? 0) > 0 && <span className="flex items-center gap-1 text-rdc-blue"><Accessibility size={12} /> PMR</span>}
-                    </div>
-                    <div className="rounded-xl bg-muted/50 p-3 space-y-1 text-sm">
-                      {lot.daily_rate_usd != null && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">À partir de</span>
-                          <span className="font-bold text-rdc-blue">${lot.daily_rate_usd} USD/jour</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+      {/* ── Pourquoi réserver en ligne ? ─────────────────────────────── */}
+      <section className="bg-white py-12">
+        <div className="mx-auto max-w-2xl px-4 text-center">
+          <h2 className="mb-8 text-xl font-bold text-[#1a1a1a]">
+            Pourquoi réserver en ligne&nbsp;?
+          </h2>
+          <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+            {WHY_ITEMS.map(({ emoji, label }) => (
+              <div key={label} className="flex flex-col items-center gap-3">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#c0392b] text-2xl shadow-sm">
+                  {emoji}
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── Mobile Money ─────────────────────────────────────────────── */}
-      <section className="container py-12">
-        <p className="eyebrow text-rdc-blue mb-2">Moyens de paiement acceptés</p>
-        <h2 className="font-display text-2xl font-bold text-rdc-anthracite mb-6">
-          Paiement Mobile Money
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-3">
-          {MOBILE_MONEY.map((m) => (
-            <div key={m.name} className="flex items-center gap-4 rounded-2xl border border-border bg-white p-5 shadow-sm">
-              <span className={`flex h-10 w-10 shrink-0 rounded-full ${m.dot}`} />
-              <div>
-                <p className="font-semibold text-rdc-anthracite">{m.name}</p>
-                <p className="text-xs text-rdc-green">✓ {m.desc}</p>
+                <p className="text-xs font-semibold text-[#1a1a1a] leading-tight">{label}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* ── Info ──────────────────────────────────────────────────────── */}
-      <div className="container pb-12">
-        <div className="rounded-2xl border border-border bg-muted/40 p-6">
-          <p className="mb-3 font-semibold text-rdc-anthracite">Informations pratiques</p>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>
-              Un code QR vous sera remis à la confirmation. Présentez-le à la barrière d'entrée.
-            </li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>
-              Les parkings P1 et P2 sont surveillés 24h/24 par les agents de sécurité RVA.
-            </li>
-            <li className="flex items-start gap-2"><span className="mt-0.5 text-rdc-blue">→</span>
-              Places PMR réservées aux personnes à mobilité réduite — accès facilité aux terminaux.
-            </li>
-          </ul>
-          <Link to={'/stationnement-transport/offres' as never}
-            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-rdc-blue hover:underline">
-            Voir tous les tarifs <ArrowRight size={13} />
-          </Link>
+      {/* ── Dark bottom banner ───────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-[#1a1a1a]">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-4 py-10 sm:flex-row sm:gap-10">
+          {/* Text side */}
+          <div className="flex-1 text-center sm:text-left">
+            <div className="mb-4 flex items-center justify-center gap-3 sm:justify-start">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white font-black text-xl text-[#1a1a1a]">
+                P
+              </div>
+              <span className="text-xs font-bold uppercase tracking-widest text-white/60">FIH Parking</span>
+            </div>
+            <p className="text-xl font-bold leading-snug text-white sm:text-2xl">
+              Des stationnements pour <strong className="text-white">tous les besoins</strong> et{' '}
+              <strong className="text-white">tous les budgets</strong>
+            </p>
+          </div>
+
+          {/* Image side */}
+          <div className="w-full sm:w-80 shrink-0 overflow-hidden rounded-xl">
+            <img
+              src="/images/fih-hero-2.jpg"
+              alt="Parking FIH"
+              className="h-40 w-full object-cover"
+              onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+          </div>
         </div>
-      </div>
+      </section>
+
     </main>
   );
 }
