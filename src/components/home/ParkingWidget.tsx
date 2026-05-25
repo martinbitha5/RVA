@@ -50,20 +50,13 @@ export function ParkingWidget() {
     const end   = new Date(`${exitDate}T${exitTime}`);
 
     if (end <= start || (end.getTime() - start.getTime()) / 3_600_000 < 4) {
-      // Données invalides → redirige vers le formulaire complet avec raison
+      // Durée invalide → formulaire avec message d'erreur
       void navigate({ to: '/stationnement-transport/formulaire' as never, search: { reason: 'min4h' } as never });
       return;
     }
 
-    // Données valides → redirige directement vers la sélection de forfaits
-    void navigate({
-      to: '/stationnement-transport/stationnement-fih' as never,
-      search: {
-        start: start.toISOString(),
-        end:   end.toISOString(),
-        promo: promo.trim() || undefined,
-      } as never,
-    });
+    // Dates valides → toujours passer par le formulaire
+    void navigate({ to: '/stationnement-transport/formulaire' as never });
   }
 
   return (
