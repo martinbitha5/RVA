@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import {
-  Car, Zap, Accessibility, Shield, Bus, MapPin,
-  Calendar, Clock, ArrowLeft, ArrowRight, Tag,
+  Bus, Accessibility, Zap, Car, Shield,
+  Calendar, Clock, ArrowLeft, Tag,
+  CheckCircle, LayoutList, LayoutGrid, MapPin,
 } from 'lucide-react';
 import { useParkingAvailability } from '@/lib/queries';
 import type { ParkingLot } from '@/types/database';
@@ -53,10 +55,50 @@ function calcPrice(lot: ParkingLot, hours: number) {
   };
 }
 
-function secLabel(level: ParkingLot['security_level']): string {
-  if (level === 'premium')  return 'Sécurité premium';
-  if (level === 'cctv_24h') return 'CCTV 24h/24';
-  return 'Sécurisé';
+// ── Stepper ───────────────────────────────────────────────────────────────────
+
+const STEP_LABELS = ['Choisir les dates', 'Choisir le produit', 'Vos renseignements', 'Confirmation'];
+
+function Stepper({ current }: { current: number }) {
+  return (
+    <div className="border-b border-border bg-white">
+      <div className="container py-5">
+        <div className="flex mb-2">
+          {STEP_LABELS.map((label, idx) => (
+            <div key={idx} className="flex-1 text-center px-1">
+              <span className={`text-[10px] sm:text-xs font-medium leading-tight ${
+                idx <= current ? 'text-rdc-anthracite' : 'text-muted-foreground'
+              }`}>
+                {label}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="relative flex items-center">
+          <div className="absolute top-1/2 -translate-y-1/2 h-0.5 bg-border" style={{ left: '12.5%', right: '12.5%' }} />
+          <div
+            className="absolute top-1/2 -translate-y-1/2 h-0.5 bg-rdc-blue transition-all duration-500"
+            style={{ left: '12.5%', width: `${(current + 1) * 25}%` }}
+          />
+          {STEP_LABELS.map((_, idx) => {
+            const done   = idx < current;
+            const active = idx === current;
+            return (
+              <div key={idx} className="relative z-10 flex-1 flex justify-center">
+                <div className={`flex h-7 w-7 items-center justify-center rounded-full border-2 text-xs font-bold transition-all ${
+                  done   ? 'border-rdc-blue bg-rdc-blue text-white' :
+                  active ? 'border-rdc-blue bg-rdc-blue text-white shadow-[0_0_0_4px_rgba(0,61,165,0.15)]' :
+                           'border-border bg-white text-muted-foreground'
+                }`}>
+                  {done ? <CheckCircle size={13} /> : <span>{idx + 1}</span>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // ── Static fallback lots ──────────────────────────────────────────────────────
@@ -64,34 +106,34 @@ function secLabel(level: ParkingLot['security_level']): string {
 const STATIC_LOTS: ParkingLot[] = [
   {
     id: 'static-p1', code: 'P1',
-    name: 'Court séjour — Proximité terminale',
-    description_fr: 'Parking de proximité idéal pour les courts séjours. Accès direct au terminal international en moins de 2 minutes à pied.',
+    name: 'Parking Court Terme — Terminal International',
+    description_fr: 'Parking officiel RVA à 200m du terminal international. Idéal pour les dépose/récupération et les courtes durées. Accès immédiat au hall des arrivées.',
     description_en: null,
-    total_spots: 120, available_spots: null,
+    total_spots: 120, available_spots: 280,
     hourly_rate_usd: 2, daily_rate_usd: 15, weekly_rate_usd: 80, monthly_rate_usd: null,
-    distance_terminal: '50 m', shuttle_available: false,
-    ev_charging: false, covered: false, pmr_spots: 4,
+    distance_terminal: '200 m', shuttle_available: false,
+    ev_charging: false, covered: false, pmr_spots: 15,
     security_level: 'cctv_24h', latitude: null, longitude: null,
     active: true, created_at: '', updated_at: '',
   },
   {
     id: 'static-p2', code: 'P2',
-    name: 'Long séjour — Économique',
-    description_fr: 'Parking économique pour les séjours prolongés. Navette gratuite toutes les 15 minutes vers le terminal.',
+    name: 'Parking Long Terme — Boulevard Lumumba',
+    description_fr: 'Grand parking extérieur sécurisé sur le Boulevard Lumumba. Tarifs dégressifs pour les séjours longs. Service navette vers les terminaux toutes les 15 minutes.',
     description_en: null,
-    total_spots: 250, available_spots: null,
+    total_spots: 250, available_spots: 620,
     hourly_rate_usd: 1, daily_rate_usd: 10, weekly_rate_usd: 55, monthly_rate_usd: null,
-    distance_terminal: '400 m', shuttle_available: true,
-    ev_charging: false, covered: false, pmr_spots: 8,
+    distance_terminal: '600 m', shuttle_available: true,
+    ev_charging: false, covered: false, pmr_spots: 20,
     security_level: 'cctv_24h', latitude: null, longitude: null,
     active: true, created_at: '', updated_at: '',
   },
   {
     id: 'static-p3', code: 'P3',
-    name: 'Premium couvert',
-    description_fr: 'Parking couvert avec surveillance premium. Bornes de recharge électrique disponibles. Idéal pour protéger votre véhicule.',
+    name: 'Parking Premium Couvert — Terminal VIP',
+    description_fr: 'Parking couvert avec surveillance premium 24h/24. Idéal pour protéger votre véhicule. Bornes de recharge pour véhicules électriques disponibles.',
     description_en: null,
-    total_spots: 60, available_spots: null,
+    total_spots: 60, available_spots: 48,
     hourly_rate_usd: 3, daily_rate_usd: 22, weekly_rate_usd: 110, monthly_rate_usd: null,
     distance_terminal: '100 m', shuttle_available: false,
     ev_charging: true, covered: true, pmr_spots: 6,
@@ -100,6 +142,12 @@ const STATIC_LOTS: ParkingLot[] = [
   },
 ];
 
+const LOT_IMAGES: Record<string, string> = {
+  P1: '/images/fih-hero-1.jpg',
+  P2: '/images/fih-tarmac.jpg',
+  P3: '/images/fih-checkin.jpg',
+};
+
 // ── Component ─────────────────────────────────────────────────────────────────
 
 function StationnementFih() {
@@ -107,17 +155,17 @@ function StationnementFih() {
   const navigate = useNavigate();
   const { data: dbLots = [] } = useParkingAvailability();
   const lots = dbLots.length > 0 ? dbLots : STATIC_LOTS;
+  const [view, setView] = useState<'list' | 'grid'>('list');
 
   const hours = start && end ? calcHours(start, end) : 0;
 
-  // Guard: invalid params
   if (!start || !end || hours < 4) {
     return (
       <div className="container py-24 text-center">
         <p className="text-muted-foreground mb-6">Paramètres de réservation invalides ou expirés.</p>
         <Link
           to={'/stationnement-transport/formulaire' as never}
-          className="inline-flex items-center gap-2 rounded-lg bg-rdc-blue px-5 py-2.5 text-sm font-bold text-white hover:bg-rdc-blue/85 transition-colors"
+          className="inline-flex items-center gap-2 bg-rdc-blue px-5 py-2.5 text-sm font-bold text-white hover:bg-rdc-blue/85 transition-colors"
         >
           <ArrowLeft size={14} /> Recommencer la recherche
         </Link>
@@ -128,17 +176,15 @@ function StationnementFih() {
   function handleSelectLot(lot: ParkingLot) {
     void navigate({
       to: '/stationnement-transport/reservation' as never,
-      search: {
-        start,
-        end,
-        promo,
-        lotId: lot.id,
-      } as never,
+      search: { start, end, promo, lotId: lot.id } as never,
     });
   }
 
   return (
     <main id="main-content" className="min-h-screen bg-[#f5f6f8]">
+
+      {/* ── Stepper — étape 2 active ──────────────────────────────── */}
+      <Stepper current={1} />
 
       {/* ── Barre résumé dates ───────────────────────────────────────── */}
       <div className="bg-[#1a1a1a] border-b border-white/10">
@@ -175,122 +221,216 @@ function StationnementFih() {
         </div>
       </div>
 
-      {/* ── Titre ────────────────────────────────────────────────────── */}
-      <div className="container pt-8 pb-4">
-        <p className="text-xs font-bold uppercase tracking-wider text-[#003DA5] mb-1">Stationnement officiel RVA</p>
-        <h1 className="font-display text-2xl font-bold text-[#1a1a1a]">
-          Choisissez votre forfait
-        </h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Durée : <strong>{durationLabel(hours)}</strong>
-          {promo && <> · <span className="text-[#009A44] font-semibold">Code promo <span className="font-mono">{promo}</span> appliqué</span></>}
-          {' '}— Tarifs taxes inclus, paiement 100 % sécurisé.
-        </p>
-      </div>
+      {/* ── Contenu principal ────────────────────────────────────────── */}
+      <div className="container py-8">
 
-      {/* ── Cards de lots ────────────────────────────────────────────── */}
-      <div className="container pb-12 space-y-4">
-        {lots.map((lot) => {
-          const price = calcPrice(lot, hours);
-          return (
-            <div key={lot.id} className="overflow-hidden rounded-2xl border border-border bg-white shadow-sm">
+        {/* Titre + barre tri/vue */}
+        <div className="flex flex-wrap items-start sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-2xl font-black uppercase tracking-wide text-rdc-anthracite">
+              VOS OPTIONS DE STATIONNEMENT
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Durée : <strong>{durationLabel(hours)}</strong>
+              {promo && (
+                <> · <span className="text-[#009A44] font-semibold">Code <span className="font-mono">{promo}</span> appliqué</span></>
+              )}
+            </p>
+          </div>
 
-              {/* Header bleu */}
-              <div className="bg-[#003DA5] px-6 py-4 flex items-center justify-between">
-                <div>
-                  <p className="font-display text-3xl font-bold text-white leading-none">{lot.code}</p>
-                  <p className="text-sm text-white/80 mt-0.5">{lot.name}</p>
-                </div>
-                {lot.available_spots != null && (
-                  <span className={`rounded-full px-3 py-1 text-xs font-bold ${
-                    lot.available_spots > 20
-                      ? 'bg-white/20 text-white'
-                      : lot.available_spots > 5
-                      ? 'bg-[#FFCE00] text-[#1a1a1a]'
-                      : 'bg-[#CE1126] text-white'
-                  }`}>
-                    {lot.available_spots} places dispo.
-                  </span>
-                )}
-              </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-muted-foreground text-xs">Trier par :</span>
+              <select className="border border-border bg-white px-3 py-1.5 text-sm text-rdc-anthracite focus:outline-none focus:border-rdc-blue">
+                <option>Prix le plus bas</option>
+                <option>Distance au terminal</option>
+              </select>
+            </div>
+            <div className="flex border border-border overflow-hidden">
+              <button
+                onClick={() => setView('list')}
+                className={`px-2.5 py-1.5 transition-colors ${view === 'list' ? 'bg-rdc-blue text-white' : 'bg-white text-muted-foreground hover:bg-muted/40'}`}
+                aria-label="Vue liste"
+              >
+                <LayoutList size={16} />
+              </button>
+              <button
+                onClick={() => setView('grid')}
+                className={`px-2.5 py-1.5 transition-colors ${view === 'grid' ? 'bg-rdc-blue text-white' : 'bg-white text-muted-foreground hover:bg-muted/40'}`}
+                aria-label="Vue grille"
+              >
+                <LayoutGrid size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
 
-              <div className="p-6">
-                <div className="lg:flex lg:gap-8">
+        {/* ── Cards ────────────────────────────────────────────────────── */}
+        <div className={view === 'grid' ? 'grid sm:grid-cols-2 lg:grid-cols-3 gap-4' : 'space-y-4'}>
+          {lots.map((lot) => {
+            const price  = calcPrice(lot, hours);
+            const imgSrc = LOT_IMAGES[lot.code] ?? '/images/fih-hero-1.jpg';
+
+            /* ── Vue liste ── */
+            if (view === 'list') {
+              return (
+                <div key={lot.id} className="flex flex-col sm:flex-row border border-border bg-white overflow-hidden shadow-sm">
+
+                  {/* Photo */}
+                  <div className="sm:w-44 md:w-52 shrink-0 relative overflow-hidden">
+                    <img
+                      src={imgSrc}
+                      alt={lot.name}
+                      className="h-44 sm:h-full w-full object-cover"
+                      onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    />
+                    {lot.available_spots != null && (
+                      <span className="absolute top-2 left-2 bg-white/90 rounded-full px-2 py-0.5 text-xs font-bold text-rdc-blue shadow-sm">
+                        {lot.available_spots} places dispo.
+                      </span>
+                    )}
+                  </div>
 
                   {/* Info */}
-                  <div className="flex-1">
-                    {lot.description_fr && (
-                      <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                        {lot.description_fr}
-                      </p>
-                    )}
+                  <div className="flex-1 p-5 flex flex-col justify-between">
+                    <div>
+                      <h2 className="font-bold text-base text-rdc-anthracite mb-3">
+                        {lot.code} — {lot.name}
+                      </h2>
 
-                    {/* Badges caractéristiques */}
-                    <div className="flex flex-wrap gap-2">
-                      {lot.covered && (
-                        <span className="flex items-center gap-1 rounded-full border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium">
-                          <Car size={11} className="text-[#003DA5]" /> Couvert
-                        </span>
-                      )}
-                      {lot.shuttle_available && (
-                        <span className="flex items-center gap-1 rounded-full border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium">
-                          <Bus size={11} className="text-[#003DA5]" /> Navette gratuite
-                        </span>
-                      )}
-                      {lot.ev_charging && (
-                        <span className="flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700">
-                          <Zap size={11} /> Recharge électrique
+                      {/* Feature checkmarks */}
+                      <div className="space-y-2 mb-4">
+                        {lot.description_fr && (
+                          <p className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <CheckCircle size={15} className="text-rdc-blue shrink-0 mt-0.5" />
+                            {lot.description_fr}
+                          </p>
+                        )}
+                        {lot.shuttle_available && (
+                          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <CheckCircle size={15} className="text-rdc-blue shrink-0" />
+                            Navette gratuite toutes les 15 minutes
+                          </p>
+                        )}
+                        {lot.ev_charging && (
+                          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <CheckCircle size={15} className="text-rdc-blue shrink-0" />
+                            Bornes de recharge électrique disponibles
+                          </p>
+                        )}
+                        {lot.covered && (
+                          <p className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <CheckCircle size={15} className="text-rdc-blue shrink-0" />
+                            Parking couvert — protection intempéries
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Infos transfert */}
+                    <div className="flex flex-wrap gap-4 text-xs text-muted-foreground border-t border-border pt-3">
+                      {lot.distance_terminal && (
+                        <span className="flex items-center gap-1.5">
+                          <Bus size={12} className="text-rdc-anthracite" />
+                          {lot.shuttle_available
+                            ? `Navette · ${lot.distance_terminal} du terminal`
+                            : `${lot.distance_terminal} du terminal`}
                         </span>
                       )}
                       {(lot.pmr_spots ?? 0) > 0 && (
-                        <span className="flex items-center gap-1 rounded-full border border-[#003DA5]/20 bg-[#003DA5]/5 px-2.5 py-1 text-xs font-medium text-[#003DA5]">
-                          <Accessibility size={11} /> {lot.pmr_spots} places PMR
+                        <span className="flex items-center gap-1.5">
+                          <Accessibility size={12} />
+                          {lot.pmr_spots} places PMR
                         </span>
                       )}
                       {lot.security_level && (
-                        <span className="flex items-center gap-1 rounded-full border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium">
-                          <Shield size={11} className="text-[#009A44]" /> {secLabel(lot.security_level)}
-                        </span>
-                      )}
-                      {lot.distance_terminal && (
-                        <span className="flex items-center gap-1 rounded-full border border-border bg-muted/50 px-2.5 py-1 text-xs font-medium">
-                          <MapPin size={11} className="text-[#003DA5]" /> {lot.distance_terminal} du terminal
+                        <span className="flex items-center gap-1.5">
+                          <Shield size={12} className="text-[#009A44]" />
+                          {lot.security_level === 'premium' ? 'Sécurité premium' : 'CCTV 24h/24'}
                         </span>
                       )}
                     </div>
                   </div>
 
-                  {/* Prix + CTA */}
-                  <div className="mt-5 lg:mt-0 lg:w-52 lg:shrink-0 flex lg:flex-col items-center lg:items-end gap-4">
-                    <div className="text-right">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-0.5">Prix en ligne</p>
-                      <p className="font-display text-3xl font-bold text-[#003DA5] leading-none">
-                        ${price.online}
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        <span className="line-through">${price.guichet} guichet</span>
-                        <span className="ml-1.5 text-[#009A44] font-semibold">−15 %</span>
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-0.5">
-                        pour {price.days} jour{price.days > 1 ? 's' : ''} · taxes incluses
-                      </p>
-                    </div>
-
+                  {/* Panneau prix */}
+                  <div className="sm:w-52 shrink-0 bg-[#2d3748] text-white flex flex-col items-center justify-center gap-2 p-6">
+                    <p className="text-sm line-through text-white/40">${price.guichet}</p>
+                    <p className="font-display text-4xl font-bold leading-none">${price.online}</p>
+                    <p className="text-sm font-semibold text-[#60a5fa]">15 % Rabais en ligne</p>
+                    <p className="text-xs text-white/40 text-center">
+                      taxes incluses · {price.days} jour{price.days > 1 ? 's' : ''}
+                    </p>
                     <button
                       type="button"
                       onClick={() => handleSelectLot(lot)}
-                      className="flex items-center justify-center gap-2 lg:w-full rounded-xl bg-[#003DA5] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#002a7a] transition-colors"
+                      className="mt-3 w-full bg-rdc-blue hover:bg-[#002a7a] text-white font-bold py-2.5 px-4 text-sm transition-colors"
                     >
-                      Réservez maintenant <ArrowRight size={14} />
+                      Réservez maintenant
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+              );
+            }
 
+            /* ── Vue grille ── */
+            return (
+              <div key={lot.id} className="flex flex-col border border-border bg-white overflow-hidden shadow-sm">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={imgSrc}
+                    alt={lot.name}
+                    className="h-36 w-full object-cover"
+                    onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                  {lot.available_spots != null && (
+                    <span className="absolute top-2 left-2 bg-white/90 rounded-full px-2 py-0.5 text-xs font-bold text-rdc-blue shadow-sm">
+                      {lot.available_spots} places
+                    </span>
+                  )}
+                </div>
+                <div className="p-4 flex-1">
+                  <h2 className="font-bold text-sm text-rdc-anthracite mb-2">{lot.code} — {lot.name}</h2>
+                  <div className="space-y-1.5 mb-3">
+                    {lot.description_fr && (
+                      <p className="flex items-start gap-1.5 text-xs text-muted-foreground line-clamp-2">
+                        <CheckCircle size={12} className="text-rdc-blue shrink-0 mt-0.5" />
+                        {lot.description_fr}
+                      </p>
+                    )}
+                    {lot.shuttle_available && (
+                      <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                        <CheckCircle size={12} className="text-rdc-blue shrink-0" />
+                        Navette gratuite
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
+                    {lot.distance_terminal && (
+                      <span className="flex items-center gap-1"><MapPin size={10} />{lot.distance_terminal}</span>
+                    )}
+                    {lot.ev_charging && <span className="flex items-center gap-1"><Zap size={10} />EV</span>}
+                    {lot.covered && <span className="flex items-center gap-1"><Car size={10} />Couvert</span>}
+                  </div>
+                </div>
+                <div className="bg-[#2d3748] text-white px-4 py-4 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs line-through text-white/40">${price.guichet}</p>
+                    <p className="font-display text-2xl font-bold leading-none">${price.online}</p>
+                    <p className="text-[10px] text-[#60a5fa] font-semibold">−15 %</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleSelectLot(lot)}
+                    className="bg-rdc-blue hover:bg-[#002a7a] text-white font-bold py-2 px-3 text-xs transition-colors"
+                  >
+                    Réservez
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </main>
   );
 }
