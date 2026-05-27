@@ -50,7 +50,7 @@ function nextLevel(l: Level): Level | null {
   return null;
 }
 
-export default function FidelitePage() {
+function FidelitePage() {
   const { user } = useUser();
   const [points, setPoints] = useState(0);
   const [resaCount, setResaCount] = useState(0);

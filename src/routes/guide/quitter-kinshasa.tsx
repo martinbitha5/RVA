@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
 import { cn } from '@/lib/utils';
-import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/guide/quitter-kinshasa')({
   component: QuitterKinshasaPage,
@@ -170,18 +169,17 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 function QuitterKinshasaPage() {
-  const { t } = useTranslation();
   return (
     <>
       {/* ── HERO ───────────────────────────────────────────────────── */}
       <PageHero
-        eyebrow={t('nav.guide')}
-        title={t('guide.leavingKinshasa')}
-        subtitle={t('guide.leavingSubtitle')}
+        eyebrow="Guide de l'Aéroport"
+        title="Quitter Kinshasa"
+        subtitle="Enregistrement, sécurité, immigration DGM — procédures de départ pas à pas depuis FIH."
         breadcrumbs={[
-          { label: t('home.hero.cta'), href: '/' },
-          { label: t('nav.guide'), href: '/guide' },
-          { label: t('guide.leavingKinshasa') },
+          { label: 'Accueil', href: '/' },
+          { label: "Guide de l'Aéroport", href: '/guide' },
+          { label: 'Quitter Kinshasa' },
         ]}
         image="/images/fih-checkin.jpg"
         gradient="night"

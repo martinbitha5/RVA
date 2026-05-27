@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import { PageHero } from '@/components/ui/page-hero';
 import { cn } from '@/lib/utils';
-import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/guide/securite-bagages')({
   component: SecuriteBagagesPage,
@@ -126,7 +125,6 @@ function BaggageIcon({ label, value, sub }: { label: string; value: string; sub?
 }
 
 function SecuriteBagagesPage() {
-  const { t } = useTranslation();
   const [activeClass, setActiveClass] = useState<BaggageClass>('economy');
   const data = BAGGAGE_DATA[activeClass];
 
@@ -134,13 +132,13 @@ function SecuriteBagagesPage() {
     <>
       {/* ── HERO — baggage claim photo ──────────────────────────────── */}
       <PageHero
-        eyebrow={t('nav.guide')}
-        title={t('guide.luggageSecurity')}
-        subtitle={t('guide.securitySubtitle')}
+        eyebrow="Guide de l'Aéroport"
+        title="Sécurité & Bagages"
+        subtitle="Règles bagages en vigueur à FIH : franchises par classe, dimensions cabine, objets interdits et règle des 100 ml."
         breadcrumbs={[
-          { label: t('home.hero.cta'), href: '/' },
-          { label: t('nav.guide'), href: '/guide' },
-          { label: t('guide.luggageSecurity') },
+          { label: 'Accueil', href: '/' },
+          { label: "Guide de l'Aéroport", href: '/guide' },
+          { label: 'Sécurité & Bagages' },
         ]}
         image="/images/fih-bagages.jpg"
         gradient="night"

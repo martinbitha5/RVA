@@ -221,8 +221,8 @@ export function Hero() {
       />
 
       {/* ── Main content ─────────────────────────────────────────── */}
-      <div className="relative z-10 flex flex-1 flex-col justify-end lg:justify-center">
-        <div className="container pb-20 md:pb-24 lg:py-32">
+      <div className="relative z-10 flex flex-1 flex-col justify-center">
+        <div className="container py-10 md:py-16 lg:py-20">
           <div className="flex justify-center lg:justify-end">
 
             {/* ── Flight search panel ── */}

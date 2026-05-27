@@ -1,10 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import {
   Building2, Scale, Rocket, History, Briefcase,
-  Handshake, Plane, Shield, ArrowRight, Users,
+  Handshake, Plane, Shield, ArrowRight,
 } from 'lucide-react';
-import { PageHero } from '@/components/ui/page-hero';
-import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/corporate/')({
   component: CorporateHub,
@@ -16,199 +14,95 @@ export const Route = createFileRoute('/corporate/')({
   }),
 });
 
-const MAIN_SECTIONS_DATA = [
-  {
-    icon: Building2,
-    href: '/corporate/a-propos',
-    labelKey: 'corporate.about',
-    descKey: 'corporate.aboutDesc',
-    accent: '#003DA5',
-  },
-  {
-    icon: Scale,
-    href: '/corporate/gouvernance',
-    labelKey: 'corporate.governance',
-    descKey: 'corporate.governanceDesc',
-    accent: '#1A1A1A',
-  },
-  {
-    icon: Rocket,
-    href: '/corporate/projets-avenir',
-    labelKey: 'corporate.futureProjects',
-    descKey: 'corporate.futureProjectsDesc',
-    accent: '#FFCE00',
-  },
-  {
-    icon: History,
-    href: '/corporate/historique',
-    labelKey: 'corporate.history',
-    descKey: 'corporate.historyDesc',
-    accent: '#CE1126',
-  },
-] as const;
-
-const OTHER_SECTIONS_DATA = [
-  { icon: Briefcase, href: '/corporate/carriere', labelKey: 'corporate.careers', descKey: 'corporate.careersDesc' },
-  { icon: Handshake, href: '/corporate/partenariats-commerciaux', labelKey: 'corporate.partnerships', descKey: 'corporate.partnershipsDesc' },
-  { icon: Plane, href: '/corporate/services-aeriens', labelKey: 'corporate.airServices', descKey: 'corporate.airServicesDesc' },
-  { icon: Shield, href: '/corporate/surete-securite', labelKey: 'corporate.safetyAndSecurity', descKey: 'corporate.safetyDesc' },
+const MAIN_CARDS = [
+  { icon: Building2, href: '/corporate/a-propos',            label: 'À propos de la RVA',    desc: "Mission, valeurs et présentation de la Régie des Voies Aériennes et de l'aéroport FIH.", accent: '#003DA5' },
+  { icon: History,   href: '/corporate/historique',           label: 'Histoire',               desc: "De l'inauguration en 1953 sous la Sabena jusqu'à la modernisation actuelle.", accent: '#CE1126' },
+  { icon: Scale,     href: '/corporate/gouvernance',          label: 'Gouvernance',            desc: "Conseil d'administration, comité de direction et tutelle ministérielle.", accent: '#1a1a1a' },
+  { icon: Rocket,    href: '/corporate/projets-avenir',       label: "Projets d'avenir",      desc: "Programme d'investissement 2024–2028 : nouveau terminal, piste, numérique.", accent: '#FFCE00' },
+  { icon: Briefcase, href: '/corporate/carriere',             label: 'Carrières',              desc: "1 200 employés directs — rejoignez l'équipe de l'aéroport de Kinshasa.", accent: '#003DA5' },
+  { icon: Handshake, href: '/corporate/partenariats-commerciaux', label: 'Partenariats',     desc: "Concessions, immobilier aéroportuaire, espaces publicitaires, appels d'offres.", accent: '#009A44' },
+  { icon: Plane,     href: '/corporate/services-aeriens',    label: 'Services aériens',      desc: 'Aviation commerciale, fret et aviation générale opérant à FIH.', accent: '#003DA5' },
+  { icon: Shield,    href: '/corporate/surete-securite',     label: 'Sûreté & Sécurité',     desc: 'Certifications OACI, AVSEC, SSLIA catégorie 8, sécurité 24h/24.', accent: '#CE1126' },
 ] as const;
 
 const STATS = [
-  { value: '1953', label: 'Année de fondation', sub: 'Aéroport de N\'djili' },
-  { value: '1M+', label: 'Passagers / an (capacité)', sub: 'Nouveau terminal 2015' },
-  { value: '17+', label: 'Compagnies aériennes', sub: 'Partenaires actifs' },
-  { value: '4 700 m', label: 'Piste principale', sub: 'Piste 06/24 — asphalt' },
+  { value: '1953',    label: "Année d'inauguration",         sub: "Aéroport de N'djili" },
+  { value: '47',      label: 'Aéroports gérés par la RVA',  sub: "Sur l'ensemble de la RDC" },
+  { value: '17+',     label: 'Compagnies aériennes',         sub: 'Partenaires actifs à FIH' },
+  { value: '4 700 m', label: 'Piste principale',             sub: 'Piste 06/24 — code 4E' },
 ] as const;
 
 function CorporateHub() {
-  const { t } = useTranslation();
-
   return (
-    <>
-      <PageHero
-        eyebrow={t('corporate.hubTitle')}
-        title={t('corporate.hubTitle')}
-        subtitle={t('corporate.hubSubtitle')}
-        breadcrumbs={[{ label: t('home.hero.cta'), href: '/' }, { label: t('nav.corporate') }]}
-        cta={
-          <div className="flex flex-wrap gap-3">
-            <Link to={'/corporate/a-propos' as never} className="btn-primary">
-              <Building2 size={15} /> {t('corporate.about')}
-            </Link>
-            <Link to={'/corporate/projets-avenir' as never} className="btn-outline-white">
-              <Rocket size={15} /> {t('corporate.futureProjects')}
-            </Link>
-          </div>
-        }
-      />
+    <main id="main-content">
+      {/* Hero */}
+      <div className="relative select-none">
+        <img src="/images/fih-hero-1.jpg" alt="Aéroport International de N'djili, Kinshasa" className="h-64 sm:h-80 w-full object-cover object-center" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 sm:px-10">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/50 mb-1">Régie des Voies Aériennes · RDC</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">Informations institutionnelles</h1>
+        </div>
+        <div className="absolute bottom-0 left-0">
+          <span className="inline-block bg-[#003DA5] px-5 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white">Corporate</span>
+        </div>
+      </div>
 
       {/* Stats strip */}
-      <section className="bg-border py-0">
-        <div className="grid grid-cols-2 gap-px md:grid-cols-4">
-          {STATS.map((s) => (
-            <div key={s.label} className="bg-white px-8 py-10 text-center">
-              <p className="font-display text-4xl font-bold text-rdc-blue leading-none">{s.value}</p>
-              <p className="mt-1.5 text-xs font-bold uppercase tracking-wider text-rdc-anthracite">{s.label}</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">{s.sub}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Main sections — dark editorial grid */}
-      <section className="section-night py-20 lg:py-28">
-        <div className="container">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="accent-line" />
-            <p className="eyebrow text-rdc-yellow">Informations institutionnelles</p>
+      <div className="grid grid-cols-2 gap-px bg-[#e8e8e8] md:grid-cols-4">
+        {STATS.map(s => (
+          <div key={s.label} className="bg-white px-8 py-8 text-center">
+            <p className="text-4xl font-bold text-[#003DA5] leading-none">{s.value}</p>
+            <p className="mt-1.5 text-xs font-bold uppercase tracking-wider text-[#1a1a1a]">{s.label}</p>
+            <p className="mt-0.5 text-xs text-gray-500">{s.sub}</p>
           </div>
-          <h2 className="display-sub text-white mb-12">
-            Découvrir la RVA et FIH
-          </h2>
+        ))}
+      </div>
 
-          <div className="grid gap-0.5 bg-white/8 sm:grid-cols-2">
-            {MAIN_SECTIONS_DATA.map((s) => (
+      {/* Cards grille */}
+      <div className="mx-auto max-w-5xl px-5 py-12 space-y-14">
+        <section>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#003DA5] mb-2">Découvrir la RVA et FIH</p>
+          <h2 className="text-2xl font-bold text-[#1a1a1a] mb-8">Toutes nos rubriques</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {MAIN_CARDS.map(c => (
               <Link
-                key={s.href}
-                to={s.href as never}
-                className="group relative bg-rdc-anthracite p-10 flex flex-col gap-6 overflow-hidden hover:bg-white/5 transition-colors"
+                key={c.href}
+                to={c.href as never}
+                className="group flex flex-col gap-4 border border-[#e8e8e8] bg-white p-5 hover:border-[#003DA5]/40 hover:shadow-md transition-all"
               >
-                <div
-                  className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full transition-all duration-500"
-                  style={{ backgroundColor: s.accent }}
-                />
-
-                <div className="flex items-start justify-between">
-                  <div
-                    className="flex h-14 w-14 items-center justify-center"
-                    style={{ background: `${s.accent}15`, border: `1px solid ${s.accent}30` }}
-                  >
-                    <s.icon size={26} style={{ color: s.accent }} strokeWidth={1.5} />
-                  </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="bg-rdc-yellow w-8 h-8 flex items-center justify-center">
-                      <ArrowRight size={14} className="text-rdc-anthracite" />
-                    </div>
-                  </div>
+                <div className="flex h-11 w-11 items-center justify-center" style={{ background: `${c.accent}18`, border: `1px solid ${c.accent}30` }}>
+                  <c.icon size={18} style={{ color: c.accent }} strokeWidth={1.5} />
                 </div>
-
-                <div>
-                  <h3 className="font-display font-bold text-white text-2xl leading-snug group-hover:text-rdc-yellow transition-colors">
-                    {t(s.labelKey)}
-                  </h3>
-                  <p className="mt-3 text-sm text-white/45 leading-relaxed">{t(s.descKey)}</p>
+                <div className="flex-1">
+                  <p className="font-bold text-[#1a1a1a] group-hover:text-[#003DA5] transition-colors text-sm leading-snug mb-2">{c.label}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{c.desc}</p>
+                </div>
+                <div className="flex items-center gap-1 text-xs font-bold text-[#003DA5]/60 group-hover:text-[#003DA5] transition-colors">
+                  Découvrir <ArrowRight size={11} className="group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </Link>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Other sections — white grid */}
-      <section className="bg-white py-20">
-        <div className="container">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="accent-line" />
-            <p className="eyebrow text-rdc-blue">Autres domaines</p>
-          </div>
-          <h2 className="display-sub text-rdc-anthracite mb-10">
-            Carrières, partenariats & services
-          </h2>
-
-          <div className="grid gap-0.5 bg-border sm:grid-cols-2 lg:grid-cols-4">
-            {OTHER_SECTIONS_DATA.map((s) => (
-              <Link
-                key={s.href}
-                to={s.href as never}
-                className="group relative bg-white p-7 flex flex-col gap-4 overflow-hidden hover:bg-rdc-blue/2 transition-colors"
-              >
-                <div className="absolute bottom-0 left-0 h-0.5 w-0 group-hover:w-full bg-rdc-blue transition-all duration-500" />
-                <div className="flex h-12 w-12 items-center justify-center bg-rdc-blue/8 border border-rdc-blue/15">
-                  <s.icon size={20} className="text-rdc-blue" strokeWidth={1.5} />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-rdc-anthracite text-lg leading-snug group-hover:text-rdc-blue transition-colors">
-                    {t(s.labelKey)}
-                  </h3>
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{t(s.descKey)}</p>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-rdc-blue/60 group-hover:text-rdc-blue transition-colors mt-auto">
-                  {t('common.viewAll')} <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Career CTA */}
-      <section className="section-blue py-16 lg:py-20">
-        <div className="container">
-          <div className="grid gap-10 lg:grid-cols-[1fr_auto] items-center">
+        {/* CTA carrières */}
+        <section className="bg-[#1a1a1a] p-8">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="accent-line" />
-                <p className="eyebrow text-rdc-yellow">Rejoindre l'équipe FIH</p>
-              </div>
-              <h2 className="font-display font-bold text-white text-3xl lg:text-4xl leading-tight">
-                Construisez votre carrière à l'aéroport
-              </h2>
-              <p className="mt-4 text-white/60 text-base max-w-xl leading-relaxed">
-                {t('corporate.careersSubtitle')}
-              </p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFCE00] mb-2">Rejoindre la RVA</p>
+              <h2 className="text-xl font-bold text-white mb-1">Construisez votre carrière à l'aéroport de Kinshasa</h2>
+              <p className="text-sm text-white/55 max-w-lg">Plus de 1 200 employés directs, 15 familles de métiers, un secteur aérien en croissance. La RVA recrute et forme des talents congolais.</p>
             </div>
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
-              <Link to={'/corporate/carriere/offres-emploi' as never} className="btn-primary whitespace-nowrap">
-                <Users size={15} /> {t('corporate.jobOffers')}
-              </Link>
-              <Link to={'/corporate/carriere' as never} className="btn-outline-white whitespace-nowrap">
-                {t('corporate.community')} <ArrowRight size={14} />
-              </Link>
-            </div>
+            <Link
+              to="/corporate/carriere"
+              className="shrink-0 flex items-center gap-2 bg-[#FFCE00] px-6 py-3 text-sm font-bold text-[#1a1a1a] hover:bg-white transition-colors"
+            >
+              <Briefcase size={14} /> Voir les offres
+            </Link>
           </div>
-        </div>
-      </section>
-    </>
+        </section>
+      </div>
+    </main>
   );
 }

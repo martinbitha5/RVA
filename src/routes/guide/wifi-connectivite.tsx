@@ -5,7 +5,6 @@ import {
   MonitorSmartphone, PlaneTakeoff, PlaneLanding,
   Luggage, DoorOpen, Star, Building2,
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/guide/wifi-connectivite')({
   component: WifiConnectivitePage,
@@ -154,7 +153,6 @@ const TIPS = [
 
 /* ─── Page ───────────────────────────────────────────────────────────────── */
 function WifiConnectivitePage() {
-  const { t } = useTranslation();
   return (
     <main id="main-content">
 
@@ -175,18 +173,18 @@ function WifiConnectivitePage() {
 
         <div className="container relative z-10 py-14 md:py-20">
           <nav className="mb-4 flex items-center gap-1.5 text-[11px] font-medium text-white/40">
-            <Link to="/" className="hover:text-white transition-colors">{t('home.hero.cta')}</Link>
+            <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
             <ChevronRight size={10} />
-            <Link to={'/guide' as never} className="hover:text-white transition-colors">{t('nav.guide')}</Link>
+            <Link to={'/guide' as never} className="hover:text-white transition-colors">Guide de l'Aéroport</Link>
             <ChevronRight size={10} />
-            <span className="text-white/70">{t('guide.wifiConnectivity')}</span>
+            <span className="text-white/70">Wi-Fi & Connectivité</span>
           </nav>
           <div className="mb-3 flex items-center gap-2.5">
             <span
               className="inline-block h-4 w-5 bg-rdc-blue"
               style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
             />
-            <span className="text-sm font-semibold tracking-wider text-white/70">{t('nav.guide')}</span>
+            <span className="text-sm font-semibold tracking-wider text-white/70">Guide de l'Aéroport</span>
           </div>
           <h1 className="font-display text-5xl font-bold text-white md:text-6xl">
             Wi-Fi &amp;<br />Connectivité

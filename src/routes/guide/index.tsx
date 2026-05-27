@@ -5,7 +5,6 @@ import {
   ScrollText, Users, ArrowRight, ChevronRight,
   CheckCircle, Syringe,
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/guide/')({
   component: GuideHub,
@@ -84,7 +83,6 @@ const SERVICES = [
 
 /* ─── Page ───────────────────────────────────────────────────────────────── */
 function GuideHub() {
-  const { t } = useTranslation();
   return (
     <main id="main-content">
 
@@ -105,16 +103,16 @@ function GuideHub() {
 
         <div className="container relative z-10 py-16 md:py-24">
           <nav className="mb-5 flex items-center gap-1.5 text-[11px] font-medium text-white/40">
-            <Link to="/" className="hover:text-white transition-colors">{t('home.hero.cta')}</Link>
+            <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
             <ChevronRight size={10} />
-            <span className="text-white/70">{t('guide.hubTitle')}</span>
+            <span className="text-white/70">Guide de l'Aéroport</span>
           </nav>
           <div className="mb-3 flex items-center gap-2.5">
             <span
               className="inline-block h-4 w-5 bg-rdc-yellow"
               style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
             />
-            <span className="text-sm font-semibold tracking-wider text-white/70">{t('nav.guide')}</span>
+            <span className="text-sm font-semibold tracking-wider text-white/70">Guide de l'Aéroport</span>
           </div>
           <h1 className="font-display text-5xl font-bold text-white md:text-6xl lg:text-7xl">
             Votre passage<br />à FIH, simplifié
@@ -155,7 +153,7 @@ function GuideHub() {
               to={'/guide/sante' as never}
               className="flex-shrink-0 text-xs font-bold text-red-700 underline hover:no-underline"
             >
-              {t('common.learnMore')}
+              En savoir plus
             </Link>
           </div>
         </div>

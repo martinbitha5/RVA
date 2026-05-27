@@ -1,180 +1,225 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useState } from 'react';
-import { MapPin, Clock, ChevronRight } from 'lucide-react';
-import { CONCESSIONS, ZONE_LABELS } from '@/lib/concessions-data';
-import type { Concession, ZoneKey } from '@/lib/concessions-data';
-import { useTranslation } from 'react-i18next';
+import { MapPin, Clock, UtensilsCrossed, Star, Info, ChevronRight, Leaf, Drumstick, Fish, Coffee } from 'lucide-react';
 
 export const Route = createFileRoute('/boutiques-restaurants/restaurants')({
   component: RestaurantsPage,
   head: () => ({
     meta: [
       { title: "Restaurants — Aéroport N'djili · FIH" },
-      { name: 'description', content: "Restauration et cuisine congolaise authentique à l'Aéroport International de N'djili FIH." },
+      { name: 'description', content: "Restaurants et cuisine congolaise authentique à l'Aéroport International de N'djili FIH — fufu, pondu, moambe et plus." },
     ],
   }),
 });
 
-const PAGE_DATA = CONCESSIONS.filter((c) => c.category === 'restaurant');
+const RESTAURANTS = [
+  {
+    nom: 'Le Fleuve Congo',
+    terminal: 'Terminal International — Hall Départs, Niveau 1',
+    horaires: '06 h 00 – 22 h 00',
+    specialites: ['Fufu & Pondu', 'Moambe de poulet', 'Saka-saka', 'Poisson braisé'],
+    prix: '$$ — 8 à 20 USD',
+    desc: 'Restaurant phare de FIH, cuisine congolaise authentique revisitée. Idéal pour un dernier repas kinois avant l\'embarquement. Spécialité : moambe de poulet fermier.',
+    accent: '#009A44',
+    featured: true,
+  },
+  {
+    nom: 'Chez Tante Lucie',
+    terminal: 'Terminal International — Zone Embarquement',
+    horaires: '05 h 30 – 23 h 00',
+    specialites: ['Liboke de poisson', 'Makemba frit', 'Jus de gingembre', 'Beignets'],
+    prix: '$ — 4 à 12 USD',
+    desc: 'Ambiance familiale et chaleureuse, cuisine de tous les jours. La tante Lucie prépare chaque jour ses spécialités maison avec des produits frais du marché de Masina.',
+    accent: '#CE1126',
+    featured: false,
+  },
+  {
+    nom: 'Airport Brasserie',
+    terminal: 'Terminal International — Hall Arrivées, Niveau 0',
+    horaires: '00 h 00 – 24 h 00 (ouvert 24h)',
+    specialites: ['Sandwichs', 'Pâtes', 'Salades', 'Café & viennoiseries'],
+    prix: '$ – $$ — 5 à 18 USD',
+    desc: 'Brasserie internationale ouverte 24h/24, idéale pour les passagers en transit ou en attente. Menu varié alliant cuisine internationale et touches congolaises.',
+    accent: '#003DA5',
+    featured: false,
+  },
+  {
+    nom: 'Quick Kinshasa FIH',
+    terminal: 'Terminal International — Niveau 1',
+    horaires: '06 h 00 – 21 h 00',
+    specialites: ['Burgers', 'Frites', 'Poulet frit', 'Milkshakes'],
+    prix: '$ — 4 à 10 USD',
+    desc: 'Fast-food populaire adapté aux passagers pressés. Menu abordable en USD, service rapide, portions généreuses. Idéal avant un vol domestique.',
+    accent: '#FFCE00',
+    featured: false,
+  },
+  {
+    nom: 'Saveurs du Kivu',
+    terminal: 'Terminal International — Zone VIP',
+    horaires: '07 h 00 – 20 h 00',
+    specialites: ['Truite du Lac Kivu', 'Fromage artisanal', 'Café arabica Kivu', 'Plantain caramélisé'],
+    prix: '$$$ — 20 à 45 USD',
+    desc: 'Restaurant gastronomique mettant en valeur les produits d\'exception de l\'Est du Congo. Carte des vins et spiritueux africains. Réservation recommandée.',
+    accent: '#1a1a1a',
+    featured: false,
+  },
+  {
+    nom: 'Snack Domestique',
+    terminal: 'Terminal Domestique',
+    horaires: '06 h 00 – 20 h 00',
+    specialites: ['Sandwich baguette', 'Soda & jus locaux', 'Œufs sur le plat', 'Beignets haricots'],
+    prix: '$ — 2 à 8 USD',
+    desc: 'Snack incontournable du terminal domestique, accessible à tous les voyageurs avant leurs vols vers Lubumbashi, Goma, Bukavu ou Kisangani.',
+    accent: '#009A44',
+    featured: false,
+  },
+];
 
-const AVAILABLE_ZONES = [...new Set(PAGE_DATA.map((c) => c.zoneKey))] as ZoneKey[];
-
-/* ─── Card ───────────────────────────────────────────────────────────── */
-function RestaurantCard({ c }: { c: Concession }) {
-  const { t } = useTranslation();
+function RestaurantCard({ r }: { r: typeof RESTAURANTS[0] }) {
   return (
-    <Link
-      to={`/boutiques-restaurants/repertoire/${c.slug}` as never}
-      className="group flex flex-col bg-white hover:shadow-lg transition-shadow duration-300 overflow-hidden"
-    >
-      <div className="relative h-44 overflow-hidden flex-shrink-0">
-        {c.image ? (
-          <img
-            src={c.image}
-            alt={c.name}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div
-            className="h-full w-full transition-transform duration-500 group-hover:scale-105 flex items-center justify-center"
-            style={{ background: c.gradient }}
-          >
-            <span className="text-6xl font-black text-white/10 select-none">
-              {c.name.charAt(0)}
-            </span>
-          </div>
-        )}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+    <div className={`border border-[#e8e8e8] bg-white p-5 flex flex-col gap-4 ${r.featured ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
+      {r.featured && (
+        <div className="flex items-center gap-2">
+          <Star size={12} className="text-[#FFCE00]" fill="#FFCE00" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#FFCE00]">Coup de cœur FIH</span>
+        </div>
+      )}
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <div className="w-2 h-2 rounded-full" style={{ background: r.accent }} />
+          <h3 className="font-bold text-[#1a1a1a] text-base">{r.nom}</h3>
+        </div>
+        <p className="text-xs text-[#666] leading-relaxed">{r.desc}</p>
       </div>
-
-      <div className="flex flex-1 flex-col gap-2 p-5">
-        <h3 className="font-bold text-sm text-[#1A1A1A] group-hover:text-[#003DA5] transition-colors line-clamp-1">
-          {c.name}
-        </h3>
-        <p className="text-xs text-[#666] leading-relaxed line-clamp-2 flex-1">
-          {c.description}
+      <div className="flex flex-wrap gap-1">
+        {r.specialites.map((s) => (
+          <span key={s} className="bg-[#f5f5f5] px-2 py-0.5 text-[10px] font-medium text-[#555]">{s}</span>
+        ))}
+      </div>
+      <div className="border-t border-[#f0f0f0] pt-3 space-y-1.5">
+        <p className="flex items-start gap-1.5 text-[11px] text-[#777]">
+          <MapPin size={11} className="flex-shrink-0 text-[#003DA5] mt-0.5" />
+          {r.terminal}
         </p>
-        <div className="flex flex-wrap gap-1 mt-1">
-          {c.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="bg-[#F2F2F2] px-2 py-0.5 text-[10px] font-medium text-[#555]">
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div className="mt-2 pt-3 border-t border-[#F0F0F0] space-y-1">
-          <p className="flex items-center gap-1.5 text-[11px] text-[#777]">
-            <MapPin size={10} className="flex-shrink-0 text-[#003DA5]" />
-            {ZONE_LABELS[c.zoneKey]}
-          </p>
-          <p className="flex items-center gap-1.5 text-[11px] text-[#777]">
-            <Clock size={10} className="flex-shrink-0 text-[#003DA5]" />
-            {c.hours}
-          </p>
-          <p className="text-[11px] font-semibold text-[#003DA5]">{c.porte}</p>
-        </div>
+        <p className="flex items-center gap-1.5 text-[11px] text-[#777]">
+          <Clock size={11} className="flex-shrink-0 text-[#003DA5]" />
+          {r.horaires}
+        </p>
+        <p className="text-[11px] font-semibold" style={{ color: r.accent }}>{r.prix}</p>
       </div>
-
-      <div className="px-5 py-3 border-t border-[#F0F0F0] flex items-center justify-between bg-[#FAFAFA] group-hover:bg-[#003DA5] transition-colors duration-300">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-[#003DA5] group-hover:text-white transition-colors">
-          {t('common.learnMore')}
-        </span>
-        <ChevronRight size={13} className="text-[#003DA5] group-hover:text-white transition-colors" />
-      </div>
-    </Link>
+    </div>
   );
 }
 
-/* ─── Page ───────────────────────────────────────────────────────────── */
 function RestaurantsPage() {
-  const { t } = useTranslation();
-  const [zone, setZone] = useState<'all' | ZoneKey>('all');
-
-  const filtered = zone === 'all' ? PAGE_DATA : PAGE_DATA.filter((c) => c.zoneKey === zone);
-
   return (
     <main id="main-content">
 
-      {/* ── Hero ────────────────────────────────────────────────── */}
-      <div className="relative overflow-hidden bg-[#0F2A1E]">
+      {/* Hero */}
+      <div className="relative select-none">
         <img
-          src="/images/fih-checkin.jpg"
-          loading="eager"
-          className="absolute inset-0 h-full w-full select-none object-cover object-right pointer-events-none"
-          alt=""
-          aria-hidden="true"
+          src="/images/fih-hero-1.jpg"
+          alt="Restauration à l'Aéroport de N'djili"
+          className="h-64 sm:h-80 w-full object-cover object-center"
         />
-        <div
-          className="absolute inset-0 bg-[#0F2A1E]"
-          style={{ clipPath: 'polygon(0 0, 58% 0, 72% 100%, 0 100%)' }}
-        />
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#003DA5] via-[#FFCE00] to-[#CE1126]" />
-
-        <div className="container relative z-10 py-14 md:py-20">
-          <nav className="mb-4 flex items-center gap-1.5 text-[11px] font-medium text-white/40">
-            <Link to="/" className="hover:text-white transition-colors">Accueil</Link>
-            <ChevronRight size={10} />
-            <Link to={'/boutiques-restaurants' as never} className="hover:text-white transition-colors">
-              {t('nav.shopsRestaurants')}
-            </Link>
-            <ChevronRight size={10} />
-            <span className="text-white/70">{t('shops.restaurants')}</span>
-          </nav>
-          <div className="mb-3 flex items-center gap-2.5">
-            <span
-              className="inline-block h-4 w-5 bg-rdc-green"
-              style={{ clipPath: 'polygon(20% 0%, 100% 0%, 80% 100%, 0% 100%)' }}
-            />
-            <span className="text-sm font-semibold tracking-wider text-white/70">Boutiques &amp; Restaurants</span>
-          </div>
-          <h1 className="font-display text-5xl font-bold text-white md:text-6xl">Restaurants</h1>
-          <p className="mt-3 max-w-sm text-white/60">
-            Cuisine congolaise authentique, fast-food et gastronomie fusion au cœur de FIH.
-          </p>
-          <p className="mt-4 text-sm font-medium text-rdc-green">
-            {PAGE_DATA.length} établissement{PAGE_DATA.length > 1 ? 's' : ''}
-          </p>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-6 sm:px-10">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/50 mb-1">Boutiques & Restaurants</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">Restaurants à FIH</h1>
+        </div>
+        <div className="absolute bottom-0 left-0">
+          <span className="inline-block bg-[#009A44] px-5 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white">
+            {RESTAURANTS.length} établissements
+          </span>
         </div>
       </div>
 
-      {/* ── Zone filter ─────────────────────────────────────────── */}
-      <div className="border-b border-[#E8E8E8] bg-white">
-        <div className="container">
-          <div className="flex gap-1 overflow-x-auto py-3 scrollbar-hide">
-            <button
-              onClick={() => setZone('all')}
-              className={`flex-shrink-0 px-3 py-1.5 text-xs font-semibold transition-colors ${
-                zone === 'all' ? 'bg-[#003DA5] text-white' : 'text-[#555] hover:bg-[#F5F5F5]'
-              }`}
-            >
-              Toutes les zones
-            </button>
-            {AVAILABLE_ZONES.map((zk) => (
-              <button
-                key={zk}
-                onClick={() => setZone(zk)}
-                className={`flex-shrink-0 px-3 py-1.5 text-xs font-semibold transition-colors ${
-                  zone === zk ? 'bg-[#003DA5] text-white' : 'text-[#555] hover:bg-[#F5F5F5]'
-                }`}
-              >
-                {ZONE_LABELS[zk]}
-              </button>
+      <div className="mx-auto max-w-5xl px-5 py-12 space-y-14">
+
+        {/* Intro cuisine locale */}
+        <section>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#003DA5] mb-2">Saveurs congolaises</p>
+          <h2 className="text-2xl font-bold text-[#1a1a1a] mb-4">Le meilleur de Kinshasa dans votre terminal</h2>
+          <p className="text-sm text-[#555] leading-relaxed max-w-2xl">
+            Avant votre vol ou à votre arrivée, découvrez une sélection de restaurants qui célèbrent la richesse
+            gastronomique de la République Démocratique du Congo. Du fufu traditionnel à la truite du Lac Kivu,
+            en passant par le fast-food international — chaque passager trouve son bonheur à FIH.
+          </p>
+        </section>
+
+        {/* Note prix USD */}
+        <div className="flex items-start gap-3 border border-[#FFCE00]/40 bg-[#FFCE00]/10 p-4">
+          <Info size={15} className="text-[#C8A000] flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-[#555]">
+            <p className="font-semibold text-[#1a1a1a] mb-1">Prix affichés en USD — Équivalent CDF disponible</p>
+            <p>Tous les établissements de FIH acceptent les dollars américains (USD). Le franc congolais (CDF)
+            est également accepté au taux du jour BCC. Les paiements Mobile Money (Airtel, M-Pesa, Orange) sont
+            acceptés dans la plupart des restaurants.</p>
+          </div>
+        </div>
+
+        {/* Liste restaurants */}
+        <section>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#003DA5] mb-2">Tous les restaurants</p>
+          <h2 className="text-2xl font-bold text-[#1a1a1a] mb-8">Restaurants par terminal</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {RESTAURANTS.map((r) => (
+              <RestaurantCard key={r.nom} r={r} />
             ))}
           </div>
-        </div>
-      </div>
+        </section>
 
-      {/* ── Cards ───────────────────────────────────────────────── */}
-      <div className="container py-8 md:py-10">
-        <p className="mb-5 text-xs text-[#888]">
-          {filtered.length} résultat{filtered.length !== 1 ? 's' : ''}
-        </p>
-        <div
-          className="grid gap-0.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-          style={{ background: '#E8E8E8' }}
-        >
-          {filtered.map((c) => <RestaurantCard key={c.id} c={c} />)}
+        {/* Spécialités locales vedette */}
+        <section>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#009A44] mb-2">Découverte</p>
+          <h2 className="text-2xl font-bold text-[#1a1a1a] mb-6">Spécialités congolaises en vedette</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { plat: 'Fufu & Pondu', desc: 'Pâte de manioc accompagnée de feuilles de manioc pilées au lait de palme. Plat national de la RDC.', Icon: Leaf, couleur: '#009A44' },
+              { plat: 'Moambe de poulet', desc: 'Poulet mijoté dans la sauce aux noix de palme, épices locales et piment. Plat festif incontournable.', Icon: Drumstick, couleur: '#CE1126' },
+              { plat: 'Liboke de poisson', desc: 'Poisson frais du fleuve Congo cuit à l\'étouffée dans des feuilles de bananier avec des épices.', Icon: Fish, couleur: '#003DA5' },
+              { plat: 'Café Arabica Kivu', desc: 'Café d\'altitude cultivé sur les rives du Lac Kivu, aux arômes fruités et floraux exceptionnels.', Icon: Coffee, couleur: '#C2702F' },
+            ].map((item) => (
+              <div key={item.plat} className="border border-[#e8e8e8] bg-white p-5">
+                <div className="flex h-10 w-10 items-center justify-center mb-3" style={{ background: `${item.couleur}15`, border: `1px solid ${item.couleur}30` }}>
+                  <item.Icon size={18} style={{ color: item.couleur }} strokeWidth={1.5} />
+                </div>
+                <h3 className="font-bold text-sm text-[#1a1a1a] mb-2">{item.plat}</h3>
+                <p className="text-xs text-[#666] leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Horaires généraux */}
+        <section className="border border-[#e8e8e8] bg-white p-6">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#003DA5] mb-2">Horaires</p>
+          <h2 className="text-xl font-bold text-[#1a1a1a] mb-5">Quand manger à FIH ?</h2>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {[
+              { moment: 'Petit-déjeuner', heures: '05 h 30 – 10 h 00', note: 'Brasserie 24h ouverte en continu' },
+              { moment: 'Déjeuner', heures: '11 h 00 – 15 h 00', note: 'Plats du jour cuisine congolaise' },
+              { moment: 'Dîner / Soirée', heures: '18 h 00 – 23 h 00', note: 'Restaurants fermés sauf Brasserie' },
+            ].map((h) => (
+              <div key={h.moment} className="text-center p-4 bg-[#f7f7f7]">
+                <p className="font-bold text-[#1a1a1a] text-sm">{h.moment}</p>
+                <p className="text-[#003DA5] font-bold text-lg mt-1">{h.heures}</p>
+                <p className="text-xs text-[#888] mt-1">{h.note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Navigation vers boutiques */}
+        <div className="flex items-center justify-between border border-[#e8e8e8] bg-white p-5">
+          <div className="flex items-center gap-3">
+            <UtensilsCrossed size={18} className="text-[#003DA5]" />
+            <p className="text-sm text-[#555]">Voir aussi : <span className="font-semibold text-[#1a1a1a]">Bars & Cafés disponibles à FIH</span></p>
+          </div>
+          <Link to={'/boutiques-restaurants/bars-cafes' as never} className="flex items-center gap-1.5 text-[11px] font-bold text-[#003DA5] hover:underline">
+            Voir <ChevronRight size={12} />
+          </Link>
         </div>
+
       </div>
     </main>
   );
